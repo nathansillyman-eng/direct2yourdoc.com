@@ -6,8 +6,8 @@
 import { useEffect, useRef } from "react";
 import { FileText, Stethoscope, ShieldCheck, Clock } from "lucide-react";
 
-const CONSULT_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663709880590/GKCMVQZrp5BBHin5LMZUpn/service-consultation-EZRzCNnVu5vjNNBxFh2hjS.webp";
-const RX_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663709880590/GKCMVQZrp5BBHin5LMZUpn/service-prescription-YuXJvDQs9bHsSpt7KVRhLC.webp";
+const CONSULT_IMG = "/manus-storage/service-consultation-EZRzCNnVu5vjNNBxFh2hjS.webp";
+const RX_IMG = "/manus-storage/service-prescription-YuXJvDQs9bHsSpt7KVRhLC.webp";
 
 const services = [
   {

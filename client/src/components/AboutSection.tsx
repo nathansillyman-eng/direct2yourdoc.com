@@ -6,7 +6,7 @@
 import { useEffect, useRef } from "react";
 import { GraduationCap, Award, Heart } from "lucide-react";
 
-const DOCTOR_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663709880590/GKCMVQZrp5BBHin5LMZUpn/hero-doctor-eB3pNfzAXfpxMomtAqv2kr.webp";
+const DOCTOR_IMG = "/manus-storage/hero-doctor-eB3pNfzAXfpxMomtAqv2kr.webp";
 
 const credentials = [
   { icon: GraduationCap, text: "Doctor of Osteopathic Medicine (M.D.O.)" },

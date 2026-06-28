@@ -7,7 +7,7 @@
 import { useEffect, useRef } from "react";
 import { ArrowRight, Phone } from "lucide-react";
 
-const HERO_DOCTOR = "https://d2xsxph8kpxj0f.cloudfront.net/310519663709880590/GKCMVQZrp5BBHin5LMZUpn/hero-doctor-eB3pNfzAXfpxMomtAqv2kr.webp";
+const HERO_DOCTOR = "/manus-storage/hero-doctor-eB3pNfzAXfpxMomtAqv2kr.webp";
 const MEDASSURANCE_LOGO = "/manus-storage/logo-both_91777e1e.png";
 
 export default function HeroSection() {
