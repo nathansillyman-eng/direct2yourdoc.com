@@ -1,0 +1,16 @@
+# Netlify build & deploy config for the MedAssurance / Direct2YourDoc site.
+# Static Vite SPA — Netlify serves dist/public; client-side routing via wouter.
+
+[build]
+  command = "pnpm run build"
+  publish = "dist/public"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# SPA fallback: every path that isn't a real file serves index.html so wouter
+# can resolve routes like /direct2yourdoc on direct navigation / refresh.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
