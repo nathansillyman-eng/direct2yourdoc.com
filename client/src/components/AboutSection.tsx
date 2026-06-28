@@ -100,10 +100,10 @@ export default function AboutSection() {
               }}
             >
               Dr. Andrew Heslin, M.D.O., practices on a simple conviction:
-                that every person deserves the kind of medical attention that used to
-                require knowing the right people. The kind where your doctor knows your
-                name, your history, and your concerns — and is genuinely available when
-                you need them.
+                that real medical attention shouldn't depend on who you know, how many
+                portals you can log into, or how long you'll wait on hold. The kind where
+                your doctor knows your name, your history, and your concerns — and is
+                genuinely there when you need them.
               </p>
               <p
                 className="mt-4"

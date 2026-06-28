@@ -8,15 +8,15 @@ import { useEffect, useRef } from "react";
 const steps = [
   {
     number: "01",
-    title: "Secure Your Membership",
+    title: "Become a Member",
     description:
-      "Reach out to Dr. Heslin's office to discuss your needs and confirm your annual membership. Membership is limited and by application only — ensuring Dr. Heslin can give each member the attention they deserve.",
+      "Reach out and tell us what's going on. One short conversation gets your membership set up — no application to be approved for, no waiting to find out if you're 'in.' Just care, started.",
   },
   {
     number: "02",
     title: "48-Hour Activation",
     description:
-      "Within 48 hours of your confirmed membership, Dr. Heslin is on call for you. You receive a direct line — a private number for your exclusive use. No answering services, no gatekeepers.",
+      "Within 48 hours, Dr. Heslin is on call for you. You get a direct line — your own number, straight to your doctor. No phone trees, no answering services, no gatekeepers.",
   },
   {
     number: "03",

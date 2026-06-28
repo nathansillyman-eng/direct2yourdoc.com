@@ -101,9 +101,9 @@ export default function HeroSection() {
                 maxWidth: "680px",
               }}
             >
-              The doctor you'd call at midnight.
+              Put on the headset.
               <br />
-              <em style={{ color: "var(--forest-green-light)", textShadow: "0 0 32px oklch(0.82 0.17 165 / 0.45)" }}>Now you actually can.</em>
+              <em style={{ color: "var(--forest-green-light)", textShadow: "0 0 32px oklch(0.82 0.17 165 / 0.45)" }}>You're in the office.</em>
             </h1>
 
             <p
@@ -119,10 +119,11 @@ export default function HeroSection() {
                 transition: "opacity 500ms cubic-bezier(0.23,1,0.32,1), transform 500ms cubic-bezier(0.23,1,0.32,1)",
               }}
             >
-              Direct2YourDoc is private medical assurance for those who expect more.
-              With 48 hours' notice, Dr. Heslin is available around the clock —
-              for consultations, same-day prescriptions, second opinions, and
-              hospital advocacy. Like having a best friend who happens to be a doctor.
+              One headset, one app — and you're sitting with your doctor. No waiting room,
+              no portal login, no hold music. Direct2YourDoc brings Dr. Heslin to you the
+              moment you need him: consultations, same-day prescriptions, second opinions,
+              and a steady hand through any hospital stay. The doctor you'd call at
+              midnight? Now you actually can.
             </p>
 
             <div
@@ -139,7 +140,7 @@ export default function HeroSection() {
                 className="btn-primary"
                 style={{ fontSize: "0.82rem", padding: "1rem 2.2rem" }}
               >
-                Secure Your Membership <ArrowRight size={15} />
+                Become a Member <ArrowRight size={15} />
               </a>
               <a
                 href="#how-it-works"

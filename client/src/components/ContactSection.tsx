@@ -98,9 +98,9 @@ export default function ContactSection() {
                   lineHeight: 1.8,
                 }}
               >
-                Membership inquiries are handled with complete discretion. 
-                Dr. Heslin personally reviews each application and responds 
-                within 24 hours to schedule a private consultation.
+                Reach out and we'll take it from there. Dr. Heslin personally reads every
+                message and responds within 24 hours to set up your first conversation —
+                handled with care and kept private.
               </p>
             </div>
 
@@ -133,7 +133,7 @@ export default function ContactSection() {
                     Inquiries
                   </p>
                   <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.95rem", color: "white", marginTop: "0.2rem" }}>
-                    membership@medassure.com
+                    membership@direct2yourdoc.com
                   </p>
                 </div>
               </div>
@@ -204,7 +204,7 @@ export default function ContactSection() {
                       marginBottom: "0.5rem",
                     }}
                   >
-                    Private Membership Inquiry
+                    Start Your Membership
                   </h3>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -285,7 +285,7 @@ export default function ContactSection() {
                       letterSpacing: "0.06em",
                     }}
                   >
-                    Your information is kept strictly confidential and never shared.
+                    Your information is kept private and never shared.
                   </p>
                 </form>
               )}

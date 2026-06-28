@@ -1,7 +1,7 @@
 /**
  * MembershipSection — Direct2YourDoc
  * Design: Warm linen dark background, single premium membership card
- * Emphasizes exclusivity and value proposition
+ * Single membership; access-first, not gatekept
  */
 import { useEffect, useRef } from "react";
 import { Check, ArrowRight } from "lucide-react";
@@ -76,9 +76,9 @@ color: "oklch(0.65 0.03 200)",
           lineHeight: 1.75,
             }}
           >
-            Direct2YourDoc is an annual private membership. Membership is limited to ensure 
-            Dr. Heslin can provide each member with the full attention they deserve. 
-            Pricing is discussed during your private consultation.
+            Direct2YourDoc is a simple annual membership. It keeps your care unhurried and
+            personal — Dr. Heslin has the time to actually know you and be there when you
+            need him. Pricing is straightforward and covered in your first conversation.
           </p>
         </div>
 
@@ -107,7 +107,7 @@ color: "oklch(0.65 0.03 200)",
                         color: "oklch(0.75 0.04 200)",
                       }}
                     >
-                      Annual Private Membership
+                      Annual Membership
                     </p>
                     <h3
                       className="mt-1"
@@ -246,7 +246,7 @@ border: "1px solid oklch(0.97 0.02 200 / 0.1)",
                     lineHeight: 1.15,
                   }}
                 >
-                  Ready to secure your membership?
+                  Ready to become a member?
                 </h3>
                 <p
                   className="mt-3"
@@ -257,8 +257,8 @@ border: "1px solid oklch(0.97 0.02 200 / 0.1)",
                     lineHeight: 1.65,
                   }}
                 >
-                  Membership is limited. Contact Dr. Heslin's office to begin 
-                  your private consultation and discuss availability.
+                  Becoming a member takes one conversation. Reach out and we'll get you
+                  set up and answer anything you want to know.
                 </p>
               </div>
               <a
@@ -278,7 +278,7 @@ border: "1px solid oklch(0.97 0.02 200 / 0.1)",
                   letterSpacing: "0.06em",
                 }}
               >
-                Strictly confidential · Limited availability
+                Private and secure · Start within 48 hours
               </p>
             </div>
 

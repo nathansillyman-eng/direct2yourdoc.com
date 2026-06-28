@@ -109,7 +109,7 @@ export default function Navigation() {
                 className="btn-primary"
                 style={{ padding: "0.6rem 1.4rem", fontSize: "0.72rem" }}
               >
-                Secure Membership
+                Become a Member
               </a>
             </nav>
 
@@ -163,7 +163,7 @@ export default function Navigation() {
             onClick={(e) => { e.preventDefault(); handleNavClick("#contact"); }}
             className="btn-primary mt-4"
           >
-            Secure Membership
+            Become a Member
           </a>
         </div>
       </div>

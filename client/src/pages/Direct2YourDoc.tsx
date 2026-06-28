@@ -928,7 +928,7 @@ export default function Direct2YourDoc() {
               <span style={{ color: "#f5c63e", fontStyle: "italic" }}>in the first cohort.</span>
             </h2>
             <p className="mt-4 text-base leading-relaxed" style={{ color: "#8fb5b0" }}>
-              Direct2YourDoc is accepting a limited number of founding members. Your sign-up fee includes the headset, setup, and onboarding with Dr. Heslin's care team.
+              Direct2YourDoc is opening to its first founding members. Your sign-up includes the headset, full setup, and onboarding with Dr. Heslin's care team.
             </p>
           </motion.div>
 
@@ -1066,7 +1066,7 @@ export default function Direct2YourDoc() {
               </button>
 
               <p className="text-center text-xs" style={{ color: "rgba(143,181,176,0.6)" }}>
-                Membership is limited. Dr. Heslin's team will respond within 48 hours.
+                Dr. Heslin's team will respond within 48 hours.
               </p>
             </motion.form>
           )}
