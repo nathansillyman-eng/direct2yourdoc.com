@@ -51,7 +51,7 @@ export default function ValueSection() {
   return (
     <section
       ref={ref}
-      style={{ backgroundColor: "oklch(0.12 0.010 60)", paddingTop: "8rem", paddingBottom: "8rem" }}
+      style={{ backgroundColor: "oklch(0.12 0.05 285)", paddingTop: "8rem", paddingBottom: "8rem" }}
     >
       <div className="container">
 
@@ -93,7 +93,7 @@ color: "white",
               style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: "1rem",
-                color: "oklch(0.65 0.005 80)",
+                color: "oklch(0.65 0.03 285)",
             lineHeight: 1.8,
           }}
         >
@@ -113,20 +113,20 @@ color: "white",
               fontWeight: 500,
               letterSpacing: "0.16em",
               textTransform: "uppercase",
-              color: "oklch(0.52 0.005 80)",
+              color: "oklch(0.52 0.03 285)",
           }}
         >
           Real situations. Real responses.
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-px" style={{ backgroundColor: "oklch(0.25 0.010 60)" }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-px" style={{ backgroundColor: "oklch(0.25 0.05 285)" }}>
           {scenarios.map((scenario, i) => (
             <div
               key={i}
               className="fade-up group transition-colors duration-300 p-8"
               style={{
-                backgroundColor: i % 2 === 0 ? "oklch(0.16 0.010 60)" : "oklch(0.19 0.010 60)",
+                backgroundColor: i % 2 === 0 ? "oklch(0.16 0.05 285)" : "oklch(0.19 0.05 285)",
                 transitionDelay: `${i * 80}ms`,
               }}
             >
@@ -170,7 +170,7 @@ color: "white",
                   style={{
                     fontFamily: "'DM Sans', sans-serif",
                     fontSize: "0.92rem",
-color: "oklch(0.65 0.005 80)",
+color: "oklch(0.65 0.03 285)",
                 lineHeight: 1.7,
                 fontStyle: "italic",
                   }}

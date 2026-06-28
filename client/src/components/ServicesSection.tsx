@@ -129,7 +129,7 @@ export default function ServicesSection() {
                       fontSize: "clamp(4rem, 7vw, 6rem)",
                       fontWeight: 600,
                       lineHeight: 1,
-                      color: "oklch(0.38 0.085 155 / 0.18)",
+                      color: "oklch(0.38 0.15 165 / 0.18)",
                       transition: "color 300ms ease",
                       userSelect: "none",
                     }}
@@ -143,7 +143,7 @@ export default function ServicesSection() {
                 <div className="lg:col-span-3 flex flex-col justify-start pt-2">
                   <div
                     className="w-10 h-10 rounded-sm flex items-center justify-center mb-4"
-                    style={{ backgroundColor: "oklch(0.38 0.085 155 / 0.1)" }}
+                    style={{ backgroundColor: "oklch(0.38 0.15 165 / 0.1)" }}
                   >
                     <Icon size={18} style={{ color: "var(--forest-green)" }} />
                   </div>
@@ -220,13 +220,13 @@ export default function ServicesSection() {
             />
             <div
               className="absolute inset-0"
-              style={{ background: "linear-gradient(to top, oklch(0.12 0.010 60 / 0.6) 0%, transparent 55%)" }}
+              style={{ background: "linear-gradient(to top, oklch(0.12 0.05 285 / 0.6) 0%, transparent 55%)" }}
             />
             <div className="absolute bottom-7 left-7">
               <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.4rem", fontWeight: 500, color: "white" }}>
                 Private Consultation
               </p>
-              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.72rem", color: "oklch(0.82 0.005 80)", letterSpacing: "0.1em", textTransform: "uppercase", marginTop: "0.3rem" }}>
+              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.72rem", color: "oklch(0.82 0.03 285)", letterSpacing: "0.1em", textTransform: "uppercase", marginTop: "0.3rem" }}>
                 On your schedule
               </p>
             </div>
@@ -239,13 +239,13 @@ export default function ServicesSection() {
             />
             <div
               className="absolute inset-0"
-              style={{ background: "linear-gradient(to top, oklch(0.12 0.010 60 / 0.6) 0%, transparent 55%)" }}
+              style={{ background: "linear-gradient(to top, oklch(0.12 0.05 285 / 0.6) 0%, transparent 55%)" }}
             />
             <div className="absolute bottom-7 left-7">
               <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.4rem", fontWeight: 500, color: "white" }}>
                 Same-Day Prescriptions
               </p>
-              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.72rem", color: "oklch(0.82 0.005 80)", letterSpacing: "0.1em", textTransform: "uppercase", marginTop: "0.3rem" }}>
+              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.72rem", color: "oklch(0.82 0.03 285)", letterSpacing: "0.1em", textTransform: "uppercase", marginTop: "0.3rem" }}>
                 Sent to your pharmacy
               </p>
             </div>

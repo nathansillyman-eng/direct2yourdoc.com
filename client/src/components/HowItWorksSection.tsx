@@ -57,7 +57,7 @@ export default function HowItWorksSection() {
       id="how-it-works"
       ref={ref}
       style={{
-        backgroundColor: "var(--forest-green-dark)",
+        backgroundColor: "oklch(0.16 0.05 285)",
         paddingTop: "8rem",
         paddingBottom: "8rem",
       }}
@@ -69,7 +69,7 @@ export default function HowItWorksSection() {
           <div className="lg:col-span-5 fade-up">
             <span
               className="section-label mb-6 block"
-              style={{ color: "oklch(0.62 0.085 65)" }}
+              style={{ color: "oklch(0.62 0.13 90)" }}
             >
               How It Works
             </span>
@@ -91,7 +91,7 @@ export default function HowItWorksSection() {
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: "1rem",
-                  color: "oklch(0.72 0.005 155)",
+                  color: "oklch(0.72 0.04 200)",
                   lineHeight: 1.78,
                 }}
               >
@@ -100,7 +100,7 @@ export default function HowItWorksSection() {
               </p>
               <div
                 className="pull-quote mt-8"
-                style={{ borderLeftColor: "var(--aged-bronze)", color: "oklch(0.78 0.005 80)" }}
+                style={{ borderLeftColor: "var(--aged-bronze)", color: "oklch(0.78 0.03 285)" }}
               >
                 "Imagine having a best friend who is a doctor — and who picks up
                 every time you call."
@@ -119,7 +119,7 @@ export default function HowItWorksSection() {
                 transitionDelay: `${i * 110}ms`,
                 paddingTop: "2.5rem",
                 paddingBottom: "2.5rem",
-                borderTop: "1px solid oklch(0.97 0.012 80 / 0.1)",
+                borderTop: "1px solid oklch(0.97 0.02 285 / 0.1)",
               }}
             >
               {/* Oversized numeral */}
@@ -130,7 +130,7 @@ export default function HowItWorksSection() {
                     fontSize: "clamp(3.5rem, 6vw, 5rem)",
                     fontWeight: 600,
                     lineHeight: 1,
-                    color: "oklch(0.48 0.085 155 / 0.35)",
+                    color: "oklch(0.48 0.15 165 / 0.35)",
                     transition: "color 300ms ease",
                   }}
                 >
@@ -159,7 +159,7 @@ export default function HowItWorksSection() {
                   style={{
                     fontFamily: "'DM Sans', sans-serif",
                     fontSize: "0.95rem",
-                    color: "oklch(0.72 0.005 80)",
+                    color: "oklch(0.72 0.03 285)",
                     lineHeight: 1.78,
                   }}
                 >
@@ -168,7 +168,7 @@ export default function HowItWorksSection() {
               </div>
             </div>
           ))}
-          <div style={{ borderTop: "1px solid oklch(0.97 0.012 80 / 0.1)" }} />
+          <div style={{ borderTop: "1px solid oklch(0.97 0.02 285 / 0.1)" }} />
         </div>
 
       </div>

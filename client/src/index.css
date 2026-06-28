@@ -4,8 +4,8 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ============================================================
-   Direct2YourDoc Design System — Quiet Luxury Clinic
-   Palette: Warm Linen / Forest Green / Aged Bronze / Charcoal
+   Direct2YourDoc Design System — Future Portal
+   Palette: Deep Indigo / Electric Mint / Portal Cyan / Bright Gold
    Fonts: Cormorant Garamond (display) + DM Sans (body/UI)
    ============================================================ */
 
@@ -36,38 +36,44 @@
 }
 
 :root {
-  /* Brand Colors */
-  --forest-green: oklch(0.38 0.085 155);
-  --forest-green-light: oklch(0.48 0.085 155);
-  --forest-green-dark: oklch(0.28 0.085 155);
-  --aged-bronze: oklch(0.62 0.085 65);
-  --warm-linen: oklch(0.97 0.012 80);
-  --warm-linen-dark: oklch(0.93 0.015 80);
-  --charcoal: oklch(0.18 0.010 60);
-  --charcoal-mid: oklch(0.35 0.010 60);
-  --charcoal-light: oklch(0.55 0.010 60);
+  /* ===== Future Portal palette ===== */
+  /* Brand Colors — green stays the health anchor, now VIVID + luminous */
+  --forest-green: oklch(0.62 0.16 165);        /* vivid emerald (fills, accents) */
+  --forest-green-light: oklch(0.82 0.17 165);  /* electric mint (glow text, highlights) */
+  --forest-green-dark: oklch(0.50 0.15 165);   /* emerald (hover) */
+  --aged-bronze: oklch(0.84 0.135 90);         /* bright gold (was aged bronze) */
+  --warm-linen: oklch(0.97 0.015 285);         /* cool near-white (text on dark / light surfaces) */
+  --warm-linen-dark: oklch(0.92 0.02 285);
+  --charcoal: oklch(0.20 0.05 285);            /* deep indigo (dark surfaces / text on light) */
+  --charcoal-mid: oklch(0.42 0.05 285);
+  --charcoal-light: oklch(0.60 0.04 285);
+
+  /* Portal accents — the VR / instant-access energy */
+  --portal-mint: oklch(0.85 0.16 165);
+  --portal-cyan: oklch(0.78 0.135 215);
+  --portal-gold: oklch(0.84 0.135 90);
 
   /* Semantic Tokens */
   --radius: 0.375rem;
-  --background: oklch(0.97 0.012 80);
-  --foreground: oklch(0.18 0.010 60);
-  --card: oklch(1 0.008 80);
-  --card-foreground: oklch(0.18 0.010 60);
-  --popover: oklch(1 0.008 80);
-  --popover-foreground: oklch(0.18 0.010 60);
-  --primary: oklch(0.38 0.085 155);
-  --primary-foreground: oklch(0.97 0.012 80);
-  --secondary: oklch(0.93 0.015 80);
-  --secondary-foreground: oklch(0.35 0.010 60);
-  --muted: oklch(0.93 0.015 80);
-  --muted-foreground: oklch(0.55 0.010 60);
-  --accent: oklch(0.62 0.085 65);
-  --accent-foreground: oklch(0.97 0.012 80);
-  --destructive: oklch(0.577 0.245 27.325);
+  --background: oklch(0.985 0.012 285);
+  --foreground: oklch(0.22 0.05 285);
+  --card: oklch(1 0.006 285);
+  --card-foreground: oklch(0.22 0.05 285);
+  --popover: oklch(1 0.006 285);
+  --popover-foreground: oklch(0.22 0.05 285);
+  --primary: oklch(0.55 0.15 165);
+  --primary-foreground: oklch(0.98 0.015 285);
+  --secondary: oklch(0.94 0.015 285);
+  --secondary-foreground: oklch(0.40 0.05 285);
+  --muted: oklch(0.94 0.015 285);
+  --muted-foreground: oklch(0.52 0.03 285);
+  --accent: oklch(0.84 0.135 90);
+  --accent-foreground: oklch(0.22 0.05 285);
+  --destructive: oklch(0.62 0.22 25);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.88 0.018 80);
-  --input: oklch(0.88 0.018 80);
-  --ring: oklch(0.38 0.085 155);
+  --border: oklch(0.90 0.02 285);
+  --input: oklch(0.90 0.02 285);
+  --ring: oklch(0.55 0.15 165);
 }
 
 @layer base {
@@ -141,7 +147,7 @@
     font-family: 'Cormorant Garamond', serif;
     font-size: 1.35rem;
     font-style: italic;
-    color: oklch(0.72 0.005 80);
+    color: oklch(0.72 0.03 285);
   }
 
   /* Stat display: oversized serif numeral */
@@ -169,10 +175,12 @@
     border-radius: 2px;
     transition: all 180ms cubic-bezier(0.23, 1, 0.32, 1);
     border: 1px solid var(--forest-green);
+    box-shadow: 0 0 22px oklch(0.62 0.16 165 / 0.35);
   }
   .btn-primary:hover {
-    background-color: var(--forest-green-dark);
-    box-shadow: 0 0 0 3px oklch(0.38 0.085 155 / 0.18);
+    background-color: var(--forest-green-light);
+    color: oklch(0.18 0.05 285);
+    box-shadow: 0 0 32px oklch(0.7 0.17 165 / 0.55);
     transform: scale(1.02);
   }
   .btn-primary:active { transform: scale(0.97); }
@@ -191,12 +199,12 @@
     text-transform: uppercase;
     padding: 0.875rem 2rem;
     border-radius: 2px;
-    border: 1px solid oklch(0.97 0.012 80 / 0.5);
+    border: 1px solid oklch(0.97 0.02 285 / 0.5);
     transition: all 180ms cubic-bezier(0.23, 1, 0.32, 1);
   }
   .btn-ghost:hover {
     border-color: var(--warm-linen);
-    background-color: oklch(0.97 0.012 80 / 0.08);
+    background-color: oklch(0.97 0.02 285 / 0.08);
   }
   .btn-ghost:active { transform: scale(0.97); }
 

@@ -38,7 +38,7 @@ export default function AboutSection() {
     <section
       id="about"
       ref={ref}
-      style={{ backgroundColor: "oklch(0.15 0.010 60)", paddingTop: "8rem", paddingBottom: "8rem" }}
+      style={{ backgroundColor: "oklch(0.15 0.05 285)", paddingTop: "8rem", paddingBottom: "8rem" }}
     >
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-11 gap-12 lg:gap-20 items-center">
@@ -65,7 +65,7 @@ export default function AboutSection() {
                 <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "2.2rem", fontWeight: 600, color: "white", lineHeight: 1 }}>
                   M.D.O.
                 </p>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(0.75 0.005 155)", marginTop: "0.35rem" }}>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(0.75 0.04 200)", marginTop: "0.35rem" }}>
                   Osteopathic Medicine
                 </p>
               </div>
@@ -95,7 +95,7 @@ export default function AboutSection() {
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: "1.05rem",
-                  color: "oklch(0.65 0.005 80)",
+                  color: "oklch(0.65 0.03 285)",
                 lineHeight: 1.8,
               }}
             >
@@ -110,7 +110,7 @@ export default function AboutSection() {
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: "1.05rem",
-                  color: "oklch(0.65 0.005 80)",
+                  color: "oklch(0.65 0.03 285)",
                 lineHeight: 1.8,
               }}
             >
@@ -125,11 +125,11 @@ export default function AboutSection() {
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: "1.05rem",
-                  color: "oklch(0.65 0.005 80)",
+                  color: "oklch(0.65 0.03 285)",
                   lineHeight: 1.8,
                 }}
               >
-                Direct2YourDoc is a venture of <strong style={{ color: "oklch(0.78 0.005 80)", fontWeight: 600 }}>The KeepMore Company</strong> —
+                Direct2YourDoc is a venture of <strong style={{ color: "oklch(0.78 0.03 285)", fontWeight: 600 }}>The KeepMore Company</strong> —
                 Nate Sillyman's lifelong work of removing the barriers between people and what
                 they need. First it was barriers to <em style={{ color: "var(--forest-green)" }}>knowledge</em>;
                 now, to <em style={{ color: "var(--forest-green)" }}>professional care</em> — delivered by
@@ -168,7 +168,7 @@ export default function AboutSection() {
                   <div key={i} className="flex items-center gap-3">
                     <div
                       className="w-8 h-8 rounded-sm flex items-center justify-center flex-shrink-0"
-                      style={{ backgroundColor: "oklch(0.38 0.085 155 / 0.25)" }}
+                      style={{ backgroundColor: "oklch(0.38 0.15 165 / 0.25)" }}
                     >
                       <Icon size={15} style={{ color: "var(--forest-green)" }} />
                     </div>
@@ -176,7 +176,7 @@ export default function AboutSection() {
                       style={{
                         fontFamily: "'DM Sans', sans-serif",
                         fontSize: "0.9rem",
-                        color: "oklch(0.68 0.005 80)",
+                        color: "oklch(0.68 0.03 285)",
                       }}
                     >
                       {cred.text}

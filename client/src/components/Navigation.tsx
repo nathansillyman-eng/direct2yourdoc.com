@@ -40,9 +40,9 @@ export default function Navigation() {
       <header
         className="fixed top-0 left-0 right-0 z-50 transition-all duration-400"
         style={{
-          backgroundColor: scrolled ? "oklch(0.13 0.010 60 / 0.96)" : "transparent",
+          backgroundColor: scrolled ? "oklch(0.13 0.05 285 / 0.96)" : "transparent",
           backdropFilter: scrolled ? "blur(16px)" : "none",
-          borderBottom: scrolled ? "1px solid oklch(0.97 0.012 80 / 0.08)" : "1px solid transparent",
+          borderBottom: scrolled ? "1px solid oklch(0.97 0.02 285 / 0.08)" : "1px solid transparent",
         }}
       >
         <div className="container">
@@ -66,11 +66,11 @@ export default function Navigation() {
               />
               <span
                 className="hidden sm:flex items-center gap-2"
-                style={{ borderLeft: "1px solid oklch(0.97 0.012 80 / 0.18)", paddingLeft: "0.75rem" }}
+                style={{ borderLeft: "1px solid oklch(0.97 0.02 285 / 0.18)", paddingLeft: "0.75rem" }}
                 title="A venture of The KeepMore Company LLC"
               >
                 <img src={KEEPMORE_MARK} alt="The KeepMore Company" style={{ height: "22px", width: "auto", objectFit: "contain", opacity: 0.9 }} />
-                <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.58rem", fontWeight: 500, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(0.6 0.005 80)", lineHeight: 1.3 }}>
+                <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.58rem", fontWeight: 500, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(0.6 0.03 285)", lineHeight: 1.3 }}>
                   A KeepMore<br />Company
                 </span>
               </span>
@@ -90,11 +90,11 @@ export default function Navigation() {
                     fontWeight: 500,
                     letterSpacing: "0.1em",
                     textTransform: "uppercase",
-                    color: "oklch(0.75 0.005 80)",
+                    color: "oklch(0.75 0.03 285)",
                     textDecoration: "none",
                   }}
                   onMouseEnter={(e) => (e.currentTarget.style.color = "white")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "oklch(0.75 0.005 80)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "oklch(0.75 0.03 285)")}
                 >
                   {link.label}
                   <span
@@ -132,7 +132,7 @@ export default function Navigation() {
         style={{
           opacity: mobileOpen ? 1 : 0,
           pointerEvents: mobileOpen ? "auto" : "none",
-          backgroundColor: "oklch(0.11 0.010 60 / 0.98)",
+          backgroundColor: "oklch(0.11 0.05 285 / 0.98)",
           backdropFilter: "blur(16px)",
         }}
       >

@@ -34,8 +34,8 @@ export default function ContactSection() {
 
   const inputStyle: React.CSSProperties = {
     width: "100%",
-    backgroundColor: "oklch(0.97 0.012 80 / 0.07)",
-    border: "1px solid oklch(0.97 0.012 80 / 0.2)",
+    backgroundColor: "oklch(0.97 0.02 285 / 0.07)",
+    border: "1px solid oklch(0.97 0.02 285 / 0.2)",
     borderRadius: "2px",
     padding: "0.875rem 1rem",
     fontFamily: "'DM Sans', sans-serif",
@@ -51,7 +51,7 @@ export default function ContactSection() {
     fontWeight: 500,
     letterSpacing: "0.12em",
     textTransform: "uppercase" as const,
-    color: "oklch(0.72 0.005 155)",
+    color: "oklch(0.72 0.04 200)",
     display: "block",
     marginBottom: "0.5rem",
   };
@@ -60,7 +60,7 @@ export default function ContactSection() {
     <section
       id="contact"
       ref={ref}
-      style={{ backgroundColor: "var(--forest-green)", paddingTop: "8rem", paddingBottom: "8rem" }}
+      style={{ backgroundColor: "oklch(0.13 0.05 285)", paddingTop: "8rem", paddingBottom: "8rem" }}
     >
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
@@ -70,7 +70,7 @@ export default function ContactSection() {
             <div className="fade-up">
               <span
                 className="section-label mb-6 block"
-                style={{ color: "oklch(0.62 0.085 65)" }}
+                style={{ color: "oklch(0.62 0.13 90)" }}
               >
                 Begin Your Inquiry
               </span>
@@ -85,7 +85,7 @@ export default function ContactSection() {
               >
                 Your Doctor. Your Home. Now.
                 <br />
-                <em style={{ color: "oklch(0.75 0.085 155)" }}>Now available.</em>
+                <em style={{ color: "oklch(0.75 0.15 165)" }}>Now available.</em>
               </h2>
             </div>
 
@@ -94,7 +94,7 @@ export default function ContactSection() {
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: "1.05rem",
-                  color: "oklch(0.78 0.005 155)",
+                  color: "oklch(0.78 0.04 200)",
                   lineHeight: 1.8,
                 }}
               >
@@ -108,12 +108,12 @@ export default function ContactSection() {
               <div className="flex items-center gap-4">
                 <div
                   className="w-10 h-10 rounded-sm flex items-center justify-center flex-shrink-0"
-                  style={{ backgroundColor: "oklch(0.97 0.012 80 / 0.1)" }}
+                  style={{ backgroundColor: "oklch(0.97 0.02 285 / 0.1)" }}
                 >
-                  <Phone size={17} style={{ color: "oklch(0.85 0.005 80)" }} />
+                  <Phone size={17} style={{ color: "oklch(0.85 0.03 285)" }} />
                 </div>
                 <div>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(0.62 0.085 65)" }}>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(0.62 0.13 90)" }}>
                     Direct Line
                   </p>
                   <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.95rem", color: "white", marginTop: "0.2rem" }}>
@@ -124,12 +124,12 @@ export default function ContactSection() {
               <div className="flex items-center gap-4">
                 <div
                   className="w-10 h-10 rounded-sm flex items-center justify-center flex-shrink-0"
-                  style={{ backgroundColor: "oklch(0.97 0.012 80 / 0.1)" }}
+                  style={{ backgroundColor: "oklch(0.97 0.02 285 / 0.1)" }}
                 >
-                  <Mail size={17} style={{ color: "oklch(0.85 0.005 80)" }} />
+                  <Mail size={17} style={{ color: "oklch(0.85 0.03 285)" }} />
                 </div>
                 <div>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(0.62 0.085 65)" }}>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(0.62 0.13 90)" }}>
                     Inquiries
                   </p>
                   <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.95rem", color: "white", marginTop: "0.2rem" }}>
@@ -140,12 +140,12 @@ export default function ContactSection() {
               <div className="flex items-center gap-4">
                 <div
                   className="w-10 h-10 rounded-sm flex items-center justify-center flex-shrink-0"
-                  style={{ backgroundColor: "oklch(0.97 0.012 80 / 0.1)" }}
+                  style={{ backgroundColor: "oklch(0.97 0.02 285 / 0.1)" }}
                 >
-                  <Shield size={17} style={{ color: "oklch(0.85 0.005 80)" }} />
+                  <Shield size={17} style={{ color: "oklch(0.85 0.03 285)" }} />
                 </div>
                 <div>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(0.62 0.085 65)" }}>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "oklch(0.62 0.13 90)" }}>
                     Confidentiality
                   </p>
                   <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.95rem", color: "white", marginTop: "0.2rem" }}>
@@ -160,13 +160,13 @@ export default function ContactSection() {
           <div className="fade-up" style={{ transitionDelay: "150ms" }}>
             <div
               className="rounded-sm p-8"
-              style={{ backgroundColor: "oklch(0.28 0.085 155 / 0.5)", border: "1px solid oklch(0.97 0.012 80 / 0.12)" }}
+              style={{ backgroundColor: "oklch(0.28 0.15 165 / 0.5)", border: "1px solid oklch(0.97 0.02 285 / 0.12)" }}
             >
               {submitted ? (
                 <div className="flex flex-col items-center text-center py-12 gap-5">
                   <div
                     className="w-14 h-14 rounded-full flex items-center justify-center"
-                    style={{ backgroundColor: "oklch(0.97 0.012 80 / 0.15)" }}
+                    style={{ backgroundColor: "oklch(0.97 0.02 285 / 0.15)" }}
                   >
                     <ArrowRight size={24} style={{ color: "white" }} />
                   </div>
@@ -184,7 +184,7 @@ export default function ContactSection() {
                     style={{
                       fontFamily: "'DM Sans', sans-serif",
                       fontSize: "0.95rem",
-                      color: "oklch(0.78 0.005 155)",
+                      color: "oklch(0.78 0.04 200)",
                       lineHeight: 1.7,
                       maxWidth: "320px",
                     }}
@@ -217,8 +217,8 @@ export default function ContactSection() {
                         value={form.name}
                         onChange={(e) => setForm({ ...form, name: e.target.value })}
                         style={inputStyle}
-                        onFocus={(e) => (e.target.style.borderColor = "oklch(0.97 0.012 80 / 0.5)")}
-                        onBlur={(e) => (e.target.style.borderColor = "oklch(0.97 0.012 80 / 0.2)")}
+                        onFocus={(e) => (e.target.style.borderColor = "oklch(0.97 0.02 285 / 0.5)")}
+                        onBlur={(e) => (e.target.style.borderColor = "oklch(0.97 0.02 285 / 0.2)")}
                       />
                     </div>
                     <div>
@@ -229,8 +229,8 @@ export default function ContactSection() {
                         value={form.phone}
                         onChange={(e) => setForm({ ...form, phone: e.target.value })}
                         style={inputStyle}
-                        onFocus={(e) => (e.target.style.borderColor = "oklch(0.97 0.012 80 / 0.5)")}
-                        onBlur={(e) => (e.target.style.borderColor = "oklch(0.97 0.012 80 / 0.2)")}
+                        onFocus={(e) => (e.target.style.borderColor = "oklch(0.97 0.02 285 / 0.5)")}
+                        onBlur={(e) => (e.target.style.borderColor = "oklch(0.97 0.02 285 / 0.2)")}
                       />
                     </div>
                   </div>
@@ -244,8 +244,8 @@ export default function ContactSection() {
                       value={form.email}
                       onChange={(e) => setForm({ ...form, email: e.target.value })}
                       style={inputStyle}
-                      onFocus={(e) => (e.target.style.borderColor = "oklch(0.97 0.012 80 / 0.5)")}
-                      onBlur={(e) => (e.target.style.borderColor = "oklch(0.97 0.012 80 / 0.2)")}
+                      onFocus={(e) => (e.target.style.borderColor = "oklch(0.97 0.02 285 / 0.5)")}
+                      onBlur={(e) => (e.target.style.borderColor = "oklch(0.97 0.02 285 / 0.2)")}
                     />
                   </div>
 
@@ -257,8 +257,8 @@ export default function ContactSection() {
                       value={form.message}
                       onChange={(e) => setForm({ ...form, message: e.target.value })}
                       style={{ ...inputStyle, resize: "none" }}
-                      onFocus={(e) => (e.target.style.borderColor = "oklch(0.97 0.012 80 / 0.5)")}
-                      onBlur={(e) => (e.target.style.borderColor = "oklch(0.97 0.012 80 / 0.2)")}
+                      onFocus={(e) => (e.target.style.borderColor = "oklch(0.97 0.02 285 / 0.5)")}
+                      onBlur={(e) => (e.target.style.borderColor = "oklch(0.97 0.02 285 / 0.2)")}
                     />
                   </div>
 
@@ -280,7 +280,7 @@ export default function ContactSection() {
                     style={{
                       fontFamily: "'DM Sans', sans-serif",
                       fontSize: "0.72rem",
-                      color: "oklch(0.6 0.005 155)",
+                      color: "oklch(0.6 0.04 200)",
                       textAlign: "center",
                       letterSpacing: "0.06em",
                     }}

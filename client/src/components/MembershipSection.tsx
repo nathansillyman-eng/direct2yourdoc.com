@@ -47,7 +47,7 @@ export default function MembershipSection() {
     <section
       id="membership"
       ref={ref}
-      style={{ backgroundColor: "oklch(0.13 0.010 60)", paddingTop: "8rem", paddingBottom: "8rem" }}
+      style={{ backgroundColor: "oklch(0.13 0.05 285)", paddingTop: "8rem", paddingBottom: "8rem" }}
       data-dark="true"
     >
       <div className="container">
@@ -72,7 +72,7 @@ export default function MembershipSection() {
             style={{
               fontFamily: "'DM Sans', sans-serif",
               fontSize: "1.05rem",
-color: "oklch(0.65 0.005 80)",
+color: "oklch(0.65 0.03 285)",
           lineHeight: 1.75,
             }}
           >
@@ -88,7 +88,7 @@ color: "oklch(0.65 0.005 80)",
           <div className="lg:col-span-3 fade-up">
             <div
               className="h-full rounded-sm overflow-hidden"
-              style={{ border: "1px solid oklch(0.97 0.012 80 / 0.1)", backgroundColor: "oklch(0.17 0.010 60)" }}
+              style={{ border: "1px solid oklch(0.97 0.02 285 / 0.1)", backgroundColor: "oklch(0.17 0.05 285)" }}
             >
               {/* Card header */}
               <div
@@ -104,7 +104,7 @@ color: "oklch(0.65 0.005 80)",
                         fontWeight: 500,
                         letterSpacing: "0.16em",
                         textTransform: "uppercase",
-                        color: "oklch(0.75 0.005 155)",
+                        color: "oklch(0.75 0.04 200)",
                       }}
                     >
                       Annual Private Membership
@@ -125,11 +125,11 @@ color: "oklch(0.65 0.005 80)",
                   <div
                     className="text-right"
                     style={{
-                      borderLeft: "1px solid oklch(0.97 0.012 80 / 0.2)",
+                      borderLeft: "1px solid oklch(0.97 0.02 285 / 0.2)",
                       paddingLeft: "1.5rem",
                     }}
                   >
-                    <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(0.75 0.005 155)" }}>
+                    <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(0.75 0.04 200)" }}>
                       Pricing by
                     </p>
                     <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.4rem", fontWeight: 600, color: "white", marginTop: "0.2rem" }}>
@@ -159,7 +159,7 @@ color: "oklch(0.65 0.005 80)",
                     <div key={i} className="flex items-start gap-3">
                       <div
                         className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
-                        style={{ backgroundColor: "oklch(0.38 0.085 155 / 0.12)" }}
+                        style={{ backgroundColor: "oklch(0.38 0.15 165 / 0.12)" }}
                       >
                         <Check size={11} style={{ color: "var(--forest-green)" }} />
                       </div>
@@ -167,7 +167,7 @@ color: "oklch(0.65 0.005 80)",
                         style={{
                           fontFamily: "'DM Sans', sans-serif",
                           fontSize: "0.92rem",
-                          color: "oklch(0.72 0.005 80)",
+                          color: "oklch(0.72 0.03 285)",
                           lineHeight: 1.5,
                         }}
                       >
@@ -187,8 +187,8 @@ color: "oklch(0.65 0.005 80)",
             <div
               className="fade-up rounded-sm p-7"
               style={{
-border: "1px solid oklch(0.97 0.012 80 / 0.1)",
-              backgroundColor: "oklch(0.17 0.010 60)",
+border: "1px solid oklch(0.97 0.02 285 / 0.1)",
+              backgroundColor: "oklch(0.17 0.05 285)",
                 transitionDelay: "100ms",
               }}
             >
@@ -200,7 +200,7 @@ border: "1px solid oklch(0.97 0.012 80 / 0.1)",
                   fontWeight: 500,
                   letterSpacing: "0.14em",
                   textTransform: "uppercase",
-                  color: "oklch(0.52 0.005 80)",
+                  color: "oklch(0.52 0.03 285)",
               }}>
                 Not Included
               </p>
@@ -217,7 +217,7 @@ border: "1px solid oklch(0.97 0.012 80 / 0.1)",
                       style={{
                         fontFamily: "'DM Sans', sans-serif",
                         fontSize: "0.88rem",
-                        color: "oklch(0.55 0.005 80)",
+                        color: "oklch(0.55 0.03 285)",
                         lineHeight: 1.5,
                       }}
                     >
@@ -253,7 +253,7 @@ border: "1px solid oklch(0.97 0.012 80 / 0.1)",
                   style={{
                     fontFamily: "'DM Sans', sans-serif",
                     fontSize: "0.88rem",
-                    color: "oklch(0.72 0.005 80)",
+                    color: "oklch(0.72 0.03 285)",
                     lineHeight: 1.65,
                   }}
                 >
@@ -273,7 +273,7 @@ border: "1px solid oklch(0.97 0.012 80 / 0.1)",
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: "0.72rem",
-                  color: "oklch(0.5 0.005 80)",
+                  color: "oklch(0.5 0.03 285)",
                   textAlign: "center",
                   letterSpacing: "0.06em",
                 }}
