@@ -13,7 +13,7 @@ export default function Footer() {
   return (
     <footer style={{ backgroundColor: "var(--charcoal)", paddingTop: "4rem", paddingBottom: "3rem" }}>
       <div className="container">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 pb-10" style={{ borderBottom: "1px solid oklch(0.97 0.02 200 / 0.1)" }}>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 pb-10" style={{ borderBottom: "1px solid oklch(0.97 0.02 200 / 0.18)" }}>
 
           {/* Brand */}
           <div>

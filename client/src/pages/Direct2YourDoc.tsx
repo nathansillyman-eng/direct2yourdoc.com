@@ -274,7 +274,7 @@ export default function Direct2YourDoc() {
       {/* ══════════════════════════════════════════════════════════════════════
           SECTION 2 — THE PROBLEM
       ══════════════════════════════════════════════════════════════════════ */}
-      <section id="how-it-works" className="py-28 px-6" style={{ background: "#16292f" }}>
+      <section id="how-it-works" className="py-28 px-6" style={{ background: "#1d3640" }}>
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial="hidden"
@@ -579,7 +579,7 @@ export default function Direct2YourDoc() {
       {/* ══════════════════════════════════════════════════════════════════════
           SECTION 4 — HOTEL-STYLE APPOINTMENT LEDGER
       ══════════════════════════════════════════════════════════════════════ */}
-      <section className="py-28 px-6" style={{ background: "#16292f" }}>
+      <section className="py-28 px-6" style={{ background: "#1d3640" }}>
         <div className="max-w-5xl mx-auto">
           <motion.div
             initial="hidden"
@@ -902,7 +902,7 @@ export default function Direct2YourDoc() {
       {/* ══════════════════════════════════════════════════════════════════════
           SECTION 6 — REQUEST / SETUP FORM
       ══════════════════════════════════════════════════════════════════════ */}
-      <section id="request" className="py-28 px-6" style={{ background: "#16292f" }}>
+      <section id="request" className="py-28 px-6" style={{ background: "#1d3640" }}>
         <div className="max-w-3xl mx-auto">
           <motion.div
             initial="hidden"

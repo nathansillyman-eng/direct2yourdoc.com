@@ -159,7 +159,7 @@ export default function HeroSection() {
                 opacity: 0,
                 transform: "translateY(20px)",
                 transition: "opacity 500ms cubic-bezier(0.23,1,0.32,1), transform 500ms cubic-bezier(0.23,1,0.32,1)",
-                borderTop: "1px solid oklch(0.97 0.02 200 / 0.12)",
+                borderTop: "1px solid oklch(0.97 0.02 200 / 0.2)",
               }}
             >
               <div className="flex items-center gap-2">

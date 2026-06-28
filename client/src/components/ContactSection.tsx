@@ -108,7 +108,7 @@ export default function ContactSection() {
               <div className="flex items-center gap-4">
                 <div
                   className="w-10 h-10 rounded-sm flex items-center justify-center flex-shrink-0"
-                  style={{ backgroundColor: "oklch(0.97 0.02 200 / 0.1)" }}
+                  style={{ backgroundColor: "oklch(0.97 0.02 200 / 0.18)" }}
                 >
                   <Phone size={17} style={{ color: "oklch(0.85 0.03 200)" }} />
                 </div>
@@ -124,7 +124,7 @@ export default function ContactSection() {
               <div className="flex items-center gap-4">
                 <div
                   className="w-10 h-10 rounded-sm flex items-center justify-center flex-shrink-0"
-                  style={{ backgroundColor: "oklch(0.97 0.02 200 / 0.1)" }}
+                  style={{ backgroundColor: "oklch(0.97 0.02 200 / 0.18)" }}
                 >
                   <Mail size={17} style={{ color: "oklch(0.85 0.03 200)" }} />
                 </div>
@@ -140,7 +140,7 @@ export default function ContactSection() {
               <div className="flex items-center gap-4">
                 <div
                   className="w-10 h-10 rounded-sm flex items-center justify-center flex-shrink-0"
-                  style={{ backgroundColor: "oklch(0.97 0.02 200 / 0.1)" }}
+                  style={{ backgroundColor: "oklch(0.97 0.02 200 / 0.18)" }}
                 >
                   <Shield size={17} style={{ color: "oklch(0.85 0.03 200)" }} />
                 </div>
@@ -160,7 +160,7 @@ export default function ContactSection() {
           <div className="fade-up" style={{ transitionDelay: "150ms" }}>
             <div
               className="rounded-sm p-8"
-              style={{ backgroundColor: "oklch(0.28 0.15 165 / 0.5)", border: "1px solid oklch(0.97 0.02 200 / 0.12)" }}
+              style={{ backgroundColor: "oklch(0.28 0.15 165 / 0.5)", border: "1px solid oklch(0.97 0.02 200 / 0.2)" }}
             >
               {submitted ? (
                 <div className="flex flex-col items-center text-center py-12 gap-5">

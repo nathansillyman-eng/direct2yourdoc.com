@@ -119,7 +119,7 @@ export default function HowItWorksSection() {
                 transitionDelay: `${i * 110}ms`,
                 paddingTop: "2.5rem",
                 paddingBottom: "2.5rem",
-                borderTop: "1px solid oklch(0.97 0.02 200 / 0.1)",
+                borderTop: "1px solid oklch(0.97 0.02 200 / 0.18)",
               }}
             >
               {/* Oversized numeral */}
@@ -168,7 +168,7 @@ export default function HowItWorksSection() {
               </div>
             </div>
           ))}
-          <div style={{ borderTop: "1px solid oklch(0.97 0.02 200 / 0.1)" }} />
+          <div style={{ borderTop: "1px solid oklch(0.97 0.02 200 / 0.18)" }} />
         </div>
 
       </div>

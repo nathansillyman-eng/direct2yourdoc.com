@@ -88,7 +88,7 @@ color: "oklch(0.65 0.03 200)",
           <div className="lg:col-span-3 fade-up">
             <div
               className="h-full rounded-sm overflow-hidden"
-              style={{ border: "1px solid oklch(0.97 0.02 200 / 0.1)", backgroundColor: "oklch(0.17 0.05 200)" }}
+              style={{ border: "1px solid oklch(0.97 0.02 200 / 0.18)", backgroundColor: "oklch(0.205 0.045 200)" }}
             >
               {/* Card header */}
               <div
@@ -187,8 +187,8 @@ color: "oklch(0.65 0.03 200)",
             <div
               className="fade-up rounded-sm p-7"
               style={{
-border: "1px solid oklch(0.97 0.02 200 / 0.1)",
-              backgroundColor: "oklch(0.17 0.05 200)",
+border: "1px solid oklch(0.97 0.02 200 / 0.18)",
+              backgroundColor: "oklch(0.205 0.045 200)",
                 transitionDelay: "100ms",
               }}
             >
