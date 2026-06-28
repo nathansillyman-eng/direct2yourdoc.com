@@ -1,5 +1,5 @@
 /**
- * ValueSection — MedAssurance
+ * ValueSection — Direct2YourDoc
  * Design: Warm linen dark bg, editorial asymmetric layout, scenario cards with varied hierarchy
  * "Best friend who's a doctor" narrative
  */
@@ -58,7 +58,7 @@ export default function ValueSection() {
         {/* Asymmetric header: large quote left, intro right */}
         <div className="grid grid-cols-1 lg:grid-cols-11 gap-12 mb-20">
           <div className="lg:col-span-7 fade-up">
-            <span className="section-label mb-6 block">The MedAssurance Difference</span>
+            <span className="section-label mb-6 block">The Direct2YourDoc Difference</span>
             <blockquote
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
@@ -72,7 +72,7 @@ color: "white",
               }}
             >
               "Everyone deserves a doctor who knows them by name, picks up the phone,
-              and tells them the truth. MedAssurance makes that possible."
+              and tells them the truth. Direct2YourDoc makes that possible."
             </blockquote>
             <p
               className="mt-5"
@@ -97,7 +97,7 @@ color: "white",
             lineHeight: 1.8,
           }}
         >
-          Think of MedAssurance as the medical relationship you always wished you had —
+          Think of Direct2YourDoc as the medical relationship you always wished you had —
               the one where your doctor actually knows you, and is genuinely available
               when something matters.
             </p>

@@ -6,8 +6,9 @@
  * NOT hospital-blue SaaS. NOT telehealth generic. A private virtual doctor's office.
  *
  * Brand hierarchy:
- *   Direct2YourDoc = patient-facing brand / app / front door
- *   MedAssurance   = service / platform / promise
+ *   Direct2YourDoc       = patient-facing brand / app / front door
+ *   The KeepMore Company = parent venture / owner (Nate Sillyman)
+ *   Dr. Andrew Heslin    = founding physician (provider, not owner)
  *
  * All sections are prototype / coming-soon — do not claim app is live.
  */
@@ -43,7 +44,7 @@ const IMG_WAITING_ROOM = "/manus-storage/d2yd-waiting-room_1f40a156.png";
 const IMG_PATIENT_CMD = "/manus-storage/d2yd-patient-command_714f0b2d.png";
 // Brand logos
 const LOGO_D2YD = "/manus-storage/logo-d2yd-v2_f04f7f38.png"; // Direct2YourDoc logo (gold fireplace version)
-const LOGO_MEDASSURANCE = "/manus-storage/logo-medassurance-only_813a4b1e.png"; // MedAssurance-only logo (house+cross mark + wordmark)
+const KEEPMORE_MARK = "/brand/keepmore-km.svg"; // KeepMore co-brand mark (gold KM)
 
 // ─── Fade-up animation variant ───────────────────────────────────────────────
 const fadeUp = {
@@ -160,7 +161,7 @@ export default function Direct2YourDoc() {
               className="mb-6 uppercase tracking-widest text-xs font-medium"
               style={{ color: "#b8963e", letterSpacing: "0.2em" }}
             >
-              MedAssurance by Direct2YourDoc &nbsp;·&nbsp; Coming Soon
+              Direct2YourDoc &nbsp;·&nbsp; A KeepMore Company &nbsp;·&nbsp; Coming Soon
             </p>
             <h1
               style={{
@@ -517,7 +518,7 @@ export default function Direct2YourDoc() {
               >
                 <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#b8963e", letterSpacing: "0.12em" }}>Care Team Status</p>
                 {[
-                  { name: "Dr. Andrew Heslin", role: "Medical Director", status: "Available" },
+                  { name: "Dr. Andrew Heslin", role: "Founding Physician", status: "Available" },
                   { name: "Care Coordinator", role: "Admin & Records", status: "Online" },
                 ].map((member, i) => (
                   <div key={i} className={`flex items-center justify-between py-2.5 ${i < 1 ? "border-b" : ""}`} style={{ borderColor: "rgba(184,150,62,0.1)" }}>
@@ -1021,7 +1022,7 @@ export default function Direct2YourDoc() {
                 </label>
                 <textarea
                   rows={4}
-                  placeholder="Briefly describe what brings you to MedAssurance — ongoing conditions, family care needs, or simply wanting a trusted physician on call."
+                  placeholder="Briefly describe what brings you to Direct2YourDoc — ongoing conditions, family care needs, or simply wanting a trusted physician on call."
                   value={formData.notes}
                   onChange={e => setFormData(prev => ({ ...prev, notes: e.target.value }))}
                   className="w-full px-4 py-3 text-sm outline-none transition-all resize-none"
@@ -1045,7 +1046,7 @@ export default function Direct2YourDoc() {
                   style={{ accentColor: "#b8963e" }}
                 />
                 <label htmlFor="consent" className="text-xs leading-relaxed" style={{ color: "#a89880" }}>
-                  I understand that Direct2YourDoc / MedAssurance is a private concierge medical service and does not constitute insurance, nor a substitute for emergency care. I consent to being contacted by Dr. Heslin's care team.
+                  I understand that Direct2YourDoc is a private concierge medical service and does not constitute insurance, nor a substitute for emergency care. I consent to being contacted by Dr. Heslin's care team.
                 </label>
               </div>
 
@@ -1080,7 +1081,7 @@ export default function Direct2YourDoc() {
           borderTop: "1px solid rgba(184,150,62,0.15)",
         }}
       >
-        {/* Dual logo lockup */}
+        {/* Logo lockup — Direct2YourDoc, a KeepMore Company venture */}
         <div className="flex items-center justify-center gap-8 mb-5 flex-wrap">
           <img
             src={LOGO_D2YD}
@@ -1088,17 +1089,22 @@ export default function Direct2YourDoc() {
             style={{ height: "64px", width: "auto", objectFit: "contain" }}
           />
           <div style={{ width: "1px", height: "48px", background: "rgba(184,150,62,0.3)" }} />
-          <img
-            src={LOGO_MEDASSURANCE}
-            alt="MedAssurance"
-            style={{ height: "48px", width: "auto", objectFit: "contain" }}
-          />
+          <span className="flex items-center gap-2.5">
+            <img
+              src={KEEPMORE_MARK}
+              alt="The KeepMore Company"
+              style={{ height: "34px", width: "auto", objectFit: "contain" }}
+            />
+            <span className="text-xs uppercase" style={{ color: "rgba(168,152,128,0.7)", letterSpacing: "0.1em", lineHeight: 1.3 }}>
+              A KeepMore<br />Company
+            </span>
+          </span>
         </div>
         <p className="text-xs mb-3" style={{ color: "#b8963e", letterSpacing: "0.16em", textTransform: "uppercase" }}>
           Your Doctor. Your Home. Now.
         </p>
         <p className="text-xs" style={{ color: "rgba(168,152,128,0.5)", maxWidth: "500px", margin: "0 auto" }}>
-          © {new Date().getFullYear()} MedAssurance · Dr. Andrew Heslin, M.D.O. · Direct2YourDoc is a private concierge medical service and does not constitute insurance or a substitute for emergency care. App coming soon.
+          © {new Date().getFullYear()} The KeepMore Company LLC · Direct2YourDoc is a private concierge medical service and does not constitute insurance or a substitute for emergency care. App coming soon.
         </p>
       </footer>
     </div>

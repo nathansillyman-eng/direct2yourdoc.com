@@ -1,5 +1,5 @@
 /**
- * Home — MedAssurance
+ * Home — Direct2YourDoc
  * Design: Quiet Luxury Clinic — Cormorant Garamond + DM Sans
  * Palette: Warm Linen / Forest Green / Aged Bronze / Charcoal
  */

@@ -1,5 +1,5 @@
 /**
- * ContactSection — MedAssurance
+ * ContactSection — Direct2YourDoc
  * Design: Forest green background, simple inquiry form, warm typography
  */
 import { useEffect, useRef, useState } from "react";

@@ -1,5 +1,5 @@
 /**
- * MembershipSection — MedAssurance
+ * MembershipSection — Direct2YourDoc
  * Design: Warm linen dark background, single premium membership card
  * Emphasizes exclusivity and value proposition
  */
@@ -76,7 +76,7 @@ color: "oklch(0.65 0.005 80)",
           lineHeight: 1.75,
             }}
           >
-            MedAssurance is an annual private membership. Membership is limited to ensure 
+            Direct2YourDoc is an annual private membership. Membership is limited to ensure 
             Dr. Heslin can provide each member with the full attention they deserve. 
             Pricing is discussed during your private consultation.
           </p>
@@ -119,7 +119,7 @@ color: "oklch(0.65 0.005 80)",
                         lineHeight: 1.1,
                       }}
                     >
-                      MedAssurance Membership
+                      Direct2YourDoc Membership
                     </h3>
                   </div>
                   <div

@@ -1,5 +1,5 @@
 /**
- * HowItWorksSection — MedAssurance
+ * HowItWorksSection — Direct2YourDoc
  * Design: Forest green background, editorial numbered steps, warm typography
  * Asymmetric header, varied step hierarchy
  */
@@ -95,7 +95,7 @@ export default function HowItWorksSection() {
                   lineHeight: 1.78,
                 }}
               >
-                MedAssurance is designed to be simple. No complex enrollment,
+                Direct2YourDoc is designed to be simple. No complex enrollment,
                 no bureaucracy. Just a direct relationship with your physician.
               </p>
               <div

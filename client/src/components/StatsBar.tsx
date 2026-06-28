@@ -1,5 +1,5 @@
 /**
- * StatsBar — MedAssurance
+ * StatsBar — Direct2YourDoc
  * Design: Deep charcoal background — bridges dark hero into lighter sections.
  * Forest green numerals, aged bronze units, muted white labels.
  */

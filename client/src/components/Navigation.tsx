@@ -1,14 +1,16 @@
 /**
- * Navigation — MedAssurance
+ * Navigation — Direct2YourDoc
  * Design: Transparent over dark hero, transitions to deep charcoal on scroll.
- * Uses the real MedAssurance logo (house+cross mark + wordmark).
+ * Uses the real Direct2YourDoc logo (house+cross mark + wordmark).
  * Slogan: "Your Doctor. Your Home. Now."
  */
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 
-// MedAssurance logo — the house+cross mark with "MedAssurance" wordmark (bottom half of logo-both.png)
-const MEDASSURANCE_LOGO = "/manus-storage/logo-medassurance-only_813a4b1e.png";
+// Direct2YourDoc logo — fireplace scene + wordmark
+const D2YD_LOGO = "/manus-storage/logo-d2yd-v2_f04f7f38.png";
+// KeepMore co-brand mark (gold KM) — Direct2YourDoc is a KeepMore Company venture
+const KEEPMORE_MARK = "/brand/keepmore-km.svg";
 
 const navLinks = [
   { label: "Services", href: "#services" },
@@ -45,23 +47,33 @@ export default function Navigation() {
       >
         <div className="container">
           <div className="flex items-center justify-between h-20">
-            {/* Logo — real MedAssurance logo image, cropped to show just the mark+wordmark */}
+            {/* Logo — Direct2YourDoc, co-branded as a KeepMore Company venture */}
             <a
               href="#"
-              className="flex items-center gap-0 group"
+              className="flex items-center gap-3 group"
               onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
             >
               <img
-                src={MEDASSURANCE_LOGO}
-                alt="MedAssurance — Your Doctor. Your Home. Now."
+                src={D2YD_LOGO}
+                alt="Direct2YourDoc — Your Doctor. Your Home. Now."
                 style={{
-                  height: "52px",
+                  height: "54px",
                   width: "auto",
                   objectFit: "contain",
                   transition: "transform 200ms ease",
                 }}
                 className="group-hover:scale-105"
               />
+              <span
+                className="hidden sm:flex items-center gap-2"
+                style={{ borderLeft: "1px solid oklch(0.97 0.012 80 / 0.18)", paddingLeft: "0.75rem" }}
+                title="A venture of The KeepMore Company LLC"
+              >
+                <img src={KEEPMORE_MARK} alt="The KeepMore Company" style={{ height: "22px", width: "auto", objectFit: "contain", opacity: 0.9 }} />
+                <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.58rem", fontWeight: 500, letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(0.6 0.005 80)", lineHeight: 1.3 }}>
+                  A KeepMore<br />Company
+                </span>
+              </span>
             </a>
 
             {/* Desktop nav */}
@@ -126,9 +138,9 @@ export default function Navigation() {
       >
         <div className="flex flex-col items-center justify-center h-full gap-8 pt-20">
           <img
-            src={MEDASSURANCE_LOGO}
-            alt="MedAssurance"
-            style={{ height: "64px", width: "auto", objectFit: "contain" }}
+            src={D2YD_LOGO}
+            alt="Direct2YourDoc"
+            style={{ height: "72px", width: "auto", objectFit: "contain" }}
           />
           {navLinks.map((link) => (
             <a

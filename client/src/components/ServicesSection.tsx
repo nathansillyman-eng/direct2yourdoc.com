@@ -1,5 +1,5 @@
 /**
- * ServicesSection — MedAssurance
+ * ServicesSection — Direct2YourDoc
  * Design: Editorial asymmetric layout, large serif numerals, varied hierarchy
  * Warm linen background, forest green accents, bronze labels
  */
@@ -98,7 +98,7 @@ export default function ServicesSection() {
                 lineHeight: 1.78,
               }}
             >
-              MedAssurance is not insurance. It is assurance — the quiet confidence
+              Direct2YourDoc is not insurance. It is assurance — the quiet confidence
               of knowing exactly who to call, and that they will answer.
               No waiting rooms. No bureaucracy. Just medicine.
             </p>

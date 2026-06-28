@@ -1,5 +1,5 @@
 /**
- * HeroSection — MedAssurance
+ * HeroSection — Direct2YourDoc
  * Design: DARK CINEMATIC — deep charcoal/near-black background, dramatic portrait,
  * white headline with forest green italic, bold visual tension.
  * Keeps all structural improvements: asymmetric 11-col grid, editorial label, availability bar.
@@ -8,7 +8,7 @@ import { useEffect, useRef } from "react";
 import { ArrowRight, Phone } from "lucide-react";
 
 const HERO_DOCTOR = "/manus-storage/hero-doctor-eB3pNfzAXfpxMomtAqv2kr.webp";
-const MEDASSURANCE_LOGO = "/manus-storage/logo-both_91777e1e.png";
+const KEEPMORE_MARK = "/brand/keepmore-km.svg";
 
 export default function HeroSection() {
   const textRef = useRef<HTMLDivElement>(null);
@@ -59,9 +59,10 @@ export default function HeroSection() {
               }}
             >
               <img
-                src={MEDASSURANCE_LOGO}
-                alt="MedAssurance — Your Doctor. Your Home. Now."
-                style={{ height: "44px", width: "auto", objectFit: "contain", filter: "brightness(0) invert(1)" }}
+                src={KEEPMORE_MARK}
+                alt="A venture of The KeepMore Company"
+                title="A venture of The KeepMore Company LLC"
+                style={{ height: "30px", width: "auto", objectFit: "contain" }}
               />
               <div
                 style={{
@@ -118,7 +119,7 @@ export default function HeroSection() {
                 transition: "opacity 500ms cubic-bezier(0.23,1,0.32,1), transform 500ms cubic-bezier(0.23,1,0.32,1)",
               }}
             >
-              MedAssurance is private medical assurance for those who expect more.
+              Direct2YourDoc is private medical assurance for those who expect more.
               With 48 hours' notice, Dr. Heslin is available around the clock —
               for consultations, same-day prescriptions, second opinions, and
               hospital advocacy. Like having a best friend who happens to be a doctor.
@@ -218,7 +219,7 @@ export default function HeroSection() {
                 Dr. Andrew Heslin
               </p>
               <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.68rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--aged-bronze)", marginTop: "0.3rem" }}>
-                M.D.O. · Medical Director
+                M.D.O. · Founding Physician
               </p>
             </div>
           </div>

@@ -1,10 +1,11 @@
 /**
- * Footer — MedAssurance
+ * Footer — Direct2YourDoc
  * Design: Dark charcoal background, minimal, editorial
- * Uses real MedAssurance logo. Slogan: "Your Doctor. Your Home. Now."
+ * Uses real Direct2YourDoc logo. Slogan: "Your Doctor. Your Home. Now."
  */
 
-const MEDASSURANCE_LOGO = "/manus-storage/logo-medassurance-only_813a4b1e.png";
+const D2YD_LOGO = "/manus-storage/logo-d2yd-v2_f04f7f38.png";
+const KEEPMORE_MARK = "/brand/keepmore-km.svg";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -18,8 +19,8 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-3 mb-4">
               <img
-                src={MEDASSURANCE_LOGO}
-                alt="MedAssurance"
+                src={D2YD_LOGO}
+                alt="Direct2YourDoc"
                 style={{ height: "56px", width: "auto", objectFit: "contain" }}
               />
             </div>
@@ -27,8 +28,21 @@ export default function Footer() {
               Your Doctor. Your Home. Now.
             </p>
             <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.88rem", color: "oklch(0.55 0.005 80)", lineHeight: 1.7, maxWidth: "260px" }}>
-              Private medical assurance for those who expect more. 24 hours a day, 7 days a week.
+              Private medical care for those who expect more. 24 hours a day, 7 days a week.
             </p>
+            {/* KeepMore co-brand endorsement */}
+            <a
+              href="https://thekeepmoreco.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2.5 mt-5"
+              style={{ textDecoration: "none" }}
+            >
+              <img src={KEEPMORE_MARK} alt="The KeepMore Company" style={{ height: "26px", width: "auto", objectFit: "contain", opacity: 0.9 }} />
+              <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.72rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(0.55 0.005 80)" }}>
+                A venture of The KeepMore Company
+              </span>
+            </a>
           </div>
 
           {/* Links */}
@@ -76,7 +90,7 @@ export default function Footer() {
                   Membership Inquiries
                 </p>
                 <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.88rem", color: "oklch(0.62 0.005 80)", marginTop: "0.2rem" }}>
-                  membership@medassurance.com
+                  membership@direct2yourdoc.com
                 </p>
               </div>
               <div>
@@ -95,10 +109,10 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8">
           <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.78rem", color: "oklch(0.42 0.005 80)" }}>
-            © {currentYear} MedAssurance · Dr. Andrew Heslin, M.D.O. · All rights reserved.
+            © {currentYear} The KeepMore Company LLC · Direct2YourDoc · All rights reserved.
           </p>
           <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.72rem", color: "oklch(0.38 0.005 80)", letterSpacing: "0.06em", textAlign: "center" }}>
-            MedAssurance is a private concierge medical service and does not constitute insurance or a substitute for emergency care.
+            Direct2YourDoc is a private concierge medical service and does not constitute insurance or a substitute for emergency care.
           </p>
         </div>
       </div>

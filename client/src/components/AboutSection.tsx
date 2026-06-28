@@ -1,5 +1,5 @@
 /**
- * AboutSection — MedAssurance
+ * AboutSection — Direct2YourDoc
  * Design: Asymmetric 55/45 split, doctor photo left, editorial text right
  * Warm linen background, forest green accents
  */
@@ -99,10 +99,10 @@ export default function AboutSection() {
                 lineHeight: 1.8,
               }}
             >
-              Dr. Andrew Heslin, M.D.O., founded MedAssurance on a simple conviction: 
-                that every person deserves the kind of medical attention that used to 
-                require knowing the right people. The kind where your doctor knows your 
-                name, your history, and your concerns — and is genuinely available when 
+              Dr. Andrew Heslin, M.D.O., practices on a simple conviction:
+                that every person deserves the kind of medical attention that used to
+                require knowing the right people. The kind where your doctor knows your
+                name, your history, and your concerns — and is genuinely available when
                 you need them.
               </p>
               <p
@@ -114,11 +114,27 @@ export default function AboutSection() {
                 lineHeight: 1.8,
               }}
             >
-              With a background in osteopathic medicine and years of clinical 
-                experience, Dr. Heslin brings both the technical expertise and the 
-                personal commitment that concierge medicine demands. He does not 
-                over-treat. He does not under-inform. He simply tells you the truth 
+              With a background in osteopathic medicine and years of clinical
+                experience, Dr. Heslin brings both the technical expertise and the
+                personal commitment that concierge medicine demands. He does not
+                over-treat. He does not under-inform. He simply tells you the truth
                 and helps you act on it.
+              </p>
+              <p
+                className="mt-4"
+                style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: "1.05rem",
+                  color: "oklch(0.65 0.005 80)",
+                  lineHeight: 1.8,
+                }}
+              >
+                Direct2YourDoc is a venture of <strong style={{ color: "oklch(0.78 0.005 80)", fontWeight: 600 }}>The KeepMore Company</strong> —
+                Nate Sillyman's lifelong work of removing the barriers between people and what
+                they need. First it was barriers to <em style={{ color: "var(--forest-green)" }}>knowledge</em>;
+                now, to <em style={{ color: "var(--forest-green)" }}>professional care</em> — delivered by
+                the very professionals who came up learning from that same brand. Dr. Heslin is its
+                founding physician.
               </p>
             </div>
 
@@ -127,8 +143,8 @@ export default function AboutSection() {
                 className="pull-quote"
                 style={{ borderLeftColor: "var(--forest-green)" }}
               >
-                "I started MedAssurance because I watched too many people navigate the 
-                healthcare system alone. No one should have to."
+                "I became Direct2YourDoc's founding physician because I watched too many
+                people navigate the healthcare system alone. No one should have to."
                 <footer
                   className="mt-3"
                   style={{
@@ -140,7 +156,7 @@ export default function AboutSection() {
                     color: "var(--aged-bronze)",
                   }}
                 >
-                  — Dr. Andrew Heslin, M.D.O., Founder
+                  — Dr. Andrew Heslin, M.D.O., Founding Physician
                 </footer>
               </div>
             </div>
