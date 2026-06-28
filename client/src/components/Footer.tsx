@@ -4,7 +4,7 @@
  * Uses real Direct2YourDoc logo. Slogan: "Your Doctor. Your Home. Now."
  */
 
-const D2YD_LOGO = "/manus-storage/logo-d2yd-v2_f04f7f38.png";
+const D2YD_LOGO = "/brand/direct2yourdoc-logo-light.png";
 const KEEPMORE_MARK = "/brand/keepmore-km.svg";
 
 export default function Footer() {

@@ -43,7 +43,7 @@ const IMG_HERO_POSTER = "/manus-storage/d2yd-hero-poster_0bcac802.png";
 const IMG_WAITING_ROOM = "/manus-storage/d2yd-waiting-room_1f40a156.png";
 const IMG_PATIENT_CMD = "/manus-storage/d2yd-patient-command_714f0b2d.png";
 // Brand logos
-const LOGO_D2YD = "/manus-storage/logo-d2yd-v2_f04f7f38.png"; // Direct2YourDoc logo (gold fireplace version)
+const LOGO_D2YD = "/brand/direct2yourdoc-logo-light.png"; // Direct2YourDoc crest (light, for dark bg)
 const KEEPMORE_MARK = "/brand/keepmore-km.svg"; // KeepMore co-brand mark (gold KM)
 
 // ─── Fade-up animation variant ───────────────────────────────────────────────

@@ -7,8 +7,9 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 
-// Direct2YourDoc logo — fireplace scene + wordmark + tagline (transparent bg)
-const D2YD_LOGO = "/brand/direct2yourdoc-logo.png";
+// Direct2YourDoc logo — light (cream+gold) variants for dark surfaces
+const D2YD_WORDMARK = "/brand/direct2yourdoc-wordmark-light.png"; // legible nav wordmark
+const D2YD_CREST = "/brand/direct2yourdoc-logo-light.png";        // full crest (mobile menu)
 // KeepMore co-brand mark (gold KM) — Direct2YourDoc is a KeepMore Company venture
 const KEEPMORE_MARK = "/brand/keepmore-km.svg";
 
@@ -53,22 +54,12 @@ export default function Navigation() {
               className="flex items-center gap-3 group"
               onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
             >
-              <span
-                className="flex items-center transition-transform duration-200 group-hover:scale-105"
-                style={{
-                  backgroundColor: "rgba(255,255,255,0.97)",
-                  borderRadius: "12px",
-                  padding: "6px 14px",
-                  boxShadow: "0 4px 18px oklch(0.10 0.05 200 / 0.35)",
-                  border: "1px solid oklch(0.84 0.135 90 / 0.45)",
-                }}
-              >
-                <img
-                  src={D2YD_LOGO}
-                  alt="Direct2YourDoc — Your Doctor. Your Home. Now."
-                  style={{ height: "52px", width: "auto", objectFit: "contain", display: "block" }}
-                />
-              </span>
+              <img
+                src={D2YD_WORDMARK}
+                alt="Direct2YourDoc — Your Doctor. Your Home. Now."
+                className="transition-transform duration-200 group-hover:scale-105"
+                style={{ height: "34px", width: "auto", objectFit: "contain", display: "block" }}
+              />
               <span
                 className="hidden sm:flex items-center gap-2"
                 style={{ borderLeft: "1px solid oklch(0.97 0.02 200 / 0.18)", paddingLeft: "0.75rem" }}
@@ -142,16 +133,11 @@ export default function Navigation() {
         }}
       >
         <div className="flex flex-col items-center justify-center h-full gap-8 pt-20">
-          <span
-            className="flex items-center"
-            style={{ backgroundColor: "rgba(255,255,255,0.97)", borderRadius: "16px", padding: "12px 22px", border: "1px solid oklch(0.84 0.135 90 / 0.45)" }}
-          >
-            <img
-              src={D2YD_LOGO}
-              alt="Direct2YourDoc"
-              style={{ height: "84px", width: "auto", objectFit: "contain", display: "block" }}
-            />
-          </span>
+          <img
+            src={D2YD_CREST}
+            alt="Direct2YourDoc"
+            style={{ height: "104px", width: "auto", objectFit: "contain", display: "block" }}
+          />
           {navLinks.map((link) => (
             <a
               key={link.href}
