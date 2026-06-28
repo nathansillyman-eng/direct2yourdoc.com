@@ -57,7 +57,7 @@ export default function HowItWorksSection() {
       id="how-it-works"
       ref={ref}
       style={{
-        backgroundColor: "oklch(0.16 0.05 285)",
+        backgroundColor: "oklch(0.16 0.05 200)",
         paddingTop: "8rem",
         paddingBottom: "8rem",
       }}
@@ -100,7 +100,7 @@ export default function HowItWorksSection() {
               </p>
               <div
                 className="pull-quote mt-8"
-                style={{ borderLeftColor: "var(--aged-bronze)", color: "oklch(0.78 0.03 285)" }}
+                style={{ borderLeftColor: "var(--aged-bronze)", color: "oklch(0.78 0.03 200)" }}
               >
                 "Imagine having a best friend who is a doctor — and who picks up
                 every time you call."
@@ -119,7 +119,7 @@ export default function HowItWorksSection() {
                 transitionDelay: `${i * 110}ms`,
                 paddingTop: "2.5rem",
                 paddingBottom: "2.5rem",
-                borderTop: "1px solid oklch(0.97 0.02 285 / 0.1)",
+                borderTop: "1px solid oklch(0.97 0.02 200 / 0.1)",
               }}
             >
               {/* Oversized numeral */}
@@ -159,7 +159,7 @@ export default function HowItWorksSection() {
                   style={{
                     fontFamily: "'DM Sans', sans-serif",
                     fontSize: "0.95rem",
-                    color: "oklch(0.72 0.03 285)",
+                    color: "oklch(0.72 0.03 200)",
                     lineHeight: 1.78,
                   }}
                 >
@@ -168,7 +168,7 @@ export default function HowItWorksSection() {
               </div>
             </div>
           ))}
-          <div style={{ borderTop: "1px solid oklch(0.97 0.02 285 / 0.1)" }} />
+          <div style={{ borderTop: "1px solid oklch(0.97 0.02 200 / 0.1)" }} />
         </div>
 
       </div>

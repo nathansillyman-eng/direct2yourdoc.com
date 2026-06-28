@@ -36,15 +36,15 @@ export default function StatsBar() {
     <section
       ref={ref}
       style={{
-        backgroundColor: "oklch(0.15 0.05 285)",
-        borderTop: "1px solid oklch(0.97 0.02 285 / 0.07)",
-        borderBottom: "1px solid oklch(0.97 0.02 285 / 0.07)",
+        backgroundColor: "oklch(0.15 0.05 200)",
+        borderTop: "1px solid oklch(0.97 0.02 200 / 0.07)",
+        borderBottom: "1px solid oklch(0.97 0.02 200 / 0.07)",
       }}
     >
       <div className="container">
         <div
           className="grid grid-cols-2 md:grid-cols-4"
-          style={{ borderLeft: "1px solid oklch(0.97 0.02 285 / 0.07)" }}
+          style={{ borderLeft: "1px solid oklch(0.97 0.02 200 / 0.07)" }}
         >
           {stats.map((stat, i) => (
             <div
@@ -52,7 +52,7 @@ export default function StatsBar() {
               className="fade-up flex flex-col items-center text-center py-12 px-6"
               style={{
                 transitionDelay: `${i * 80}ms`,
-                borderRight: "1px solid oklch(0.97 0.02 285 / 0.07)",
+                borderRight: "1px solid oklch(0.97 0.02 200 / 0.07)",
               }}
             >
               <div className="flex items-end gap-2 leading-none mb-2">
@@ -85,7 +85,7 @@ export default function StatsBar() {
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: "0.72rem",
-                  color: "oklch(0.52 0.03 285)",
+                  color: "oklch(0.52 0.03 200)",
                   letterSpacing: "0.1em",
                   textTransform: "uppercase",
                 }}

@@ -38,7 +38,7 @@ export default function AboutSection() {
     <section
       id="about"
       ref={ref}
-      style={{ backgroundColor: "oklch(0.15 0.05 285)", paddingTop: "8rem", paddingBottom: "8rem" }}
+      style={{ backgroundColor: "oklch(0.15 0.05 200)", paddingTop: "8rem", paddingBottom: "8rem" }}
     >
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-11 gap-12 lg:gap-20 items-center">
@@ -95,7 +95,7 @@ export default function AboutSection() {
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: "1.05rem",
-                  color: "oklch(0.65 0.03 285)",
+                  color: "oklch(0.65 0.03 200)",
                 lineHeight: 1.8,
               }}
             >
@@ -110,7 +110,7 @@ export default function AboutSection() {
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: "1.05rem",
-                  color: "oklch(0.65 0.03 285)",
+                  color: "oklch(0.65 0.03 200)",
                 lineHeight: 1.8,
               }}
             >
@@ -125,11 +125,11 @@ export default function AboutSection() {
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: "1.05rem",
-                  color: "oklch(0.65 0.03 285)",
+                  color: "oklch(0.65 0.03 200)",
                   lineHeight: 1.8,
                 }}
               >
-                Direct2YourDoc is a venture of <strong style={{ color: "oklch(0.78 0.03 285)", fontWeight: 600 }}>The KeepMore Company</strong> —
+                Direct2YourDoc is a venture of <strong style={{ color: "oklch(0.78 0.03 200)", fontWeight: 600 }}>The KeepMore Company</strong> —
                 Nate Sillyman's lifelong work of removing the barriers between people and what
                 they need. First it was barriers to <em style={{ color: "var(--forest-green)" }}>knowledge</em>;
                 now, to <em style={{ color: "var(--forest-green)" }}>professional care</em> — delivered by
@@ -176,7 +176,7 @@ export default function AboutSection() {
                       style={{
                         fontFamily: "'DM Sans', sans-serif",
                         fontSize: "0.9rem",
-                        color: "oklch(0.68 0.03 285)",
+                        color: "oklch(0.68 0.03 200)",
                       }}
                     >
                       {cred.text}

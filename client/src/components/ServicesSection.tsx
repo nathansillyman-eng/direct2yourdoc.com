@@ -220,13 +220,13 @@ export default function ServicesSection() {
             />
             <div
               className="absolute inset-0"
-              style={{ background: "linear-gradient(to top, oklch(0.12 0.05 285 / 0.6) 0%, transparent 55%)" }}
+              style={{ background: "linear-gradient(to top, oklch(0.12 0.05 200 / 0.6) 0%, transparent 55%)" }}
             />
             <div className="absolute bottom-7 left-7">
               <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.4rem", fontWeight: 500, color: "white" }}>
                 Private Consultation
               </p>
-              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.72rem", color: "oklch(0.82 0.03 285)", letterSpacing: "0.1em", textTransform: "uppercase", marginTop: "0.3rem" }}>
+              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.72rem", color: "oklch(0.82 0.03 200)", letterSpacing: "0.1em", textTransform: "uppercase", marginTop: "0.3rem" }}>
                 On your schedule
               </p>
             </div>
@@ -239,13 +239,13 @@ export default function ServicesSection() {
             />
             <div
               className="absolute inset-0"
-              style={{ background: "linear-gradient(to top, oklch(0.12 0.05 285 / 0.6) 0%, transparent 55%)" }}
+              style={{ background: "linear-gradient(to top, oklch(0.12 0.05 200 / 0.6) 0%, transparent 55%)" }}
             />
             <div className="absolute bottom-7 left-7">
               <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.4rem", fontWeight: 500, color: "white" }}>
                 Same-Day Prescriptions
               </p>
-              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.72rem", color: "oklch(0.82 0.03 285)", letterSpacing: "0.1em", textTransform: "uppercase", marginTop: "0.3rem" }}>
+              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.72rem", color: "oklch(0.82 0.03 200)", letterSpacing: "0.1em", textTransform: "uppercase", marginTop: "0.3rem" }}>
                 Sent to your pharmacy
               </p>
             </div>

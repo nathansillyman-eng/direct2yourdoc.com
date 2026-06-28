@@ -13,7 +13,7 @@ export default function Footer() {
   return (
     <footer style={{ backgroundColor: "var(--charcoal)", paddingTop: "4rem", paddingBottom: "3rem" }}>
       <div className="container">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 pb-10" style={{ borderBottom: "1px solid oklch(0.97 0.02 285 / 0.1)" }}>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 pb-10" style={{ borderBottom: "1px solid oklch(0.97 0.02 200 / 0.1)" }}>
 
           {/* Brand */}
           <div>
@@ -27,7 +27,7 @@ export default function Footer() {
             <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.78rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--aged-bronze)", marginBottom: "0.6rem" }}>
               Your Doctor. Your Home. Now.
             </p>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.88rem", color: "oklch(0.55 0.03 285)", lineHeight: 1.7, maxWidth: "260px" }}>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.88rem", color: "oklch(0.55 0.03 200)", lineHeight: 1.7, maxWidth: "260px" }}>
               Private medical care for those who expect more. 24 hours a day, 7 days a week.
             </p>
             {/* KeepMore co-brand endorsement */}
@@ -39,7 +39,7 @@ export default function Footer() {
               style={{ textDecoration: "none" }}
             >
               <img src={KEEPMORE_MARK} alt="The KeepMore Company" style={{ height: "26px", width: "auto", objectFit: "contain", opacity: 0.9 }} />
-              <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.72rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(0.55 0.03 285)" }}>
+              <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.72rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(0.55 0.03 200)" }}>
                 A venture of The KeepMore Company
               </span>
             </a>
@@ -47,7 +47,7 @@ export default function Footer() {
 
           {/* Links */}
           <div>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", fontWeight: 500, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(0.5 0.03 285)", marginBottom: "1rem" }}>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", fontWeight: 500, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(0.5 0.03 200)", marginBottom: "1rem" }}>
               Navigation
             </p>
             <div className="flex flex-col gap-2">
@@ -66,12 +66,12 @@ export default function Footer() {
                   style={{
                     fontFamily: "'DM Sans', sans-serif",
                     fontSize: "0.88rem",
-                    color: "oklch(0.62 0.03 285)",
+                    color: "oklch(0.62 0.03 200)",
                     transition: "color 200ms ease",
                     textDecoration: "none",
                   }}
                   onMouseEnter={(e) => (e.currentTarget.style.color = "white")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "oklch(0.62 0.03 285)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "oklch(0.62 0.03 200)")}
                 >
                   {link.label}
                 </a>
@@ -81,7 +81,7 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", fontWeight: 500, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(0.5 0.03 285)", marginBottom: "1rem" }}>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", fontWeight: 500, letterSpacing: "0.14em", textTransform: "uppercase", color: "oklch(0.5 0.03 200)", marginBottom: "1rem" }}>
               Contact
             </p>
             <div className="flex flex-col gap-3">
@@ -89,7 +89,7 @@ export default function Footer() {
                 <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--aged-bronze)" }}>
                   Membership Inquiries
                 </p>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.88rem", color: "oklch(0.62 0.03 285)", marginTop: "0.2rem" }}>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.88rem", color: "oklch(0.62 0.03 200)", marginTop: "0.2rem" }}>
                   membership@direct2yourdoc.com
                 </p>
               </div>
@@ -97,7 +97,7 @@ export default function Footer() {
                 <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--aged-bronze)" }}>
                   Availability
                 </p>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.88rem", color: "oklch(0.62 0.03 285)", marginTop: "0.2rem" }}>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.88rem", color: "oklch(0.62 0.03 200)", marginTop: "0.2rem" }}>
                   24 / 7 · 365 days a year
                 </p>
               </div>
@@ -108,10 +108,10 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8">
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.78rem", color: "oklch(0.42 0.03 285)" }}>
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.78rem", color: "oklch(0.42 0.03 200)" }}>
             © {currentYear} The KeepMore Company LLC · Direct2YourDoc · All rights reserved.
           </p>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.72rem", color: "oklch(0.38 0.03 285)", letterSpacing: "0.06em", textAlign: "center" }}>
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.72rem", color: "oklch(0.38 0.03 200)", letterSpacing: "0.06em", textAlign: "center" }}>
             Direct2YourDoc is a private concierge medical service and does not constitute insurance or a substitute for emergency care.
           </p>
         </div>

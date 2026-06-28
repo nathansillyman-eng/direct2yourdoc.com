@@ -30,7 +30,7 @@ export default function HeroSection() {
   return (
     <section
       className="relative min-h-screen flex items-stretch overflow-hidden"
-      style={{ background: "radial-gradient(115% 85% at 80% 15%, oklch(0.22 0.09 200) 0%, oklch(0.13 0.06 270) 45%, oklch(0.10 0.05 285) 75%)" }}
+      style={{ background: "radial-gradient(115% 85% at 80% 15%, oklch(0.22 0.09 200) 0%, oklch(0.15 0.05 205) 45%, oklch(0.10 0.05 200) 75%)" }}
     >
       {/* Subtle grain texture overlay */}
       <div
@@ -68,7 +68,7 @@ export default function HeroSection() {
                 style={{
                   width: "1px",
                   height: "2.5rem",
-                  backgroundColor: "oklch(0.97 0.02 285 / 0.2)",
+                  backgroundColor: "oklch(0.97 0.02 200 / 0.2)",
                   flexShrink: 0,
                 }}
               />
@@ -112,7 +112,7 @@ export default function HeroSection() {
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: "1.05rem",
                 lineHeight: 1.78,
-                color: "oklch(0.72 0.03 285)",
+                color: "oklch(0.72 0.03 200)",
                 maxWidth: "500px",
                 opacity: 0,
                 transform: "translateY(20px)",
@@ -158,7 +158,7 @@ export default function HeroSection() {
                 opacity: 0,
                 transform: "translateY(20px)",
                 transition: "opacity 500ms cubic-bezier(0.23,1,0.32,1), transform 500ms cubic-bezier(0.23,1,0.32,1)",
-                borderTop: "1px solid oklch(0.97 0.02 285 / 0.12)",
+                borderTop: "1px solid oklch(0.97 0.02 200 / 0.12)",
               }}
             >
               <div className="flex items-center gap-2">
@@ -169,12 +169,12 @@ export default function HeroSection() {
                     boxShadow: "0 0 0 4px oklch(0.55 0.18 145 / 0.25)",
                   }}
                 />
-                <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.78rem", color: "oklch(0.62 0.03 285)", letterSpacing: "0.06em" }}>
+                <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.78rem", color: "oklch(0.62 0.03 200)", letterSpacing: "0.06em" }}>
                   Available 24 / 7 · 365 days a year
                 </span>
               </div>
-              <span style={{ color: "oklch(0.3 0.03 285)" }}>·</span>
-              <div className="flex items-center gap-2" style={{ color: "oklch(0.55 0.03 285)", fontSize: "0.78rem", fontFamily: "'DM Sans', sans-serif" }}>
+              <span style={{ color: "oklch(0.3 0.03 200)" }}>·</span>
+              <div className="flex items-center gap-2" style={{ color: "oklch(0.55 0.03 200)", fontSize: "0.78rem", fontFamily: "'DM Sans', sans-serif" }}>
                 <Phone size={13} />
                 48-hour activation
               </div>
@@ -189,17 +189,17 @@ export default function HeroSection() {
             {/* Left gradient fade into dark bg */}
             <div
               className="absolute inset-y-0 left-0 w-32 z-10 pointer-events-none"
-              style={{ background: "linear-gradient(to right, oklch(0.11 0.05 285), transparent)" }}
+              style={{ background: "linear-gradient(to right, oklch(0.11 0.05 200), transparent)" }}
             />
             {/* Bottom gradient */}
             <div
               className="absolute inset-x-0 bottom-0 h-48 z-10 pointer-events-none"
-              style={{ background: "linear-gradient(to bottom, transparent, oklch(0.11 0.05 285))" }}
+              style={{ background: "linear-gradient(to bottom, transparent, oklch(0.11 0.05 200))" }}
             />
             {/* Top gradient */}
             <div
               className="absolute inset-x-0 top-0 h-32 z-10 pointer-events-none"
-              style={{ background: "linear-gradient(to bottom, oklch(0.11 0.05 285), transparent)" }}
+              style={{ background: "linear-gradient(to bottom, oklch(0.11 0.05 200), transparent)" }}
             />
             <img
               src={HERO_DOCTOR}

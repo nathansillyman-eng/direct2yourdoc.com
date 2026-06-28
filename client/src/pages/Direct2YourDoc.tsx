@@ -99,14 +99,14 @@ export default function Direct2YourDoc() {
       className="min-h-screen"
       style={{
         fontFamily: "'DM Sans', sans-serif",
-        backgroundColor: "#14112e",
-        color: "#d9d5f2",
+        backgroundColor: "#0d1c20",
+        color: "#cce2dd",
       }}
     >
       {/* ── Minimal top bar ─────────────────────────────────────────────────── */}
       <header
         className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4"
-        style={{ background: "linear-gradient(to bottom, rgba(23,19,56,0.95) 0%, transparent 100%)" }}
+        style={{ background: "linear-gradient(to bottom, rgba(13,28,31,0.95) 0%, transparent 100%)" }}
       >
         <div className="flex items-center gap-3">
           <img
@@ -128,7 +128,7 @@ export default function Direct2YourDoc() {
           }}
           onMouseEnter={e => {
             (e.currentTarget as HTMLElement).style.background = "#f5c63e";
-            (e.currentTarget as HTMLElement).style.color = "#14112e";
+            (e.currentTarget as HTMLElement).style.color = "#0d1c20";
           }}
           onMouseLeave={e => {
             (e.currentTarget as HTMLElement).style.background = "transparent";
@@ -151,7 +151,7 @@ export default function Direct2YourDoc() {
             className="w-full h-full object-cover object-center"
             style={{ filter: "brightness(0.45)" }}
           />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(105deg, rgba(23,19,56,0.92) 40%, rgba(23,19,56,0.3) 100%)" }} />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(105deg, rgba(13,28,31,0.92) 40%, rgba(13,28,31,0.3) 100%)" }} />
         </div>
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 pt-28 pb-20 grid lg:grid-cols-2 gap-16 items-center">
@@ -169,7 +169,7 @@ export default function Direct2YourDoc() {
                 fontSize: "clamp(3rem, 7vw, 5.5rem)",
                 fontWeight: 700,
                 lineHeight: 1.0,
-                color: "#eceaf9",
+                color: "#e7f3f0",
                 letterSpacing: "-0.01em",
               }}
             >
@@ -179,7 +179,7 @@ export default function Direct2YourDoc() {
             </h1>
             <p
               className="mt-6 text-lg leading-relaxed max-w-md"
-              style={{ color: "#b6b0e0", fontFamily: "'DM Sans', sans-serif" }}
+              style={{ color: "#a6cbc5", fontFamily: "'DM Sans', sans-serif" }}
             >
               Medical care shouldn't be a password problem. Direct2YourDoc brings you directly to your private doctor — from home, on your schedule, without the chaos.
             </p>
@@ -189,7 +189,7 @@ export default function Direct2YourDoc() {
                 className="flex items-center gap-2 px-7 py-3.5 font-medium transition-all"
                 style={{
                   background: "#f5c63e",
-                  color: "#14112e",
+                  color: "#0d1c20",
                   borderRadius: "2px",
                   fontSize: "0.85rem",
                   letterSpacing: "0.06em",
@@ -204,8 +204,8 @@ export default function Direct2YourDoc() {
                 href="#how-it-works"
                 className="flex items-center gap-2 px-7 py-3.5 font-medium transition-all"
                 style={{
-                  border: "1px solid rgba(236,234,249,0.3)",
-                  color: "#d9d5f2",
+                  border: "1px solid rgba(231,243,240,0.3)",
+                  color: "#cce2dd",
                   borderRadius: "2px",
                   fontSize: "0.85rem",
                   letterSpacing: "0.06em",
@@ -234,7 +234,7 @@ export default function Direct2YourDoc() {
                 key={i}
                 className="flex items-center gap-4 px-5 py-4"
                 style={{
-                  background: "rgba(236,234,249,0.06)",
+                  background: "rgba(231,243,240,0.06)",
                   border: "1px solid rgba(245,198,62,0.25)",
                   borderRadius: "4px",
                   backdropFilter: "blur(8px)",
@@ -246,7 +246,7 @@ export default function Direct2YourDoc() {
                 >
                   <Icon size={18} style={{ color: "#f5c63e" }} />
                 </div>
-                <span style={{ color: "#d9d5f2", fontSize: "0.95rem" }}>{text}</span>
+                <span style={{ color: "#cce2dd", fontSize: "0.95rem" }}>{text}</span>
               </div>
             ))}
             <div
@@ -274,7 +274,7 @@ export default function Direct2YourDoc() {
       {/* ══════════════════════════════════════════════════════════════════════
           SECTION 2 — THE PROBLEM
       ══════════════════════════════════════════════════════════════════════ */}
-      <section id="how-it-works" className="py-28 px-6" style={{ background: "#1d1942" }}>
+      <section id="how-it-works" className="py-28 px-6" style={{ background: "#16292f" }}>
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial="hidden"
@@ -291,7 +291,7 @@ export default function Direct2YourDoc() {
                 fontFamily: "'Cormorant Garamond', serif",
                 fontSize: "clamp(2.2rem, 4vw, 3.5rem)",
                 fontWeight: 600,
-                color: "#eceaf9",
+                color: "#e7f3f0",
                 lineHeight: 1.15,
                 maxWidth: "680px",
               }}
@@ -308,7 +308,7 @@ export default function Direct2YourDoc() {
               variants={fadeUp}
               custom={1}
             >
-              <p className="text-lg leading-relaxed mb-8" style={{ color: "#9b94c8" }}>
+              <p className="text-lg leading-relaxed mb-8" style={{ color: "#8fb5b0" }}>
                 Too many portals. Too many logins. Too many missed follow-ups. Families navigating a loved one's care spend more time chasing paperwork than receiving it.
               </p>
               <div className="space-y-5">
@@ -334,7 +334,7 @@ export default function Direct2YourDoc() {
                     >
                       <X size={10} style={{ color: "#f5c63e" }} />
                     </div>
-                    <span style={{ color: "#b6b0e0", fontSize: "0.95rem", lineHeight: 1.6 }}>{pain}</span>
+                    <span style={{ color: "#a6cbc5", fontSize: "0.95rem", lineHeight: 1.6 }}>{pain}</span>
                   </motion.div>
                 ))}
               </div>
@@ -350,7 +350,7 @@ export default function Direct2YourDoc() {
             >
               <p
                 className="text-lg leading-relaxed mb-8"
-                style={{ color: "#9b94c8" }}
+                style={{ color: "#8fb5b0" }}
               >
                 Direct2YourDoc eliminates the friction. One app. One office. Your doctor, your records, your care plan — organized and accessible from home.
               </p>
@@ -376,7 +376,7 @@ export default function Direct2YourDoc() {
                   >
                     <Check size={10} style={{ color: "#f5c63e" }} />
                   </div>
-                  <span style={{ color: "#d9d5f2", fontSize: "0.95rem", lineHeight: 1.6 }}>{sol}</span>
+                  <span style={{ color: "#cce2dd", fontSize: "0.95rem", lineHeight: 1.6 }}>{sol}</span>
                 </motion.div>
               ))}
             </motion.div>
@@ -387,7 +387,7 @@ export default function Direct2YourDoc() {
       {/* ══════════════════════════════════════════════════════════════════════
           SECTION 3 — VIRTUAL WAITING ROOM
       ══════════════════════════════════════════════════════════════════════ */}
-      <section className="py-28 px-6 relative overflow-hidden" style={{ background: "#14112e" }}>
+      <section className="py-28 px-6 relative overflow-hidden" style={{ background: "#0d1c20" }}>
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial="hidden"
@@ -404,7 +404,7 @@ export default function Direct2YourDoc() {
                 fontFamily: "'Cormorant Garamond', serif",
                 fontSize: "clamp(2.2rem, 4vw, 3.5rem)",
                 fontWeight: 600,
-                color: "#eceaf9",
+                color: "#e7f3f0",
                 lineHeight: 1.15,
                 maxWidth: "700px",
               }}
@@ -413,7 +413,7 @@ export default function Direct2YourDoc() {
               <br />
               <span style={{ color: "#f5c63e", fontStyle: "italic" }}>From your living room.</span>
             </h2>
-            <p className="mt-4 max-w-xl text-base leading-relaxed" style={{ color: "#9b94c8" }}>
+            <p className="mt-4 max-w-xl text-base leading-relaxed" style={{ color: "#8fb5b0" }}>
               When you open the Direct2YourDoc app, you enter a private virtual medical office — not a portal, not a chat window. A real waiting room experience with your care team status, queue position, and appointment options.
             </p>
           </motion.div>
@@ -437,13 +437,13 @@ export default function Direct2YourDoc() {
               />
               <div
                 className="absolute inset-0"
-                style={{ background: "linear-gradient(to right, rgba(23,19,56,0.3) 0%, transparent 60%)" }}
+                style={{ background: "linear-gradient(to right, rgba(13,28,31,0.3) 0%, transparent 60%)" }}
               />
               {/* Overlay badge */}
               <div
                 className="absolute top-5 left-5 px-3 py-1.5 text-xs uppercase tracking-widest"
                 style={{
-                  background: "rgba(23,19,56,0.8)",
+                  background: "rgba(13,28,31,0.8)",
                   border: "1px solid rgba(245,198,62,0.4)",
                   color: "#f5c63e",
                   borderRadius: "2px",
@@ -467,7 +467,7 @@ export default function Direct2YourDoc() {
               <div
                 className="p-5 rounded-sm"
                 style={{
-                  background: "rgba(236,234,249,0.04)",
+                  background: "rgba(231,243,240,0.04)",
                   border: "1px solid rgba(245,198,62,0.2)",
                 }}
               >
@@ -482,29 +482,29 @@ export default function Direct2YourDoc() {
                     Checked In
                   </span>
                 </div>
-                <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.3rem", color: "#eceaf9" }}>
+                <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.3rem", color: "#e7f3f0" }}>
                   Welcome back.
                 </p>
-                <p className="text-sm mt-1" style={{ color: "#9b94c8" }}>Dr. Heslin will be with you shortly.</p>
+                <p className="text-sm mt-1" style={{ color: "#8fb5b0" }}>Dr. Heslin will be with you shortly.</p>
               </div>
 
               {/* Queue + ETA */}
               <div
                 className="p-5 rounded-sm grid grid-cols-2 gap-4"
                 style={{
-                  background: "rgba(236,234,249,0.04)",
+                  background: "rgba(231,243,240,0.04)",
                   border: "1px solid rgba(245,198,62,0.2)",
                 }}
               >
                 <div>
                   <p className="text-xs uppercase tracking-widest mb-1" style={{ color: "#f5c63e", letterSpacing: "0.12em" }}>Queue</p>
-                  <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "2rem", color: "#eceaf9" }}>#2</p>
-                  <p className="text-xs" style={{ color: "#9b94c8" }}>of 3 today</p>
+                  <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "2rem", color: "#e7f3f0" }}>#2</p>
+                  <p className="text-xs" style={{ color: "#8fb5b0" }}>of 3 today</p>
                 </div>
                 <div>
                   <p className="text-xs uppercase tracking-widest mb-1" style={{ color: "#f5c63e", letterSpacing: "0.12em" }}>Est. Wait</p>
-                  <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "2rem", color: "#eceaf9" }}>12m</p>
-                  <p className="text-xs" style={{ color: "#9b94c8" }}>Response window</p>
+                  <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "2rem", color: "#e7f3f0" }}>12m</p>
+                  <p className="text-xs" style={{ color: "#8fb5b0" }}>Response window</p>
                 </div>
               </div>
 
@@ -512,7 +512,7 @@ export default function Direct2YourDoc() {
               <div
                 className="p-5 rounded-sm"
                 style={{
-                  background: "rgba(236,234,249,0.04)",
+                  background: "rgba(231,243,240,0.04)",
                   border: "1px solid rgba(245,198,62,0.2)",
                 }}
               >
@@ -530,8 +530,8 @@ export default function Direct2YourDoc() {
                         <User size={12} style={{ color: "#f5c63e" }} />
                       </div>
                       <div>
-                        <p className="text-sm font-medium" style={{ color: "#d9d5f2" }}>{member.name}</p>
-                        <p className="text-xs" style={{ color: "#9b94c8" }}>{member.role}</p>
+                        <p className="text-sm font-medium" style={{ color: "#cce2dd" }}>{member.name}</p>
+                        <p className="text-xs" style={{ color: "#8fb5b0" }}>{member.role}</p>
                       </div>
                     </div>
                     <span
@@ -548,7 +548,7 @@ export default function Direct2YourDoc() {
               <div
                 className="p-5 rounded-sm"
                 style={{
-                  background: "rgba(236,234,249,0.04)",
+                  background: "rgba(231,243,240,0.04)",
                   border: "1px solid rgba(245,198,62,0.2)",
                 }}
               >
@@ -561,7 +561,7 @@ export default function Direct2YourDoc() {
                       style={{
                         background: "rgba(245,198,62,0.06)",
                         border: "1px solid rgba(245,198,62,0.15)",
-                        color: "#b6b0e0",
+                        color: "#a6cbc5",
                       }}
                       onClick={() => {}}
                     >
@@ -579,7 +579,7 @@ export default function Direct2YourDoc() {
       {/* ══════════════════════════════════════════════════════════════════════
           SECTION 4 — HOTEL-STYLE APPOINTMENT LEDGER
       ══════════════════════════════════════════════════════════════════════ */}
-      <section className="py-28 px-6" style={{ background: "#1d1942" }}>
+      <section className="py-28 px-6" style={{ background: "#16292f" }}>
         <div className="max-w-5xl mx-auto">
           <motion.div
             initial="hidden"
@@ -596,7 +596,7 @@ export default function Direct2YourDoc() {
                 fontFamily: "'Cormorant Garamond', serif",
                 fontSize: "clamp(2.2rem, 4vw, 3.2rem)",
                 fontWeight: 600,
-                color: "#eceaf9",
+                color: "#e7f3f0",
                 lineHeight: 1.15,
               }}
             >
@@ -604,7 +604,7 @@ export default function Direct2YourDoc() {
               <br />
               <span style={{ color: "#f5c63e", fontStyle: "italic" }}>Mark your X.</span>
             </h2>
-            <p className="mt-4 max-w-lg text-base leading-relaxed" style={{ color: "#9b94c8" }}>
+            <p className="mt-4 max-w-lg text-base leading-relaxed" style={{ color: "#8fb5b0" }}>
               Like the reservation ledger of a private club — select your preferred time by marking it. No automated phone trees. No 3-week waits.
             </p>
           </motion.div>
@@ -621,7 +621,7 @@ export default function Direct2YourDoc() {
               className="rounded-sm overflow-hidden"
               style={{
                 border: "1px solid rgba(245,198,62,0.25)",
-                background: "rgba(236,234,249,0.03)",
+                background: "rgba(231,243,240,0.03)",
                 minWidth: "600px",
               }}
             >
@@ -661,7 +661,7 @@ export default function Direct2YourDoc() {
                   <div
                     className="px-4 py-3 text-sm"
                     style={{
-                      color: "#9b94c8",
+                      color: "#8fb5b0",
                       borderRight: "1px solid rgba(245,198,62,0.15)",
                       fontVariantNumeric: "tabular-nums",
                     }}
@@ -683,7 +683,7 @@ export default function Direct2YourDoc() {
                           background: isSelected
                             ? "rgba(245,198,62,0.2)"
                             : isBooked
-                            ? "rgba(236,234,249,0.02)"
+                            ? "rgba(231,243,240,0.02)"
                             : "transparent",
                           cursor: isBooked ? "not-allowed" : "pointer",
                         }}
@@ -732,7 +732,7 @@ export default function Direct2YourDoc() {
             </div>
 
             {/* Legend */}
-            <div className="mt-4 flex items-center gap-6 text-xs" style={{ color: "#9b94c8" }}>
+            <div className="mt-4 flex items-center gap-6 text-xs" style={{ color: "#8fb5b0" }}>
               <div className="flex items-center gap-2">
                 <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1rem", color: "rgba(245,198,62,0.35)" }}>×</span>
                 <span>Already booked</span>
@@ -761,17 +761,17 @@ export default function Direct2YourDoc() {
                 }}
               >
                 <div>
-                  <p className="text-sm font-medium" style={{ color: "#d9d5f2" }}>
+                  <p className="text-sm font-medium" style={{ color: "#cce2dd" }}>
                     Selected: <span style={{ color: "#f5c63e" }}>{selectedSlot.replace("-", " at ")}</span>
                   </p>
-                  <p className="text-xs mt-0.5" style={{ color: "#9b94c8" }}>
+                  <p className="text-xs mt-0.5" style={{ color: "#8fb5b0" }}>
                     Complete the request form below to confirm this appointment.
                   </p>
                 </div>
                 <a
                   href="#request"
                   className="flex items-center gap-1.5 text-xs px-4 py-2 rounded-sm"
-                  style={{ background: "#f5c63e", color: "#14112e", fontWeight: 600 }}
+                  style={{ background: "#f5c63e", color: "#0d1c20", fontWeight: 600 }}
                 >
                   Confirm <ArrowRight size={12} />
                 </a>
@@ -784,7 +784,7 @@ export default function Direct2YourDoc() {
       {/* ══════════════════════════════════════════════════════════════════════
           SECTION 5 — PATIENT COMMAND FILE
       ══════════════════════════════════════════════════════════════════════ */}
-      <section className="py-28 px-6 relative overflow-hidden" style={{ background: "#14112e" }}>
+      <section className="py-28 px-6 relative overflow-hidden" style={{ background: "#0d1c20" }}>
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial="hidden"
@@ -801,7 +801,7 @@ export default function Direct2YourDoc() {
                 fontFamily: "'Cormorant Garamond', serif",
                 fontSize: "clamp(2.2rem, 4vw, 3.5rem)",
                 fontWeight: 600,
-                color: "#eceaf9",
+                color: "#e7f3f0",
                 lineHeight: 1.15,
                 maxWidth: "700px",
               }}
@@ -810,7 +810,7 @@ export default function Direct2YourDoc() {
               <br />
               <span style={{ color: "#f5c63e", fontStyle: "italic" }}>In one place. Always ready.</span>
             </h2>
-            <p className="mt-4 max-w-xl text-base leading-relaxed" style={{ color: "#9b94c8" }}>
+            <p className="mt-4 max-w-xl text-base leading-relaxed" style={{ color: "#8fb5b0" }}>
               Your Patient Command File is a living record organized by Dr. Heslin's office — not a dump of PDFs, but a curated, readable overview of your entire health picture.
             </p>
           </motion.div>
@@ -835,7 +835,7 @@ export default function Direct2YourDoc() {
                   custom={i * 0.3 + 1}
                   className="flex items-center gap-4 px-4 py-3.5 rounded-sm transition-all cursor-default"
                   style={{
-                    background: "rgba(236,234,249,0.04)",
+                    background: "rgba(231,243,240,0.04)",
                     border: "1px solid rgba(245,198,62,0.15)",
                   }}
                   onMouseEnter={e => ((e.currentTarget as HTMLElement).style.borderColor = "rgba(245,198,62,0.4)")}
@@ -848,8 +848,8 @@ export default function Direct2YourDoc() {
                     <Icon size={16} style={{ color: "#f5c63e" }} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium" style={{ color: "#d9d5f2" }}>{label}</p>
-                    <p className="text-xs truncate" style={{ color: "#9b94c8" }}>{desc}</p>
+                    <p className="text-sm font-medium" style={{ color: "#cce2dd" }}>{label}</p>
+                    <p className="text-xs truncate" style={{ color: "#8fb5b0" }}>{desc}</p>
                   </div>
                   <div className="flex items-center gap-1.5 flex-shrink-0">
                     <span className="text-xs" style={{ color: "#f5c63e" }}>{status}</span>
@@ -877,12 +877,12 @@ export default function Direct2YourDoc() {
               />
               <div
                 className="absolute inset-0"
-                style={{ background: "linear-gradient(to left, rgba(23,19,56,0.2) 0%, rgba(23,19,56,0.5) 100%)" }}
+                style={{ background: "linear-gradient(to left, rgba(13,28,31,0.2) 0%, rgba(13,28,31,0.5) 100%)" }}
               />
               <div
                 className="absolute bottom-6 left-6 right-6 px-5 py-4 rounded-sm"
                 style={{
-                  background: "rgba(23,19,56,0.85)",
+                  background: "rgba(13,28,31,0.85)",
                   border: "1px solid rgba(245,198,62,0.3)",
                   backdropFilter: "blur(10px)",
                 }}
@@ -890,7 +890,7 @@ export default function Direct2YourDoc() {
                 <p className="text-xs uppercase tracking-widest mb-1" style={{ color: "#f5c63e", letterSpacing: "0.15em" }}>
                   Prototype Preview
                 </p>
-                <p className="text-sm" style={{ color: "#d9d5f2" }}>
+                <p className="text-sm" style={{ color: "#cce2dd" }}>
                   Patient Overview · Care Coordination · Second Opinion Review — all in one private office view.
                 </p>
               </div>
@@ -902,7 +902,7 @@ export default function Direct2YourDoc() {
       {/* ══════════════════════════════════════════════════════════════════════
           SECTION 6 — REQUEST / SETUP FORM
       ══════════════════════════════════════════════════════════════════════ */}
-      <section id="request" className="py-28 px-6" style={{ background: "#1d1942" }}>
+      <section id="request" className="py-28 px-6" style={{ background: "#16292f" }}>
         <div className="max-w-3xl mx-auto">
           <motion.div
             initial="hidden"
@@ -919,7 +919,7 @@ export default function Direct2YourDoc() {
                 fontFamily: "'Cormorant Garamond', serif",
                 fontSize: "clamp(2.2rem, 4vw, 3.5rem)",
                 fontWeight: 600,
-                color: "#eceaf9",
+                color: "#e7f3f0",
                 lineHeight: 1.15,
               }}
             >
@@ -927,7 +927,7 @@ export default function Direct2YourDoc() {
               <br />
               <span style={{ color: "#f5c63e", fontStyle: "italic" }}>in the first cohort.</span>
             </h2>
-            <p className="mt-4 text-base leading-relaxed" style={{ color: "#9b94c8" }}>
+            <p className="mt-4 text-base leading-relaxed" style={{ color: "#8fb5b0" }}>
               Direct2YourDoc is accepting a limited number of founding members. Your sign-up fee includes the headset, setup, and onboarding with Dr. Heslin's care team.
             </p>
           </motion.div>
@@ -952,13 +952,13 @@ export default function Direct2YourDoc() {
                 style={{
                   fontFamily: "'Cormorant Garamond', serif",
                   fontSize: "2rem",
-                  color: "#eceaf9",
+                  color: "#e7f3f0",
                   marginBottom: "0.75rem",
                 }}
               >
                 Request received.
               </h3>
-              <p style={{ color: "#9b94c8", maxWidth: "400px", margin: "0 auto", lineHeight: 1.7 }}>
+              <p style={{ color: "#8fb5b0", maxWidth: "400px", margin: "0 auto", lineHeight: 1.7 }}>
                 Dr. Heslin's care team will be in touch within 48 hours to discuss your membership and schedule your onboarding call.
               </p>
             </motion.div>
@@ -1000,10 +1000,10 @@ export default function Direct2YourDoc() {
                         onChange={e => setFormData(prev => ({ ...prev, [field]: e.target.value }))}
                         className="w-full pl-9 pr-4 py-3 text-sm outline-none transition-all"
                         style={{
-                          background: "rgba(236,234,249,0.04)",
+                          background: "rgba(231,243,240,0.04)",
                           border: "1px solid rgba(245,198,62,0.2)",
                           borderRadius: "2px",
-                          color: "#d9d5f2",
+                          color: "#cce2dd",
                         }}
                         onFocus={e => ((e.target as HTMLElement).style.borderColor = "rgba(245,198,62,0.6)")}
                         onBlur={e => ((e.target as HTMLElement).style.borderColor = "rgba(245,198,62,0.2)")}
@@ -1027,10 +1027,10 @@ export default function Direct2YourDoc() {
                   onChange={e => setFormData(prev => ({ ...prev, notes: e.target.value }))}
                   className="w-full px-4 py-3 text-sm outline-none transition-all resize-none"
                   style={{
-                    background: "rgba(236,234,249,0.04)",
+                    background: "rgba(231,243,240,0.04)",
                     border: "1px solid rgba(245,198,62,0.2)",
                     borderRadius: "2px",
-                    color: "#d9d5f2",
+                    color: "#cce2dd",
                   }}
                   onFocus={e => ((e.target as HTMLElement).style.borderColor = "rgba(245,198,62,0.6)")}
                   onBlur={e => ((e.target as HTMLElement).style.borderColor = "rgba(245,198,62,0.2)")}
@@ -1045,7 +1045,7 @@ export default function Direct2YourDoc() {
                   className="mt-1 flex-shrink-0"
                   style={{ accentColor: "#f5c63e" }}
                 />
-                <label htmlFor="consent" className="text-xs leading-relaxed" style={{ color: "#9b94c8" }}>
+                <label htmlFor="consent" className="text-xs leading-relaxed" style={{ color: "#8fb5b0" }}>
                   I understand that Direct2YourDoc is a private concierge medical service and does not constitute insurance, nor a substitute for emergency care. I consent to being contacted by Dr. Heslin's care team.
                 </label>
               </div>
@@ -1055,7 +1055,7 @@ export default function Direct2YourDoc() {
                 className="w-full py-4 font-medium text-sm uppercase tracking-widest flex items-center justify-center gap-2 transition-all"
                 style={{
                   background: "#f5c63e",
-                  color: "#14112e",
+                  color: "#0d1c20",
                   borderRadius: "2px",
                   letterSpacing: "0.1em",
                 }}
@@ -1065,7 +1065,7 @@ export default function Direct2YourDoc() {
                 Submit Request &nbsp;<ArrowRight size={15} />
               </button>
 
-              <p className="text-center text-xs" style={{ color: "rgba(155,148,200,0.6)" }}>
+              <p className="text-center text-xs" style={{ color: "rgba(143,181,176,0.6)" }}>
                 Membership is limited. Dr. Heslin's team will respond within 48 hours.
               </p>
             </motion.form>
@@ -1077,7 +1077,7 @@ export default function Direct2YourDoc() {
       <footer
         className="py-10 px-6 text-center"
         style={{
-          background: "#0a0806",
+          background: "#08161a",
           borderTop: "1px solid rgba(245,198,62,0.15)",
         }}
       >
@@ -1095,7 +1095,7 @@ export default function Direct2YourDoc() {
               alt="The KeepMore Company"
               style={{ height: "34px", width: "auto", objectFit: "contain" }}
             />
-            <span className="text-xs uppercase" style={{ color: "rgba(155,148,200,0.7)", letterSpacing: "0.1em", lineHeight: 1.3 }}>
+            <span className="text-xs uppercase" style={{ color: "rgba(143,181,176,0.7)", letterSpacing: "0.1em", lineHeight: 1.3 }}>
               A KeepMore<br />Company
             </span>
           </span>
@@ -1103,7 +1103,7 @@ export default function Direct2YourDoc() {
         <p className="text-xs mb-3" style={{ color: "#f5c63e", letterSpacing: "0.16em", textTransform: "uppercase" }}>
           Your Doctor. Your Home. Now.
         </p>
-        <p className="text-xs" style={{ color: "rgba(155,148,200,0.5)", maxWidth: "500px", margin: "0 auto" }}>
+        <p className="text-xs" style={{ color: "rgba(143,181,176,0.5)", maxWidth: "500px", margin: "0 auto" }}>
           © {new Date().getFullYear()} The KeepMore Company LLC · Direct2YourDoc is a private concierge medical service and does not constitute insurance or a substitute for emergency care. App coming soon.
         </p>
       </footer>

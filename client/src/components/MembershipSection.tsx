@@ -47,7 +47,7 @@ export default function MembershipSection() {
     <section
       id="membership"
       ref={ref}
-      style={{ backgroundColor: "oklch(0.13 0.05 285)", paddingTop: "8rem", paddingBottom: "8rem" }}
+      style={{ backgroundColor: "oklch(0.13 0.05 200)", paddingTop: "8rem", paddingBottom: "8rem" }}
       data-dark="true"
     >
       <div className="container">
@@ -72,7 +72,7 @@ export default function MembershipSection() {
             style={{
               fontFamily: "'DM Sans', sans-serif",
               fontSize: "1.05rem",
-color: "oklch(0.65 0.03 285)",
+color: "oklch(0.65 0.03 200)",
           lineHeight: 1.75,
             }}
           >
@@ -88,7 +88,7 @@ color: "oklch(0.65 0.03 285)",
           <div className="lg:col-span-3 fade-up">
             <div
               className="h-full rounded-sm overflow-hidden"
-              style={{ border: "1px solid oklch(0.97 0.02 285 / 0.1)", backgroundColor: "oklch(0.17 0.05 285)" }}
+              style={{ border: "1px solid oklch(0.97 0.02 200 / 0.1)", backgroundColor: "oklch(0.17 0.05 200)" }}
             >
               {/* Card header */}
               <div
@@ -125,7 +125,7 @@ color: "oklch(0.65 0.03 285)",
                   <div
                     className="text-right"
                     style={{
-                      borderLeft: "1px solid oklch(0.97 0.02 285 / 0.2)",
+                      borderLeft: "1px solid oklch(0.97 0.02 200 / 0.2)",
                       paddingLeft: "1.5rem",
                     }}
                   >
@@ -167,7 +167,7 @@ color: "oklch(0.65 0.03 285)",
                         style={{
                           fontFamily: "'DM Sans', sans-serif",
                           fontSize: "0.92rem",
-                          color: "oklch(0.72 0.03 285)",
+                          color: "oklch(0.72 0.03 200)",
                           lineHeight: 1.5,
                         }}
                       >
@@ -187,8 +187,8 @@ color: "oklch(0.65 0.03 285)",
             <div
               className="fade-up rounded-sm p-7"
               style={{
-border: "1px solid oklch(0.97 0.02 285 / 0.1)",
-              backgroundColor: "oklch(0.17 0.05 285)",
+border: "1px solid oklch(0.97 0.02 200 / 0.1)",
+              backgroundColor: "oklch(0.17 0.05 200)",
                 transitionDelay: "100ms",
               }}
             >
@@ -200,7 +200,7 @@ border: "1px solid oklch(0.97 0.02 285 / 0.1)",
                   fontWeight: 500,
                   letterSpacing: "0.14em",
                   textTransform: "uppercase",
-                  color: "oklch(0.52 0.03 285)",
+                  color: "oklch(0.52 0.03 200)",
               }}>
                 Not Included
               </p>
@@ -217,7 +217,7 @@ border: "1px solid oklch(0.97 0.02 285 / 0.1)",
                       style={{
                         fontFamily: "'DM Sans', sans-serif",
                         fontSize: "0.88rem",
-                        color: "oklch(0.55 0.03 285)",
+                        color: "oklch(0.55 0.03 200)",
                         lineHeight: 1.5,
                       }}
                     >
@@ -253,7 +253,7 @@ border: "1px solid oklch(0.97 0.02 285 / 0.1)",
                   style={{
                     fontFamily: "'DM Sans', sans-serif",
                     fontSize: "0.88rem",
-                    color: "oklch(0.72 0.03 285)",
+                    color: "oklch(0.72 0.03 200)",
                     lineHeight: 1.65,
                   }}
                 >
@@ -273,7 +273,7 @@ border: "1px solid oklch(0.97 0.02 285 / 0.1)",
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: "0.72rem",
-                  color: "oklch(0.5 0.03 285)",
+                  color: "oklch(0.5 0.03 200)",
                   textAlign: "center",
                   letterSpacing: "0.06em",
                 }}
