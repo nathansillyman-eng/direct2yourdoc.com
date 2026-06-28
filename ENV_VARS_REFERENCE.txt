@@ -1,0 +1,18 @@
+MedAssurance / Direct2YourDoc — Environment Variables Reference
+==============================================================
+Copy these variable names into a .env file and fill in values for your environment.
+On Manus hosting, all of these are injected automatically.
+
+# Manus platform variables (leave blank or omit for non-Manus hosting)
+VITE_APP_ID=
+VITE_FRONTEND_FORGE_API_KEY=
+VITE_FRONTEND_FORGE_API_URL=
+VITE_OAUTH_PORTAL_URL=
+VITE_ANALYTICS_ENDPOINT=
+VITE_ANALYTICS_WEBSITE_ID=
+VITE_APP_TITLE=
+VITE_APP_LOGO=
+
+# Server
+PORT=3000
+NODE_ENV=development

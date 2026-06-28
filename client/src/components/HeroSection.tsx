@@ -1,0 +1,230 @@
+/**
+ * HeroSection — MedAssurance
+ * Design: DARK CINEMATIC — deep charcoal/near-black background, dramatic portrait,
+ * white headline with forest green italic, bold visual tension.
+ * Keeps all structural improvements: asymmetric 11-col grid, editorial label, availability bar.
+ */
+import { useEffect, useRef } from "react";
+import { ArrowRight, Phone } from "lucide-react";
+
+const HERO_DOCTOR = "https://d2xsxph8kpxj0f.cloudfront.net/310519663709880590/GKCMVQZrp5BBHin5LMZUpn/hero-doctor-eB3pNfzAXfpxMomtAqv2kr.webp";
+const MEDASSURANCE_LOGO = "/manus-storage/logo-both_91777e1e.png";
+
+export default function HeroSection() {
+  const textRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (textRef.current) {
+        textRef.current.querySelectorAll(".hero-fade").forEach((el, i) => {
+          setTimeout(() => {
+            (el as HTMLElement).style.opacity = "1";
+            (el as HTMLElement).style.transform = "translateY(0)";
+          }, i * 130);
+        });
+      }
+    }, 80);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <section
+      className="relative min-h-screen flex items-stretch overflow-hidden"
+      style={{ backgroundColor: "oklch(0.11 0.010 60)" }}
+    >
+      {/* Subtle grain texture overlay */}
+      <div
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E")`,
+          opacity: 0.4,
+        }}
+      />
+
+      <div className="container relative z-10 pt-24 pb-0">
+        <div className="grid grid-cols-1 lg:grid-cols-11 min-h-screen items-center">
+
+          {/* Left: Text content — 6/11 */}
+          <div
+            className="lg:col-span-6 flex flex-col justify-center py-20 lg:pr-12"
+            ref={textRef}
+          >
+            {/* Brand mark + label */}
+            <div
+              className="hero-fade flex items-center gap-3 mb-10"
+              style={{
+                opacity: 0,
+                transform: "translateY(20px)",
+                transition: "opacity 500ms cubic-bezier(0.23,1,0.32,1), transform 500ms cubic-bezier(0.23,1,0.32,1)",
+              }}
+            >
+              <img
+                src={MEDASSURANCE_LOGO}
+                alt="MedAssurance — Your Doctor. Your Home. Now."
+                style={{ height: "44px", width: "auto", objectFit: "contain", filter: "brightness(0) invert(1)" }}
+              />
+              <div
+                style={{
+                  width: "1px",
+                  height: "2.5rem",
+                  backgroundColor: "oklch(0.97 0.012 80 / 0.2)",
+                  flexShrink: 0,
+                }}
+              />
+              <span
+                style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: "0.7rem",
+                  fontWeight: 500,
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  color: "var(--aged-bronze)",
+                }}
+              >
+                Dr. Andrew Heslin, M.D.O.
+              </span>
+            </div>
+
+            <h1
+              className="hero-fade"
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "clamp(3.2rem, 6vw, 5.5rem)",
+                fontWeight: 600,
+                lineHeight: 1.06,
+                color: "white",
+                letterSpacing: "-0.02em",
+                opacity: 0,
+                transform: "translateY(20px)",
+                transition: "opacity 500ms cubic-bezier(0.23,1,0.32,1), transform 500ms cubic-bezier(0.23,1,0.32,1)",
+                maxWidth: "680px",
+              }}
+            >
+              The doctor you'd call at midnight.
+              <br />
+              <em style={{ color: "var(--forest-green-light)" }}>Now you actually can.</em>
+            </h1>
+
+            <p
+              className="hero-fade mt-7"
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: "1.05rem",
+                lineHeight: 1.78,
+                color: "oklch(0.72 0.005 80)",
+                maxWidth: "500px",
+                opacity: 0,
+                transform: "translateY(20px)",
+                transition: "opacity 500ms cubic-bezier(0.23,1,0.32,1), transform 500ms cubic-bezier(0.23,1,0.32,1)",
+              }}
+            >
+              MedAssurance is private medical assurance for those who expect more.
+              With 48 hours' notice, Dr. Heslin is available around the clock —
+              for consultations, same-day prescriptions, second opinions, and
+              hospital advocacy. Like having a best friend who happens to be a doctor.
+            </p>
+
+            <div
+              className="hero-fade flex flex-wrap gap-4 mt-10"
+              style={{
+                opacity: 0,
+                transform: "translateY(20px)",
+                transition: "opacity 500ms cubic-bezier(0.23,1,0.32,1), transform 500ms cubic-bezier(0.23,1,0.32,1)",
+              }}
+            >
+              <a
+                href="#contact"
+                onClick={(e) => { e.preventDefault(); document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" }); }}
+                className="btn-primary"
+                style={{ fontSize: "0.82rem", padding: "1rem 2.2rem" }}
+              >
+                Secure Your Membership <ArrowRight size={15} />
+              </a>
+              <a
+                href="#how-it-works"
+                onClick={(e) => { e.preventDefault(); document.querySelector("#how-it-works")?.scrollIntoView({ behavior: "smooth" }); }}
+                className="btn-ghost"
+                style={{ fontSize: "0.82rem", padding: "1rem 2.2rem" }}
+              >
+                How It Works
+              </a>
+            </div>
+
+            {/* Availability badge */}
+            <div
+              className="hero-fade flex items-center gap-5 mt-10 pt-10"
+              style={{
+                opacity: 0,
+                transform: "translateY(20px)",
+                transition: "opacity 500ms cubic-bezier(0.23,1,0.32,1), transform 500ms cubic-bezier(0.23,1,0.32,1)",
+                borderTop: "1px solid oklch(0.97 0.012 80 / 0.12)",
+              }}
+            >
+              <div className="flex items-center gap-2">
+                <span
+                  className="inline-block w-2 h-2 rounded-full"
+                  style={{
+                    backgroundColor: "oklch(0.55 0.18 145)",
+                    boxShadow: "0 0 0 4px oklch(0.55 0.18 145 / 0.25)",
+                  }}
+                />
+                <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.78rem", color: "oklch(0.62 0.005 80)", letterSpacing: "0.06em" }}>
+                  Available 24 / 7 · 365 days a year
+                </span>
+              </div>
+              <span style={{ color: "oklch(0.3 0.005 80)" }}>·</span>
+              <div className="flex items-center gap-2" style={{ color: "oklch(0.55 0.005 80)", fontSize: "0.78rem", fontFamily: "'DM Sans', sans-serif" }}>
+                <Phone size={13} />
+                48-hour activation
+              </div>
+            </div>
+          </div>
+
+          {/* Right: Doctor portrait — 5/11, full-height dark panel */}
+          <div
+            className="lg:col-span-5 hidden lg:block relative self-stretch"
+            style={{ minHeight: "100vh" }}
+          >
+            {/* Left gradient fade into dark bg */}
+            <div
+              className="absolute inset-y-0 left-0 w-32 z-10 pointer-events-none"
+              style={{ background: "linear-gradient(to right, oklch(0.11 0.010 60), transparent)" }}
+            />
+            {/* Bottom gradient */}
+            <div
+              className="absolute inset-x-0 bottom-0 h-48 z-10 pointer-events-none"
+              style={{ background: "linear-gradient(to bottom, transparent, oklch(0.11 0.010 60))" }}
+            />
+            {/* Top gradient */}
+            <div
+              className="absolute inset-x-0 top-0 h-32 z-10 pointer-events-none"
+              style={{ background: "linear-gradient(to bottom, oklch(0.11 0.010 60), transparent)" }}
+            />
+            <img
+              src={HERO_DOCTOR}
+              alt="Dr. Andrew Heslin, M.D.O."
+              className="absolute inset-0 w-full h-full object-cover"
+              style={{ objectPosition: "center top", filter: "brightness(0.75) saturate(0.85) contrast(1.05)" }}
+            />
+            {/* Name card */}
+            <div
+              className="absolute bottom-14 left-8 z-20"
+              style={{
+                borderLeft: "3px solid var(--aged-bronze)",
+                paddingLeft: "1rem",
+              }}
+            >
+              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.35rem", fontWeight: 600, color: "white", lineHeight: 1.2 }}>
+                Dr. Andrew Heslin
+              </p>
+              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.68rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--aged-bronze)", marginTop: "0.3rem" }}>
+                M.D.O. · Medical Director
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+}

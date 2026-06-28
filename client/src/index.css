@@ -1,0 +1,246 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================================
+   MedAssurance Design System — Quiet Luxury Clinic
+   Palette: Warm Linen / Forest Green / Aged Bronze / Charcoal
+   Fonts: Cormorant Garamond (display) + DM Sans (body/UI)
+   ============================================================ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+:root {
+  /* Brand Colors */
+  --forest-green: oklch(0.38 0.085 155);
+  --forest-green-light: oklch(0.48 0.085 155);
+  --forest-green-dark: oklch(0.28 0.085 155);
+  --aged-bronze: oklch(0.62 0.085 65);
+  --warm-linen: oklch(0.97 0.012 80);
+  --warm-linen-dark: oklch(0.93 0.015 80);
+  --charcoal: oklch(0.18 0.010 60);
+  --charcoal-mid: oklch(0.35 0.010 60);
+  --charcoal-light: oklch(0.55 0.010 60);
+
+  /* Semantic Tokens */
+  --radius: 0.375rem;
+  --background: oklch(0.97 0.012 80);
+  --foreground: oklch(0.18 0.010 60);
+  --card: oklch(1 0.008 80);
+  --card-foreground: oklch(0.18 0.010 60);
+  --popover: oklch(1 0.008 80);
+  --popover-foreground: oklch(0.18 0.010 60);
+  --primary: oklch(0.38 0.085 155);
+  --primary-foreground: oklch(0.97 0.012 80);
+  --secondary: oklch(0.93 0.015 80);
+  --secondary-foreground: oklch(0.35 0.010 60);
+  --muted: oklch(0.93 0.015 80);
+  --muted-foreground: oklch(0.55 0.010 60);
+  --accent: oklch(0.62 0.085 65);
+  --accent-foreground: oklch(0.97 0.012 80);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.88 0.018 80);
+  --input: oklch(0.88 0.018 80);
+  --ring: oklch(0.38 0.085 155);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Cormorant Garamond', serif;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  a[href] {
+    @apply cursor-pointer;
+  }
+}
+
+@layer components {
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  @media (min-width: 640px) {
+    .container { padding-left: 2rem; padding-right: 2rem; }
+  }
+  @media (min-width: 1024px) {
+    .container { padding-left: 3rem; padding-right: 3rem; max-width: 1320px; }
+  }
+
+  .flex { min-height: 0; min-width: 0; }
+
+  /* Section label style: thin rule + small-caps */
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--aged-bronze);
+  }
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 2rem;
+    height: 1px;
+    background-color: var(--aged-bronze);
+    flex-shrink: 0;
+  }
+
+  /* Pull-quote green left border */
+  .pull-quote {
+    border-left: 3px solid var(--forest-green);
+    padding-left: 1.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-style: italic;
+    color: oklch(0.72 0.005 80);
+  }
+
+  /* Stat display: oversized serif numeral */
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    font-weight: 600;
+    line-height: 1;
+    color: var(--forest-green);
+  }
+
+  /* Primary CTA button */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--forest-green);
+    color: var(--warm-linen);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.875rem 2rem;
+    border-radius: 2px;
+    transition: all 180ms cubic-bezier(0.23, 1, 0.32, 1);
+    border: 1px solid var(--forest-green);
+  }
+  .btn-primary:hover {
+    background-color: var(--forest-green-dark);
+    box-shadow: 0 0 0 3px oklch(0.38 0.085 155 / 0.18);
+    transform: scale(1.02);
+  }
+  .btn-primary:active { transform: scale(0.97); }
+
+  /* Ghost/outline button */
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: transparent;
+    color: var(--warm-linen);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.875rem 2rem;
+    border-radius: 2px;
+    border: 1px solid oklch(0.97 0.012 80 / 0.5);
+    transition: all 180ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .btn-ghost:hover {
+    border-color: var(--warm-linen);
+    background-color: oklch(0.97 0.012 80 / 0.08);
+  }
+  .btn-ghost:active { transform: scale(0.97); }
+
+  /* Bronze outline button (on light bg) */
+  .btn-outline-bronze {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: transparent;
+    color: var(--forest-green);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.875rem 2rem;
+    border-radius: 2px;
+    border: 1px solid var(--forest-green);
+    transition: all 180ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .btn-outline-bronze:hover {
+    background-color: var(--forest-green);
+    color: var(--warm-linen);
+    transform: scale(1.02);
+  }
+  .btn-outline-bronze:active { transform: scale(0.97); }
+
+  /* Fade-up animation for scroll reveals */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 500ms cubic-bezier(0.23, 1, 0.32, 1),
+                transform 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fade-up { opacity: 0; transform: translateY(24px); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fade-up { opacity: 1; transform: none; }
+  }
+}
