@@ -102,24 +102,26 @@ export default function FounderSection() {
 
             <div className="fade-up mt-6">
               <p style={para}>
-                Direct2YourDoc began as a single conviction held by{" "}
+                Direct2YourDoc began with a single conviction — one{" "}
                 <strong style={{ color: "oklch(0.82 0.03 200)", fontWeight: 600 }}>Nate Sillyman</strong>,
-                founder of The KeepMore Company: that reaching a real doctor should never depend on who
-                you know, what you can afford to navigate, or how long you'll wait on hold. It wasn't a
-                doctor's idea, or anyone else's. It was his.
+                founder of The KeepMore Company, came by honestly. He was raised by a father devoted to
+                the truth, and to the daily, unglamorous work of earning wisdom: show up, test what you
+                believe, and keep only what holds. That discipline became the family inheritance.
               </p>
               <p className="mt-4" style={para}>
-                He came to it with no formal background in code or medicine — and taught himself to build
-                it anyway. What once took an outside team eight weeks, he now turns out in a single day;
-                the work in front of you moved from idea to live in the time most companies spend booking
-                a kickoff call. The same relentless pace that built The KeepMore Company is what makes
-                Direct2YourDoc real.
+                Nate carried it into the build. With no formal training in code or medicine, he taught
+                himself — and then made the thing. What once took an outside team eight weeks, he now
+                ships in a single day; the work in front of you went from idea to live in the time most
+                companies spend scheduling a kickoff call. The idea, the build, and the company are his.
               </p>
               <p className="mt-4" style={para}>
-                It is all one mission — removing the barriers between people and what they need: first to{" "}
+                It is all one mission — taking down the barriers between people and what they need: first to{" "}
                 <em style={{ color: "var(--forest-green)" }}>knowledge</em>, now to{" "}
-                <em style={{ color: "var(--forest-green)" }}>care</em>. The physicians of Direct2YourDoc
-                are the hands that deliver it. The idea, the build, and the company are his.
+                <em style={{ color: "var(--forest-green)" }}>care</em>. He's building it for the generation
+                coming up — and for his son,{" "}
+                <strong style={{ color: "oklch(0.82 0.03 200)", fontWeight: 600 }}>Magne</strong> — so that
+                reaching a real doctor for a real answer is never again something you fight a system to do.
+                The physicians of Direct2YourDoc are the hands that deliver it.
               </p>
             </div>
 
