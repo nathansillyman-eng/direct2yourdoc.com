@@ -8,6 +8,7 @@ import HeroSection from "@/components/HeroSection";
 import StatsBar from "@/components/StatsBar";
 import ServicesSection from "@/components/ServicesSection";
 import ValueSection from "@/components/ValueSection";
+import OfficeBand from "@/components/OfficeBand";
 import HowItWorksSection from "@/components/HowItWorksSection";
 import FounderSection from "@/components/FounderSection";
 import MembershipSection from "@/components/MembershipSection";
@@ -22,6 +23,7 @@ export default function Home() {
       <StatsBar />
       <ServicesSection />
       <ValueSection />
+      <OfficeBand />
       <HowItWorksSection />
       <FounderSection />
       <MembershipSection />
