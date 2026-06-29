@@ -2,10 +2,14 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
+import { lazy, Suspense } from "react";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import Direct2YourDoc from "./pages/Direct2YourDoc";
+
+// WebXR sealed room — lazy so Three.js never lands in the main bundle.
+const VRRoomPage = lazy(() => import("./xr/react/VRRoomPage"));
 
 
 function Router() {
@@ -13,6 +17,11 @@ function Router() {
     <Switch>
       <Route path={"/"} component={Home} />
       <Route path={"/direct2yourdoc"} component={Direct2YourDoc} />
+      <Route path={"/room"}>
+        <Suspense fallback={<div style={{ position: "fixed", inset: 0, background: "#081519" }} />}>
+          <VRRoomPage />
+        </Suspense>
+      </Route>
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
