@@ -11,10 +11,22 @@ import { advanceStage, FADE_MS } from "@/xr/locomotion";
 const store = createXRStore();
 export { store as xrStore };
 
-/** Renders the current engine group + (in office) the presence, with comfort fades. */
-function RoomScene({ skin, enableOrbit }: { skin: RoomSkin; enableOrbit: boolean }) {
-  const [stage, setStage] = useState<RoomStage>("waiting");
-  const [fade, setFade] = useState(0); // 0 = clear, 1 = black
+/** Renders the current engine group + (in office) the presence, with comfort fades.
+ *  Stage + the advance action are now OWNED BY THE PARENT so a guaranteed,
+ *  always-reachable affordance can cross the threshold — never an aim alone. */
+function RoomScene({
+  skin,
+  stage,
+  fade,
+  enableOrbit,
+  onDoorSelect,
+}: {
+  skin: RoomSkin;
+  stage: RoomStage;
+  fade: number;
+  enableOrbit: boolean;
+  onDoorSelect: () => void;
+}) {
   const { camera } = useThree();
 
   const room = useMemo(() => buildSealedRoom(stage, skin), [stage, skin]);
@@ -30,20 +42,14 @@ function RoomScene({ skin, enableOrbit }: { skin: RoomSkin; enableOrbit: boolean
     });
   });
 
-  function trigger() {
-    if (stage !== "waiting") return;
-    setFade(1);
-    window.setTimeout(() => {
-      setStage((s) => advanceStage(s));
-      setFade(0);
-    }, FADE_MS);
-  }
-
   // Raycast click/select on interactive meshes (Door 1 advances the stage).
-  function onSelect(e: { object: THREE.Object3D }) {
+  function onSelect(e: { object: THREE.Object3D; stopPropagation?: () => void }) {
     let o: THREE.Object3D | null = e.object;
     while (o) {
-      if (o.name === "door-1") return trigger();
+      if (o.name === "door-1" || o.name === "door-1-collider") {
+        e.stopPropagation?.();
+        return onDoorSelect();
+      }
       o = o.parent;
     }
   }
@@ -53,8 +59,25 @@ function RoomScene({ skin, enableOrbit }: { skin: RoomSkin; enableOrbit: boolean
       <ambientLight intensity={0.5} />
       <pointLight position={[0, 2.6, 0]} intensity={20} distance={10} />
       <primitive object={room} onClick={(e: any) => onSelect(e)} />
+
+      {/* Oversized INVISIBLE collider over Door 1. The visible door is a 1 m panel
+          ~4 m away — a fragile target for a Quest controller ray or a desktop
+          click. This widens the hit area without changing the look. Only present
+          while there is somewhere to go. */}
+      {stage === "waiting" && (
+        <mesh
+          name="door-1-collider"
+          position={[1.0, 1.2, -2.3]}
+          onClick={(e: any) => { e.stopPropagation?.(); onDoorSelect(); }}
+        >
+          <planeGeometry args={[1.8, 2.4]} />
+          <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+        </mesh>
+      )}
+
       {presence && <primitive object={presence} />}
-      {enableOrbit && <OrbitControls target={[0, 1.4, -1.5]} />}
+      {enableOrbit && <OrbitControls makeDefault target={[0, 1.4, -1.5]} />}
+
       {/* Comfort fade overlay. */}
       <mesh position={[0, 1.4, -0.3]} visible={fade > 0} renderOrder={999}>
         <planeGeometry args={[8, 8]} />
@@ -65,16 +88,61 @@ function RoomScene({ skin, enableOrbit }: { skin: RoomSkin; enableOrbit: boolean
 }
 
 export function SealedRoomCanvas({ skin, xr }: { skin: RoomSkin; xr: boolean }) {
+  const [stage, setStage] = useState<RoomStage>("waiting");
+  const [fade, setFade] = useState(0); // 0 = clear, 1 = black
+
+  // The single threshold-crossing action. Mirrors the Swift Sanctum reference's
+  // `walkThroughDoor()`: crossing is an explicit, debounced state change — not a
+  // spatial aim. Door click, door collider, and the overlay button all call this.
+  function advance() {
+    if (stage !== "waiting") return;
+    setFade(1);
+    window.setTimeout(() => {
+      setStage((s) => advanceStage(s));
+      setFade(0);
+    }, FADE_MS);
+  }
+
   return (
-    <Canvas camera={{ position: [0, 1.6, 1.8], fov: 70 }} style={{ width: "100%", height: "100%" }}>
-      {xr ? (
-        <XR store={store}>
-          <XROrigin position={[0, 0, 1.6]} />
-          <RoomScene skin={skin} enableOrbit={false} />
-        </XR>
-      ) : (
-        <RoomScene skin={skin} enableOrbit={true} />
+    <>
+      <Canvas camera={{ position: [0, 1.6, 1.8], fov: 70 }} style={{ width: "100%", height: "100%" }}>
+        {xr ? (
+          <XR store={store}>
+            <XROrigin position={[0, 0, 1.6]} />
+            <RoomScene skin={skin} stage={stage} fade={fade} enableOrbit={false} onDoorSelect={advance} />
+          </XR>
+        ) : (
+          <RoomScene skin={skin} stage={stage} fade={fade} enableOrbit onDoorSelect={advance} />
+        )}
+      </Canvas>
+
+      {/* GUARANTEED threshold control. This is the fix for "stuck in the waiting
+          room": there is now always a way across that does not depend on landing
+          a raycast. Shown on the 2D overlay (desktop preview + the flat HUD that
+          sits over the canvas). In-headset, the enlarged door collider above
+          covers the controller ray. */}
+      {stage === "waiting" && (
+        <button
+          onClick={advance}
+          style={{
+            position: "absolute",
+            bottom: 28,
+            left: "50%",
+            transform: "translateX(-50%)",
+            padding: "14px 26px",
+            borderRadius: 9999,
+            border: "1px solid #c9a24b",
+            background: "#0f2a33",
+            color: "#f4e9c8",
+            fontWeight: 600,
+            fontSize: 16,
+            cursor: "pointer",
+            boxShadow: "0 6px 24px rgba(0,0,0,0.45)",
+          }}
+        >
+          Step through Door 1 → the office
+        </button>
       )}
-    </Canvas>
+    </>
   );
 }
