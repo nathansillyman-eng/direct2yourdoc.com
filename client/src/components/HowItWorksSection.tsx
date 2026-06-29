@@ -16,13 +16,13 @@ const steps = [
     number: "02",
     title: "48-Hour Activation",
     description:
-      "Within 48 hours, Dr. Heslin is on call for you. You get a direct line — your own number, straight to your doctor. No phone trees, no answering services, no gatekeepers.",
+      "Within 48 hours, your doctor is on call for you. You get a direct line — your own number, straight to your doctor. No phone trees, no answering services, no gatekeepers.",
   },
   {
     number: "03",
     title: "Call Anytime",
     description:
-      "Day or night, weekday or holiday — call Dr. Heslin directly. He will answer, listen, and advise. Whether it is a prescription, a second opinion, or guidance through a hospital stay, he is there.",
+      "Day or night, weekday or holiday — call your doctor directly. They answer, listen, and advise. Whether it is a prescription, a second opinion, or guidance through a hospital stay, they are there.",
   },
   {
     number: "04",

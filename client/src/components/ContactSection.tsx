@@ -98,7 +98,7 @@ export default function ContactSection() {
                   lineHeight: 1.8,
                 }}
               >
-                Reach out and we'll take it from there. Dr. Heslin personally reads every
+                Reach out and we'll take it from there. Our care team personally reads every
                 message and responds within 24 hours to set up your first conversation —
                 handled with care and kept private.
               </p>
@@ -189,7 +189,7 @@ export default function ContactSection() {
                       maxWidth: "320px",
                     }}
                   >
-                    Dr. Heslin will review your inquiry personally and respond 
+                    Our team will review your inquiry personally and respond 
                     within 24 hours to schedule a private consultation.
                   </p>
                 </div>
@@ -250,7 +250,7 @@ export default function ContactSection() {
                   </div>
 
                   <div>
-                    <label style={labelStyle}>How Can Dr. Heslin Help You?</label>
+                    <label style={labelStyle}>How Can We Help You?</label>
                     <textarea
                       rows={4}
                       placeholder="Briefly describe your situation or what you're looking for..."

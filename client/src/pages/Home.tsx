@@ -9,7 +9,7 @@ import StatsBar from "@/components/StatsBar";
 import ServicesSection from "@/components/ServicesSection";
 import ValueSection from "@/components/ValueSection";
 import HowItWorksSection from "@/components/HowItWorksSection";
-import AboutSection from "@/components/AboutSection";
+import FounderSection from "@/components/FounderSection";
 import MembershipSection from "@/components/MembershipSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
@@ -23,7 +23,7 @@ export default function Home() {
       <ServicesSection />
       <ValueSection />
       <HowItWorksSection />
-      <AboutSection />
+      <FounderSection />
       <MembershipSection />
       <ContactSection />
       <Footer />

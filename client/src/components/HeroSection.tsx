@@ -7,7 +7,7 @@
 import { useEffect, useRef } from "react";
 import { ArrowRight, Phone } from "lucide-react";
 
-const HERO_DOCTOR = "/manus-storage/hero-doctor-eB3pNfzAXfpxMomtAqv2kr.webp";
+const HERO_OFFICE = "/manus-storage/d2yd-hero-poster_0bcac802.png";
 const KEEPMORE_MARK = "/brand/keepmore-km.svg";
 
 export default function HeroSection() {
@@ -82,7 +82,7 @@ export default function HeroSection() {
                   color: "var(--aged-bronze)",
                 }}
               >
-                Dr. Andrew Heslin, M.D.O.
+                Private concierge medicine
               </span>
             </div>
 
@@ -120,8 +120,8 @@ export default function HeroSection() {
               }}
             >
               One headset, one app — and you're sitting with your doctor. No waiting room,
-              no portal login, no hold music. Direct2YourDoc brings Dr. Heslin to you the
-              moment you need him: consultations, same-day prescriptions, second opinions,
+              no portal login, no hold music. Direct2YourDoc brings your doctor to you the
+              moment you need them: consultations, same-day prescriptions, second opinions,
               and a steady hand through any hospital stay. The doctor you'd call at
               midnight? Now you actually can.
             </p>
@@ -182,7 +182,23 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Right: Doctor portrait — 5/11, full-height dark panel */}
+          {/* Mobile-only office image (desktop uses the full-height panel at right) */}
+          <div className="lg:hidden -mx-6 sm:mx-0 mt-2">
+            <div className="relative">
+              <img
+                src={HERO_OFFICE}
+                alt="The Direct2YourDoc private office"
+                className="w-full object-cover sm:rounded-sm"
+                style={{ height: "300px", objectPosition: "center", filter: "brightness(0.82) saturate(0.9)" }}
+              />
+              <div
+                className="absolute inset-x-0 bottom-0 h-20 pointer-events-none"
+                style={{ background: "linear-gradient(to bottom, transparent, oklch(0.10 0.05 200))" }}
+              />
+            </div>
+          </div>
+
+          {/* Right: office panel — 5/11, full-height (desktop) */}
           <div
             className="lg:col-span-5 hidden lg:block relative self-stretch"
             style={{ minHeight: "100vh" }}
@@ -203,12 +219,12 @@ export default function HeroSection() {
               style={{ background: "linear-gradient(to bottom, oklch(0.11 0.05 200), transparent)" }}
             />
             <img
-              src={HERO_DOCTOR}
-              alt="Dr. Andrew Heslin, M.D.O."
+              src={HERO_OFFICE}
+              alt="The Direct2YourDoc private office"
               className="absolute inset-0 w-full h-full object-cover"
-              style={{ objectPosition: "center top", filter: "brightness(0.75) saturate(0.85) contrast(1.05)" }}
+              style={{ objectPosition: "center", filter: "brightness(0.78) saturate(0.9) contrast(1.05)" }}
             />
-            {/* Name card */}
+            {/* Caption card */}
             <div
               className="absolute bottom-14 left-8 z-20"
               style={{
@@ -217,10 +233,10 @@ export default function HeroSection() {
               }}
             >
               <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.35rem", fontWeight: 600, color: "white", lineHeight: 1.2 }}>
-                Dr. Andrew Heslin
+                Your office, on demand
               </p>
               <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.68rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--aged-bronze)", marginTop: "0.3rem" }}>
-                M.D.O. · Founding Physician
+                Private concierge medicine
               </p>
             </div>
           </div>

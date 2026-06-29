@@ -54,7 +54,7 @@ export default function Footer() {
               {[
                 { label: "Services", href: "#services" },
                 { label: "How It Works", href: "#how-it-works" },
-                { label: "About Dr. Heslin", href: "#about" },
+                { label: "The Founder", href: "#founder" },
                 { label: "Membership", href: "#membership" },
                 { label: "Contact", href: "#contact" },
                 { label: "Direct2YourDoc →", href: "/direct2yourdoc" },

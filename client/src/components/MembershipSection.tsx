@@ -7,7 +7,7 @@ import { useEffect, useRef } from "react";
 import { Check, ArrowRight } from "lucide-react";
 
 const included = [
-  "Unlimited 1-on-1 consultations with Dr. Heslin",
+  "Unlimited 1-on-1 consultations with your doctor",
   "Same-day prescription writing to your pharmacy",
   "Expert second opinions on diagnoses and procedures",
   "Active hospital advocacy during any admission",
@@ -77,8 +77,8 @@ color: "oklch(0.65 0.03 200)",
             }}
           >
             Direct2YourDoc is a simple annual membership. It keeps your care unhurried and
-            personal — Dr. Heslin has the time to actually know you and be there when you
-            need him. Pricing is straightforward and covered in your first conversation.
+            personal — your doctor has the time to actually know you and be there when you
+            need them. Pricing is straightforward and covered in your first conversation.
           </p>
         </div>
 

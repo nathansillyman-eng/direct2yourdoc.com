@@ -8,7 +8,7 @@
  * Brand hierarchy:
  *   Direct2YourDoc       = patient-facing brand / app / front door
  *   The KeepMore Company = parent venture / owner (Nate Sillyman)
- *   Dr. Andrew Heslin    = founding physician (provider, not owner)
+ *   Dr. Andrew Heslin    = a staff physician (NOT founder/owner; founder = Nate Sillyman)
  *
  * All sections are prototype / coming-soon — do not claim app is live.
  */
@@ -359,7 +359,7 @@ export default function Direct2YourDoc() {
                 "Same-day prescriptions sent to your pharmacy",
                 "48-hour on-call access, 24 hours a day",
                 "Hospital advocacy so you get the care you need",
-                "Second opinions coordinated by Dr. Heslin directly",
+                "Second opinions coordinated by your doctor directly",
               ].map((sol, i) => (
                 <motion.div
                   key={i}
@@ -485,7 +485,7 @@ export default function Direct2YourDoc() {
                 <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.3rem", color: "#e7f3f0" }}>
                   Welcome back.
                 </p>
-                <p className="text-sm mt-1" style={{ color: "#8fb5b0" }}>Dr. Heslin will be with you shortly.</p>
+                <p className="text-sm mt-1" style={{ color: "#8fb5b0" }}>Your doctor will be with you shortly.</p>
               </div>
 
               {/* Queue + ETA */}
@@ -518,7 +518,7 @@ export default function Direct2YourDoc() {
               >
                 <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#f5c63e", letterSpacing: "0.12em" }}>Care Team Status</p>
                 {[
-                  { name: "Dr. Andrew Heslin", role: "Founding Physician", status: "Available" },
+                  { name: "Dr. Andrew Heslin", role: "Physician", status: "Available" },
                   { name: "Care Coordinator", role: "Admin & Records", status: "Online" },
                 ].map((member, i) => (
                   <div key={i} className={`flex items-center justify-between py-2.5 ${i < 1 ? "border-b" : ""}`} style={{ borderColor: "rgba(245,198,62,0.1)" }}>
@@ -811,7 +811,7 @@ export default function Direct2YourDoc() {
               <span style={{ color: "#f5c63e", fontStyle: "italic" }}>In one place. Always ready.</span>
             </h2>
             <p className="mt-4 max-w-xl text-base leading-relaxed" style={{ color: "#8fb5b0" }}>
-              Your Patient Command File is a living record organized by Dr. Heslin's office — not a dump of PDFs, but a curated, readable overview of your entire health picture.
+              Your Patient Command File is a living record organized by your care team — not a dump of PDFs, but a curated, readable overview of your entire health picture.
             </p>
           </motion.div>
 
@@ -928,7 +928,7 @@ export default function Direct2YourDoc() {
               <span style={{ color: "#f5c63e", fontStyle: "italic" }}>in the first cohort.</span>
             </h2>
             <p className="mt-4 text-base leading-relaxed" style={{ color: "#8fb5b0" }}>
-              Direct2YourDoc is opening to its first founding members. Your sign-up includes the headset, full setup, and onboarding with Dr. Heslin's care team.
+              Direct2YourDoc is opening to its first founding members. Your sign-up includes the headset, full setup, and onboarding with your care team.
             </p>
           </motion.div>
 
@@ -959,7 +959,7 @@ export default function Direct2YourDoc() {
                 Request received.
               </h3>
               <p style={{ color: "#8fb5b0", maxWidth: "400px", margin: "0 auto", lineHeight: 1.7 }}>
-                Dr. Heslin's care team will be in touch within 48 hours to discuss your membership and schedule your onboarding call.
+                Our care team will be in touch within 48 hours to discuss your membership and schedule your onboarding call.
               </p>
             </motion.div>
           ) : (
@@ -1046,7 +1046,7 @@ export default function Direct2YourDoc() {
                   style={{ accentColor: "#f5c63e" }}
                 />
                 <label htmlFor="consent" className="text-xs leading-relaxed" style={{ color: "#8fb5b0" }}>
-                  I understand that Direct2YourDoc is a private concierge medical service and does not constitute insurance, nor a substitute for emergency care. I consent to being contacted by Dr. Heslin's care team.
+                  I understand that Direct2YourDoc is a private concierge medical service and does not constitute insurance, nor a substitute for emergency care. I consent to being contacted by our care team.
                 </label>
               </div>
 
@@ -1066,7 +1066,7 @@ export default function Direct2YourDoc() {
               </button>
 
               <p className="text-center text-xs" style={{ color: "rgba(143,181,176,0.6)" }}>
-                Dr. Heslin's team will respond within 48 hours.
+                Our team will respond within 48 hours.
               </p>
             </motion.form>
           )}

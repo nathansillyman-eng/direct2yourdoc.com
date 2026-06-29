@@ -16,7 +16,7 @@ const services = [
     title: "1-on-1 Consultations",
     tagline: "Your physician. Your time.",
     description:
-      "Schedule a private consultation with Dr. Heslin at any hour. No waiting rooms, no rushed appointments. A full, unhurried conversation about your health — the way medicine was meant to be practiced.",
+      "Schedule a private consultation with your doctor at any hour. No waiting rooms, no rushed appointments. A full, unhurried conversation about your health — the way medicine was meant to be practiced.",
     detail: "Available same-day with 48-hour membership activation.",
   },
   {
@@ -25,7 +25,7 @@ const services = [
     title: "Same-Day Prescriptions",
     tagline: "Written. Sent. Done.",
     description:
-      "Need a prescription? Dr. Heslin evaluates your situation and sends it directly to your preferred pharmacy — same day. No unnecessary office visits, no delays.",
+      "Need a prescription? Your doctor evaluates your situation and sends it directly to your preferred pharmacy — same day. No unnecessary office visits, no delays.",
     detail: "Sent directly to any pharmacy in your network.",
   },
   {
@@ -34,7 +34,7 @@ const services = [
     title: "Second Opinions",
     tagline: "Know before you decide.",
     description:
-      "Before any major procedure or diagnosis, get a frank, expert second opinion from Dr. Heslin. He reviews your records, speaks with your specialists, and tells you exactly what he thinks — without the politics.",
+      "Before any major procedure or diagnosis, get a frank, expert second opinion from your doctor. They review your records, speak with your specialists, and tell you exactly what they think — without the politics.",
     detail: "Includes record review and specialist liaison.",
   },
   {
@@ -43,7 +43,7 @@ const services = [
     title: "Hospital Advocacy",
     tagline: "Someone in your corner.",
     description:
-      "If you're admitted to a hospital, Dr. Heslin ensures you receive the care you need — and nothing more. He communicates with your care team, interprets findings, and protects your interests at every step.",
+      "If you're admitted to a hospital, your doctor ensures you receive the care you need — and nothing more. They communicate with your care team, interpret findings, and protect your interests at every step.",
     detail: "Active monitoring throughout your stay.",
   },
 ];

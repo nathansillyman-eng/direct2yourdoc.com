@@ -9,22 +9,22 @@ const scenarios = [
   {
     time: "2:00 AM",
     situation: "Your chest feels tight. You're not sure if it's anxiety or something more.",
-    response: "Dr. Heslin answers. He listens. He tells you exactly what to do next.",
+    response: "Your doctor answers. They listen. They tell you exactly what to do next.",
   },
   {
     time: "Day of surgery",
     situation: "Your surgeon recommends a procedure. You're not sure it's necessary.",
-    response: "Dr. Heslin reviews your case and gives you his honest, unfiltered opinion.",
+    response: "Your doctor reviews your case and gives you an honest, unfiltered opinion.",
   },
   {
     time: "Traveling abroad",
     situation: "You need a prescription refilled and your pharmacy is 5,000 miles away.",
-    response: "Dr. Heslin coordinates with a local pharmacy. Done.",
+    response: "Your doctor coordinates with a local pharmacy. Done.",
   },
   {
     time: "Hospital admission",
     situation: "You're admitted and the care team is busy. Things feel uncertain.",
-    response: "Dr. Heslin speaks with your team, monitors your progress, and keeps you informed.",
+    response: "Your doctor speaks with your team, monitors your progress, and keeps you informed.",
   },
 ];
 
