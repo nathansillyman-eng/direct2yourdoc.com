@@ -10,7 +10,8 @@ Bring the Direct2YourDoc / Sanctum "sealed room" experience to **Meta Quest 3 an
 other Android-powered VR** without forking the iOS/visionOS Swift work. The Quest
 runs an Android stack and cannot execute any of the existing Swift / RealityKit
 code, so this is a **fresh WebXR build**, not a port — delivered as a VR mode inside
-the existing MedAssurance React/Vite web app. Because it is WebXR, the same build
+the existing Direct2YourDoc React/Vite web app (the medical front door; its repo
+directory on disk is `MedAssurance/`). Because it is WebXR, the same build
 runs in the **Quest Browser** and in **Android Chrome**, with no app-store path.
 
 This build is the **web twin of `SanctumEngine`**: it mirrors the Swift engine's
@@ -45,7 +46,7 @@ React/R3F mounting + XR-session shell on top. The engine owns immersion; it know
 nothing about medicine or brand. A **skin** supplies identity.
 
 ```
-MedAssurance/client/src/xr/
+client/src/xr/            (repo dir on disk: MedAssurance/)
   engine/                    ← web twin of SanctumEngine (plain Three.js, no React)
     RoomSkin.ts              ← RoomStage, RoomPalette, RoomObject, RoomSkin, neutralSkin, arc()
     SealedRoom.ts            ← buildSealedRoom(stage, skin) → THREE.Group

@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Ship a walkable, branded WebXR sealed room (waiting → office) that runs in the Quest 3 browser and Android Chrome, built as a VR mode inside the existing MedAssurance React/Vite app, with a stable desktop fallback.
+**Goal:** Ship a walkable, branded WebXR sealed room (waiting → office) that runs in the Quest 3 browser and Android Chrome, built as a VR mode inside the existing Direct2YourDoc React/Vite app (the medical front door; repo dir on disk is `MedAssurance/`), with a stable desktop fallback.
 
 **Architecture:** A framework-agnostic Three.js engine (the web twin of `SanctumEngine`) exposes pure builder functions that return `THREE.Group`s from data only. A thin react-three-fiber + `@react-three/xr` shell mounts those groups, owns the XR session, locomotion, and stage transitions. A separate **skin** module supplies brand/medical identity. The engine never depends on specific images.
 
@@ -12,7 +12,7 @@
 
 ## Identity separation (non-negotiable, applies to every task)
 
-- `client/src/xr/engine/**` is the **reusable room technology** (Sanctum twin). It MUST NOT import from `skins/`, reference Direct2YourDoc/MedAssurance, doctors, patients, records, or any specific image path. Each engine file starts with the header comment:
+- `client/src/xr/engine/**` is the **reusable room technology** (Sanctum twin). It MUST NOT import from `skins/`, reference Direct2YourDoc or any medical/brand identity, doctors, patients, records, or any specific image path. Each engine file starts with the header comment:
   `// SealedRoom engine — reusable room tech. No brand/medical identity. No specific assets.`
 - `client/src/xr/skins/**` is the **medical face**. It owns brand, palette, copy, command-file labels, and asset URLs.
 - The engine receives identity only as data (a `RoomSkin`) and optional already-loaded `THREE.Texture`s passed in by the React layer. The engine never fetches a URL itself.
