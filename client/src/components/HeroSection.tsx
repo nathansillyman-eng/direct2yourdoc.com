@@ -7,7 +7,7 @@
 import { useEffect, useRef } from "react";
 import { ArrowRight, Phone } from "lucide-react";
 
-const HERO_OFFICE = "/manus-storage/d2yd-hero-poster_0bcac802.png";
+const HERO_OFFICE = "/brand/office-lounge.jpg";
 const KEEPMORE_MARK = "/brand/keepmore-km.svg";
 
 export default function HeroSection() {

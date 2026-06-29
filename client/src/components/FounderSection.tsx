@@ -7,7 +7,7 @@
 import { useEffect, useRef } from "react";
 import { Lightbulb, Zap, Compass } from "lucide-react";
 
-const OFFICE_IMG = "/manus-storage/d2yd-waiting-room_1f40a156.png";
+const OFFICE_IMG = "/brand/office-lounge-b.jpg";
 
 const para: React.CSSProperties = {
   fontFamily: "'DM Sans', sans-serif",
