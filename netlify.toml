@@ -1,9 +1,25 @@
-# Netlify build & deploy config for the MedAssurance / Direct2YourDoc site.
+# Netlify build & deploy config for the Direct2YourDoc site.
 # Static Vite SPA — Netlify serves dist/public; client-side routing via wouter.
 
 [build]
   command = "pnpm run build"
   publish = "dist/public"
+
+# ── Security headers (applied to every response) ─────────────────────────────
+# Static site: no backend/secrets, TLS handled by Netlify. These headers harden
+# the browser side — enforce HTTPS, block framing/sniffing, and constrain what
+# the page may load (CSP). Resource inventory: self-hosted JS/CSS/images +
+# Google Fonts only; styles are inline (React/framer-motion) so style-src needs
+# 'unsafe-inline'. No inline/external scripts, so script-src stays 'self'.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self'"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
 
 [build.environment]
   NODE_VERSION = "22"

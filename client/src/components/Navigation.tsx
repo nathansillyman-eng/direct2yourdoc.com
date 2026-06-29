@@ -54,12 +54,16 @@ export default function Navigation() {
               className="flex items-center gap-3 group"
               onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
             >
-              <img
-                src={D2YD_WORDMARK}
-                alt="Direct2YourDoc — Your Doctor. Your Home. Now."
-                className="transition-transform duration-200 group-hover:scale-105"
-                style={{ height: "34px", width: "auto", objectFit: "contain", display: "block" }}
-              />
+              <span
+                className="logo-shimmer transition-transform duration-200 group-hover:scale-105"
+                style={{ ["--shimmer-src" as string]: `url(${D2YD_WORDMARK})` } as React.CSSProperties}
+              >
+                <img
+                  src={D2YD_WORDMARK}
+                  alt="Direct2YourDoc — Your Doctor. Your Home. Now."
+                  style={{ height: "34px", width: "auto", objectFit: "contain", display: "block" }}
+                />
+              </span>
               <span
                 className="hidden sm:flex items-center gap-2"
                 style={{ borderLeft: "1px solid oklch(0.97 0.02 200 / 0.18)", paddingLeft: "0.75rem" }}
