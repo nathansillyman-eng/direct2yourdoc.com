@@ -52,7 +52,7 @@ client/src/xr/            (repo dir on disk: MedAssurance/)
     SealedRoom.ts            ← buildSealedRoom(stage, skin) → THREE.Group
     presence.ts              ← buildPresence(skin) → seated-doctor billboard plane
   skins/
-    direct2yourdoc.ts        ← the medical SKIN (brand, palette, copy, commandFile, doctorImage)
+    direct2yourdoc.ts        ← the medical SKIN (brand, palette, copy, commandFile, presenceImage)
   react/
     SealedRoomCanvas.tsx     ← R3F <Canvas>+<XR> shell: mounts group, owns stage + locomotion
     VRRoomPage.tsx           ← route page: Enter-VR button + desktop fallback preview
@@ -73,7 +73,7 @@ interface RoomSkin {
   officeTitle: string;
   palette: RoomPalette;
   commandFile: RoomObject[];   // arced labels in the office
-  doctorImage?: string;        // optional — engine never hard-depends on it
+  presenceImage?: string;     // optional — engine never hard-depends on it
 }
 function arc(labels: string[]): RoomObject[];        // layout helper (twin of RoomSkin.arc)
 const neutralSkin: RoomSkin;                          // the empty engine room
@@ -82,7 +82,7 @@ function buildPresence(skin: RoomSkin): THREE.Group;  // office stage only
 ```
 
 ### Key invariant
-The engine **never hard-depends on skin images**. A missing `doctorImage` (or any
+The engine **never hard-depends on skin images**. A missing `presenceImage` (or any
 texture) → the room still builds with neutral materials. No medical or brand
 identity lives in `engine/`; it lives only in `skins/`.
 
