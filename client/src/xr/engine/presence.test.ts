@@ -29,7 +29,7 @@ describe("buildPresence", () => {
     expect(mat.transparent).toBe(true);
   });
 
-  it("does not throw when the skin has no doctorImage", () => {
+  it("does not throw when the skin has no presenceImage", () => {
     expect(() => buildPresence(neutralSkin)).not.toThrow();
   });
 });

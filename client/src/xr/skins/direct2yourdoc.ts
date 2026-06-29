@@ -12,5 +12,6 @@ export const direct2YourDocSkin: RoomSkin = {
   // teal-navy walls, deep floor, gold trim, warm hearth
   palette: { wall: "#0f2a33", floor: "#081519", trim: "#c9a24b", fire: "#1f8a6b" },
   commandFile: arc(COMMAND_FILE),
-  doctorImage: "/manus-storage/d2yd-doctor-presence.png", // produced in Stage 2
+  // the seated concierge-doctor presence (the skin carries the medical identity); produced in Stage 2
+  presenceImage: "/manus-storage/d2yd-doctor-presence.png",
 };

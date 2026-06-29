@@ -4,7 +4,7 @@ import type { RoomSkin } from "./RoomSkin";
 
 /**
  * A seated "presence" behind the desk. Stage 1: neutral volume. Stage 2/live:
- * the React layer loads skin.doctorImage (or a WebRTC video texture) and passes
+ * the React layer loads skin.presenceImage (or a WebRTC video texture) and passes
  * it in here. The engine itself loads nothing.
  */
 export function buildPresence(skin: RoomSkin, texture?: THREE.Texture): THREE.Group {

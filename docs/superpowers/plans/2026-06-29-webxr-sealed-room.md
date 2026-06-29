@@ -170,7 +170,7 @@ describe("neutralSkin", () => {
       fire: expect.any(String),
     });
     expect(neutralSkin.commandFile).toEqual([]);
-    expect(neutralSkin.doctorImage).toBeUndefined();
+    expect(neutralSkin.presenceImage).toBeUndefined();
   });
 });
 ```
@@ -209,7 +209,7 @@ export interface RoomSkin {
   palette: RoomPalette;
   commandFile: RoomObject[];
   /** Optional. The engine never fetches this; the React layer loads it and passes a texture. */
-  doctorImage?: string;
+  presenceImage?: string;
 }
 
 const FRONT_WALL_Z = -2.3;
@@ -492,7 +492,7 @@ describe("buildPresence", () => {
     expect(mat.transparent).toBe(true);
   });
 
-  it("does not throw when the skin has no doctorImage", () => {
+  it("does not throw when the skin has no presenceImage", () => {
     expect(() => buildPresence(neutralSkin)).not.toThrow();
   });
 });
@@ -513,7 +513,7 @@ import type { RoomSkin } from "./RoomSkin";
 
 /**
  * A seated "presence" behind the desk. Stage 1: neutral volume. Stage 2/live:
- * the React layer loads skin.doctorImage (or a WebRTC video texture) and passes
+ * the React layer loads skin.presenceImage (or a WebRTC video texture) and passes
  * it in here. The engine itself loads nothing.
  */
 export function buildPresence(skin: RoomSkin, texture?: THREE.Texture): THREE.Group {
@@ -556,7 +556,7 @@ git commit -m "feat(xr): buildPresence — neutral seated volume with texture se
 - Create: `client/src/xr/skins/direct2yourdoc.ts`
 - Test: `client/src/xr/skins/direct2yourdoc.test.ts`
 
-Palette uses the brand teal-navy / emerald / gold. `doctorImage` points at the off-Manus asset path (the file itself is produced in Stage 2; the path is declared now and the engine tolerates its absence).
+Palette uses the brand teal-navy / emerald / gold. `presenceImage` points at the off-Manus asset path (the file itself is produced in Stage 2; the path is declared now and the engine tolerates its absence).
 
 - [ ] **Step 1: Write the failing test**
 
@@ -580,7 +580,7 @@ describe("direct2YourDocSkin", () => {
   });
 
   it("declares a doctor image path under manus-storage", () => {
-    expect(direct2YourDocSkin.doctorImage).toContain("/manus-storage/");
+    expect(direct2YourDocSkin.presenceImage).toContain("/manus-storage/");
   });
 
   it("regenerates the same layout via arc()", () => {
@@ -613,7 +613,7 @@ export const direct2YourDocSkin: RoomSkin = {
   // teal-navy walls, deep floor, gold trim, warm hearth
   palette: { wall: "#0f2a33", floor: "#081519", trim: "#c9a24b", fire: "#1f8a6b" },
   commandFile: arc(COMMAND_FILE),
-  doctorImage: "/manus-storage/d2yd-doctor-presence.png", // produced in Stage 2
+  presenceImage: "/manus-storage/d2yd-doctor-presence.png", // produced in Stage 2
 };
 ```
 
@@ -953,7 +953,7 @@ Each item ships behind the same engine seam, so Stage 1 code does not change sha
 
 1. **Doctor presence asset.** Generate a seated concierge doctor with Higgsfield (recraft, palette-locked to teal-navy/emerald/gold) → `remove_background` → transparent PNG → optimize → save to `client/public/manus-storage/d2yd-doctor-presence.png` (the path the skin already declares).
    - Acceptance: file exists; office stage shows the doctor on the presence plane, softly lit, billboarded; engine still builds with neutral material if the file is missing.
-2. **Wire the texture.** In `SealedRoomCanvas`, load `skin.doctorImage` via drei `useTexture` (only when present) and pass it to `buildPresence(skin, texture)`. Add a soft rim-light/vignette.
+2. **Wire the texture.** In `SealedRoomCanvas`, load `skin.presenceImage` via drei `useTexture` (only when present) and pass it to `buildPresence(skin, texture)`. Add a soft rim-light/vignette.
    - Acceptance: with the asset present, the doctor reads as a person seated across the desk; with it removed, no crash.
 3. **Hotspot labels + content.** Render `userData.label` text over each hotspot (drei `<Text>`/`<Billboard>`), and on select show the corresponding command-file panel.
    - Acceptance: each of Records/Visits/Labs/Meds/Messages is readable and selectable in-headset.

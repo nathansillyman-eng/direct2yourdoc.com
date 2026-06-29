@@ -33,6 +33,6 @@ describe("neutralSkin", () => {
       fire: expect.any(String),
     });
     expect(neutralSkin.commandFile).toEqual([]);
-    expect(neutralSkin.doctorImage).toBeUndefined();
+    expect(neutralSkin.presenceImage).toBeUndefined();
   });
 });

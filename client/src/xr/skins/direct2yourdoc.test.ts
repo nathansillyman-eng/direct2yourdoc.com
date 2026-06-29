@@ -15,8 +15,8 @@ describe("direct2YourDocSkin", () => {
     direct2YourDocSkin.commandFile.forEach((o) => expect(o.position[2]).toBeCloseTo(-2.3));
   });
 
-  it("declares a doctor image path under manus-storage", () => {
-    expect(direct2YourDocSkin.doctorImage).toContain("/manus-storage/");
+  it("declares a presence image path under manus-storage", () => {
+    expect(direct2YourDocSkin.presenceImage).toContain("/manus-storage/");
   });
 
   it("regenerates the same layout via arc()", () => {

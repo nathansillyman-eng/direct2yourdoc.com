@@ -22,8 +22,9 @@ export interface RoomSkin {
   officeTitle: string;
   palette: RoomPalette;
   commandFile: RoomObject[];
-  /** Optional. The engine never fetches this; the React layer loads it and passes a texture. */
-  doctorImage?: string;
+  /** Optional presence image (e.g. the seated professional). Generic on purpose — NOT
+   *  medical-specific. The engine never fetches it; the React layer loads it and passes a texture. */
+  presenceImage?: string;
 }
 
 const FRONT_WALL_Z = -2.3;
