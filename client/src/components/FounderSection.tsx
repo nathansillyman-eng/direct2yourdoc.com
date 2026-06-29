@@ -104,7 +104,7 @@ export default function FounderSection() {
               <p style={para}>
                 Direct2YourDoc began with a single conviction — one{" "}
                 <strong style={{ color: "oklch(0.82 0.03 200)", fontWeight: 600 }}>Nate Sillyman</strong>,
-                founder of The KeepMore Company, came by honestly. He was raised by a father devoted to
+                founder and CEO of The KeepMore Company, came by honestly. He was raised by a father devoted to
                 the truth, and to the daily, unglamorous work of earning wisdom: show up, test what you
                 believe, and keep only what holds. That discipline became the family inheritance.
               </p>
@@ -117,11 +117,9 @@ export default function FounderSection() {
               <p className="mt-4" style={para}>
                 It is all one mission — taking down the barriers between people and what they need: first to{" "}
                 <em style={{ color: "var(--forest-green)" }}>knowledge</em>, now to{" "}
-                <em style={{ color: "var(--forest-green)" }}>care</em>. He's building it for the generation
-                coming up — and for his son,{" "}
-                <strong style={{ color: "oklch(0.82 0.03 200)", fontWeight: 600 }}>Magne</strong> — so that
-                reaching a real doctor for a real answer is never again something you fight a system to do.
-                The physicians of Direct2YourDoc are the hands that deliver it.
+                <em style={{ color: "var(--forest-green)" }}>care</em>. He built it so that reaching a real
+                doctor for a real answer is never again something you have to fight a system to do. The
+                physicians of Direct2YourDoc are the hands that deliver it.
               </p>
             </div>
 
