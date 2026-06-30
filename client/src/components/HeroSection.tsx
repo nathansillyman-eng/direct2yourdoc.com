@@ -131,7 +131,7 @@ export default function HeroSection() {
               className="hero-fade"
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
-                fontSize: "clamp(3.2rem, 6vw, 5.5rem)",
+                fontSize: "clamp(2.5rem, 4.4vw, 4.2rem)",
                 fontWeight: 600,
                 lineHeight: 1.06,
                 color: "white",
@@ -143,9 +143,9 @@ export default function HeroSection() {
                 textShadow: "0 2px 26px rgba(10,6,3,0.75)",
               }}
             >
-              Put on the headset.
+              The privacy of your own home.
               <br />
-              <em style={{ color: "var(--forest-green-light)", textShadow: "0 0 32px oklch(0.82 0.17 165 / 0.45)" }}>You're in the office.</em>
+              <em style={{ color: "var(--forest-green-light)", textShadow: "0 0 32px oklch(0.82 0.17 165 / 0.45)" }}>The accuracy of your real doctor.</em>
             </h1>
 
             <p
@@ -162,11 +162,9 @@ export default function HeroSection() {
                 textShadow: "0 1px 14px rgba(10,6,3,0.85)",
               }}
             >
-              One headset, one app — and you're sitting with your doctor. No waiting room,
-              no portal login, no hold music. Direct2YourDoc brings your doctor to you the
-              moment you need them: consultations, same-day prescriptions, second opinions,
-              and a steady hand through any hospital stay. The doctor you'd call at
-              midnight? Now you actually can.
+              Your own physician — not a queue, not a chatbot — from the privacy of home.
+              Consultations, same-day prescriptions, second opinions, and a steady hand
+              through any hospital stay. Your health. Your doctor. Now.
             </p>
 
             <div
