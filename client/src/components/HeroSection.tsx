@@ -7,7 +7,11 @@
 import { useEffect, useRef } from "react";
 import { ArrowRight, Phone } from "lucide-react";
 
-const HERO_OFFICE = "/brand/office-lounge.jpg";
+// Hero photo: the warm red-oak greeting scene — the host welcoming a family, the
+// koi-pond waterfall giving way to the KM mark. (Nate-approved hero, 2026-06-30.)
+// Served from /brand/ (a plain static path) — NOT /manus-storage/, which the dev
+// storage-proxy plugin intercepts and which can resolve to remote storage in prod.
+const HERO_GREETING = "/brand/d2yd-hero-greeting.jpg";
 const KEEPMORE_MARK = "/brand/keepmore-km.svg";
 
 export default function HeroSection() {
@@ -30,15 +34,32 @@ export default function HeroSection() {
   return (
     <section
       className="relative min-h-screen flex items-stretch overflow-hidden"
-      style={{ background: "radial-gradient(115% 85% at 80% 15%, oklch(0.22 0.09 200) 0%, oklch(0.15 0.05 205) 45%, oklch(0.10 0.05 200) 75%)" }}
+      style={{ background: "#160d08" }}
     >
-      {/* Subtle grain texture overlay */}
+      {/* Full-bleed hero photo — the warm greeting scene */}
+      <img
+        src={HERO_GREETING}
+        alt="Direct2YourDoc — your host welcoming a family in the private concierge greeting room"
+        className="absolute inset-0 w-full h-full object-cover z-0"
+        style={{ objectPosition: "64% center" }}
+      />
+      {/* Right scrim — the greeting (host + family + dogs) stays clear on the LEFT,
+          the headline/CTAs sit legibly over the darkened right. */}
       <div
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E")`,
-          opacity: 0.4,
+          background:
+            "linear-gradient(90deg, rgba(18,10,6,0) 34%, rgba(18,10,6,0.48) 50%, rgba(18,10,6,0.90) 66%, rgba(18,10,6,0.97) 100%)",
         }}
+      />
+      {/* Bottom + top scrims to seat the photo into the page */}
+      <div
+        className="absolute inset-x-0 bottom-0 h-44 z-0 pointer-events-none"
+        style={{ background: "linear-gradient(to bottom, transparent, rgba(18,10,6,0.92))" }}
+      />
+      <div
+        className="absolute inset-x-0 top-0 h-28 z-0 pointer-events-none"
+        style={{ background: "linear-gradient(to bottom, rgba(18,10,6,0.7), transparent)" }}
       />
 
       <div className="container relative z-10 pt-24 pb-0">
@@ -46,7 +67,7 @@ export default function HeroSection() {
 
           {/* Left: Text content — 6/11 */}
           <div
-            className="lg:col-span-6 flex flex-col justify-center py-20 lg:pr-12"
+            className="lg:col-start-7 lg:col-span-5 flex flex-col justify-center py-20 lg:pl-10"
             ref={textRef}
           >
             {/* Brand mark + label */}
@@ -99,6 +120,7 @@ export default function HeroSection() {
                 transform: "translateY(20px)",
                 transition: "opacity 500ms cubic-bezier(0.23,1,0.32,1), transform 500ms cubic-bezier(0.23,1,0.32,1)",
                 maxWidth: "680px",
+                textShadow: "0 2px 26px rgba(10,6,3,0.75)",
               }}
             >
               Put on the headset.
@@ -112,11 +134,12 @@ export default function HeroSection() {
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: "1.05rem",
                 lineHeight: 1.78,
-                color: "oklch(0.72 0.03 200)",
+                color: "oklch(0.86 0.02 200)",
                 maxWidth: "500px",
                 opacity: 0,
                 transform: "translateY(20px)",
                 transition: "opacity 500ms cubic-bezier(0.23,1,0.32,1), transform 500ms cubic-bezier(0.23,1,0.32,1)",
+                textShadow: "0 1px 14px rgba(10,6,3,0.85)",
               }}
             >
               One headset, one app — and you're sitting with your doctor. No waiting room,
@@ -182,63 +205,17 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Mobile-only office image (desktop uses the full-height panel at right) */}
-          <div className="lg:hidden -mx-6 sm:mx-0 mt-2">
-            <div className="relative">
-              <img
-                src={HERO_OFFICE}
-                alt="The Direct2YourDoc private office"
-                className="w-full object-cover sm:rounded-sm"
-                style={{ height: "300px", objectPosition: "center", filter: "brightness(0.82) saturate(0.9)" }}
-              />
-              <div
-                className="absolute inset-x-0 bottom-0 h-20 pointer-events-none"
-                style={{ background: "linear-gradient(to bottom, transparent, oklch(0.10 0.05 200))" }}
-              />
-            </div>
-          </div>
-
-          {/* Right: office panel — 5/11, full-height (desktop) */}
+          {/* Caption card — anchored bottom-left, under the greeting */}
           <div
-            className="lg:col-span-5 hidden lg:block relative self-stretch"
-            style={{ minHeight: "100vh" }}
+            className="hidden lg:block absolute bottom-16 left-10 z-20"
+            style={{ borderLeft: "3px solid var(--aged-bronze)", paddingLeft: "1rem" }}
           >
-            {/* Left gradient fade into dark bg */}
-            <div
-              className="absolute inset-y-0 left-0 w-32 z-10 pointer-events-none"
-              style={{ background: "linear-gradient(to right, oklch(0.11 0.05 200), transparent)" }}
-            />
-            {/* Bottom gradient */}
-            <div
-              className="absolute inset-x-0 bottom-0 h-48 z-10 pointer-events-none"
-              style={{ background: "linear-gradient(to bottom, transparent, oklch(0.11 0.05 200))" }}
-            />
-            {/* Top gradient */}
-            <div
-              className="absolute inset-x-0 top-0 h-32 z-10 pointer-events-none"
-              style={{ background: "linear-gradient(to bottom, oklch(0.11 0.05 200), transparent)" }}
-            />
-            <img
-              src={HERO_OFFICE}
-              alt="The Direct2YourDoc private office"
-              className="absolute inset-0 w-full h-full object-cover"
-              style={{ objectPosition: "center", filter: "brightness(0.78) saturate(0.9) contrast(1.05)" }}
-            />
-            {/* Caption card */}
-            <div
-              className="absolute bottom-14 left-8 z-20"
-              style={{
-                borderLeft: "3px solid var(--aged-bronze)",
-                paddingLeft: "1rem",
-              }}
-            >
-              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.35rem", fontWeight: 600, color: "white", lineHeight: 1.2 }}>
-                Your office, on demand
-              </p>
-              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.68rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--aged-bronze)", marginTop: "0.3rem" }}>
-                Private concierge medicine
-              </p>
-            </div>
+            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.35rem", fontWeight: 600, color: "white", lineHeight: 1.2 }}>
+              Your office, on demand
+            </p>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.68rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--aged-bronze)", marginTop: "0.3rem" }}>
+              Private concierge medicine
+            </p>
           </div>
 
         </div>
