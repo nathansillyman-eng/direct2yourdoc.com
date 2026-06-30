@@ -11,7 +11,8 @@ import { ArrowRight, Phone } from "lucide-react";
 // koi-pond waterfall giving way to the KM mark. (Nate-approved hero, 2026-06-30.)
 // Served from /brand/ (a plain static path) — NOT /manus-storage/, which the dev
 // storage-proxy plugin intercepts and which can resolve to remote storage in prod.
-const HERO_GREETING = "/brand/d2yd-hero-greeting.jpg";
+const HERO_GREETING = "/brand/d2yd-hero-greeting.jpg"; // desktop, 16:9
+const HERO_GREETING_MOBILE = "/brand/d2yd-hero-greeting-mobile.jpg"; // phone, 9:16 portrait
 const KEEPMORE_MARK = "/brand/keepmore-km.svg";
 
 export default function HeroSection() {
@@ -33,42 +34,60 @@ export default function HeroSection() {
 
   return (
     <section
-      className="relative min-h-screen flex items-stretch overflow-hidden"
+      className="relative lg:flex lg:items-stretch overflow-hidden"
       style={{ background: "#160d08" }}
     >
-      {/* Full-bleed hero photo — the warm greeting scene */}
-      <img
-        src={HERO_GREETING}
-        alt="Direct2YourDoc — your host welcoming a family in the private concierge greeting room"
-        className="absolute inset-0 w-full h-full object-cover z-0"
-        style={{ objectPosition: "64% center" }}
-      />
-      {/* Right scrim — the greeting (host + family + dogs) stays clear on the LEFT,
-          the headline/CTAs sit legibly over the darkened right. */}
-      <div
-        className="absolute inset-0 z-0 pointer-events-none"
-        style={{
-          background:
-            "linear-gradient(90deg, rgba(18,10,6,0) 38%, rgba(18,10,6,0.18) 56%, rgba(18,10,6,0.48) 76%, rgba(18,10,6,0.62) 100%)",
-        }}
-      />
-      {/* Bottom + top scrims to seat the photo into the page (kept light so the
-          warm greeting brightness survives; text shadows carry the legibility) */}
-      <div
-        className="absolute inset-x-0 bottom-0 h-40 z-0 pointer-events-none"
-        style={{ background: "linear-gradient(to bottom, transparent, rgba(18,10,6,0.6))" }}
-      />
-      <div
-        className="absolute inset-x-0 top-0 h-24 z-0 pointer-events-none"
-        style={{ background: "linear-gradient(to bottom, rgba(18,10,6,0.5), transparent)" }}
-      />
+      {/* DESKTOP: full-bleed greeting photo + scrims (kept light so the warm
+          brightness survives — text shadows carry legibility). Hidden on mobile. */}
+      <div className="hidden lg:block">
+        <img
+          src={HERO_GREETING}
+          alt="Direct2YourDoc — the host welcoming a family in the private concierge greeting room"
+          className="absolute inset-0 w-full h-full object-cover z-0"
+          style={{ objectPosition: "64% center" }}
+        />
+        <div
+          className="absolute inset-0 z-0 pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(18,10,6,0) 38%, rgba(18,10,6,0.18) 56%, rgba(18,10,6,0.48) 76%, rgba(18,10,6,0.62) 100%)",
+          }}
+        />
+        <div
+          className="absolute inset-x-0 bottom-0 h-40 z-0 pointer-events-none"
+          style={{ background: "linear-gradient(to bottom, transparent, rgba(18,10,6,0.6))" }}
+        />
+        <div
+          className="absolute inset-x-0 top-0 h-24 z-0 pointer-events-none"
+          style={{ background: "linear-gradient(to bottom, rgba(18,10,6,0.5), transparent)" }}
+        />
+      </div>
 
-      <div className="container relative z-10 pt-24 pb-0">
-        <div className="grid grid-cols-1 lg:grid-cols-11 min-h-screen items-center">
+      {/* MOBILE: portrait greeting photo as a top band; text stacks below on the
+          dark background where it's fully legible (no text-over-photo on phones). */}
+      <div className="lg:hidden relative">
+        <img
+          src={HERO_GREETING_MOBILE}
+          alt="Direct2YourDoc — the host welcoming a family in the private concierge greeting room"
+          className="w-full object-cover"
+          style={{ height: "58vh", objectPosition: "center 26%" }}
+        />
+        <div
+          className="absolute inset-x-0 bottom-0 h-24 pointer-events-none"
+          style={{ background: "linear-gradient(to bottom, transparent, #160d08)" }}
+        />
+        <div
+          className="absolute inset-x-0 top-0 h-20 pointer-events-none"
+          style={{ background: "linear-gradient(to bottom, rgba(18,10,6,0.55), transparent)" }}
+        />
+      </div>
+
+      <div className="container relative z-10 pt-8 pb-14 lg:pt-24 lg:pb-0">
+        <div className="grid grid-cols-1 lg:grid-cols-11 lg:min-h-screen items-center">
 
           {/* Left: Text content — 6/11 */}
           <div
-            className="lg:col-start-7 lg:col-span-5 flex flex-col justify-center py-20 lg:pl-10"
+            className="lg:col-start-7 lg:col-span-5 flex flex-col justify-center py-6 lg:py-20 lg:pl-10"
             ref={textRef}
           >
             {/* Brand mark + label */}
