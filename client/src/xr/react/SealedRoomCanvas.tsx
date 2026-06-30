@@ -71,11 +71,46 @@ function RoomScene({
     return buildPresence(skin, presenceTex, { width: height * aspect, height, y: 1.05 });
   }, [stage, skin, presenceTex, aspect]);
 
-  // Billboard any presence-plane toward the camera each frame.
-  useFrame(() => {
+  // Greeting skin: drive the waterfall (animated scrolling texture) and the KM
+  // emblem (loaded image). Both are tagged by the engine via userData; the engine
+  // itself loads/animates nothing.
+  const waterTex = useRef<THREE.CanvasTexture | null>(null);
+  useEffect(() => {
+    const wf = room.getObjectByName("waterfall") as THREE.Mesh | null;
+    if (wf) {
+      const tex = makeWaterTexture(skin.palette.water ?? "#6fb6cf");
+      tex.wrapS = THREE.RepeatWrapping;
+      tex.wrapT = THREE.RepeatWrapping;
+      tex.repeat.set(1, 2);
+      const m = wf.material as THREE.MeshStandardMaterial;
+      m.map = tex;
+      m.emissiveMap = tex;
+      m.needsUpdate = true;
+      waterTex.current = tex;
+    }
+    const emblem = room.getObjectByName("km-emblem") as THREE.Mesh | null;
+    if (emblem && skin.logoImage) {
+      new THREE.TextureLoader().load(skin.logoImage, (t) => {
+        t.colorSpace = THREE.SRGBColorSpace;
+        const m = emblem.material as THREE.MeshStandardMaterial;
+        m.map = t;
+        m.emissiveMap = t;
+        m.color = new THREE.Color(0xffffff);
+        m.needsUpdate = true;
+      });
+    }
+    return () => {
+      waterTex.current?.dispose();
+      waterTex.current = null;
+    };
+  }, [room, skin]);
+
+  // Billboard presence toward the camera + flow the waterfall downward each frame.
+  useFrame((_, dt) => {
     presence?.traverse((o) => {
       if (o.userData.billboard) o.lookAt(camera.position.x, o.position.y, camera.position.z);
     });
+    if (waterTex.current) waterTex.current.offset.y -= dt * 0.35;
   });
 
   // Raycast click/select on interactive meshes (Door 1 advances the stage).
@@ -249,6 +284,33 @@ function makeCanvasTexture(
   tex.colorSpace = THREE.SRGBColorSpace;
   tex.anisotropy = 8;
   tex.needsUpdate = true;
+  return tex;
+}
+
+/** A tall canvas of vertical water streaks → a tiling, scrollable CanvasTexture.
+ *  Cheap (no shader), Quest-friendly; the React layer scrolls offset.y to "flow". */
+function makeWaterTexture(colorHex: string): THREE.CanvasTexture {
+  const w = 128;
+  const h = 512;
+  const canvas = document.createElement("canvas");
+  canvas.width = w;
+  canvas.height = h;
+  const ctx = canvas.getContext("2d")!;
+  const base = new THREE.Color(colorHex);
+  const grad = ctx.createLinearGradient(0, 0, 0, h);
+  grad.addColorStop(0, `#${base.clone().lerp(new THREE.Color(0xffffff), 0.35).getHexString()}`);
+  grad.addColorStop(1, `#${base.clone().lerp(new THREE.Color(0x000000), 0.35).getHexString()}`);
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, w, h);
+  for (let i = 0; i < 26; i++) {
+    const x = (i / 26) * w + (((i * 53) % 7) - 3);
+    ctx.globalAlpha = 0.1 + ((i * 37) % 22) / 100;
+    ctx.fillStyle = i % 2 ? "#ffffff" : "#cfeefa";
+    ctx.fillRect(x, 0, 1 + (i % 3), h);
+  }
+  ctx.globalAlpha = 1;
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.colorSpace = THREE.SRGBColorSpace;
   return tex;
 }
 

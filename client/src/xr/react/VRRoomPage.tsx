@@ -1,8 +1,17 @@
 import { useEffect, useState } from "react";
 import { SealedRoomCanvas, xrStore } from "./SealedRoomCanvas";
 import { direct2YourDocSkin } from "@/xr/skins/direct2yourdoc";
+import { direct2YourDocGreetingSkin } from "@/xr/skins/direct2yourdoc-greeting";
 
 type XRSupport = "checking" | "supported" | "unsupported";
+
+// Default to the red-oak/waterfall greeting direction; ?skin=classic keeps the
+// original teal sealed room available for A/B (it stays in the build, not deleted).
+const skin =
+  typeof window !== "undefined" &&
+  new URLSearchParams(window.location.search).get("skin") === "classic"
+    ? direct2YourDocSkin
+    : direct2YourDocGreetingSkin;
 
 export default function VRRoomPage() {
   const [support, setSupport] = useState<XRSupport>("checking");
@@ -17,7 +26,7 @@ export default function VRRoomPage() {
 
   return (
     <div style={{ position: "fixed", inset: 0, background: "#081519" }}>
-      <SealedRoomCanvas skin={direct2YourDocSkin} xr={support === "supported"} />
+      <SealedRoomCanvas skin={skin} xr={support === "supported"} />
 
       <div style={{ position: "absolute", top: 16, left: 16, right: 16, display: "flex", gap: 12, alignItems: "center" }}>
         {support === "supported" && (

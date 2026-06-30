@@ -7,6 +7,11 @@ export interface RoomPalette {
   floor: string;
   trim: string;
   fire: string;
+  /** Optional richer palette used by feature skins (default: derived from the four core
+   *  colours so existing skins keep working unchanged). */
+  wood?: string; // warm wood (e.g. red oak) for panelled walls / desks
+  accent?: string; // a secondary accent (e.g. lavender) used sparingly
+  water?: string; // waterfall / pond tint
 }
 
 export interface RoomObject {
@@ -25,6 +30,11 @@ export interface RoomSkin {
   /** Optional presence image (e.g. the seated professional). Generic on purpose — NOT
    *  medical-specific. The engine never fetches it; the React layer loads it and passes a texture. */
   presenceImage?: string;
+  /** Waiting-room feature wall. "hearth" (default) = the original glowing niche;
+   *  "waterfall" = a water feature wall with a basin/koi pond and a brand emblem. */
+  feature?: "hearth" | "waterfall";
+  /** Optional brand emblem texture for the feature wall (e.g. the KM monogram). */
+  logoImage?: string;
 }
 
 const FRONT_WALL_Z = -2.3;

@@ -70,6 +70,22 @@ export function buildSealedRoom(stage: RoomStage, skin: RoomSkin): THREE.Group {
     metalness: 0.25,
   });
 
+  // Greeting skin: polished wood + a water feature wall instead of the hearth.
+  const greeting = skin.feature === "waterfall";
+  if (greeting) {
+    // Red-oak panelling reads as polished wood, not matte plaster.
+    wallMat.roughness = 0.5;
+    wallMat.metalness = 0.08;
+    floorMat.roughness = 0.2;
+    floorMat.metalness = 0.12;
+  }
+  const accentMat = new THREE.MeshStandardMaterial({
+    color: new THREE.Color(p.accent ?? p.fire), // lavender accent (sparingly)
+    roughness: 0.55,
+    metalness: 0.05,
+  });
+  const waterCol = new THREE.Color(p.water ?? "#6fb6cf");
+
   // ---- shell --------------------------------------------------------------
   const floor = plane("floor", W, D, floorMat);
   floor.rotation.x = -Math.PI / 2;
@@ -122,28 +138,111 @@ export function buildSealedRoom(stage: RoomStage, skin: RoomSkin): THREE.Group {
   );
   g.add(fixture);
 
-  // ---- hearth: a recessed fire niche on the front wall (the warm anchor) ---
-  g.add(
-    box(
-      "hearth-surround",
-      [1.5, 1.0, 0.12],
-      new THREE.MeshStandardMaterial({ color: new THREE.Color(p.wall).multiplyScalar(0.6), roughness: 0.9 }),
-      [-0.95, 0.55, FRONT + 0.06],
-    ),
-  );
-  g.add(
-    box(
-      "hearth",
-      [1.15, 0.62, 0.06],
+  // ---- feature wall: hearth (default) OR a waterfall + koi pond (greeting) --
+  if (greeting) {
+    const FX = -0.7; // feature centre x (door sits on the right at x=1.0)
+    // Pale stone backing behind the water.
+    g.add(
+      box(
+        "waterfall-stone",
+        [1.7, 2.5, 0.08],
+        new THREE.MeshStandardMaterial({ color: new THREE.Color("#c7cfd4"), roughness: 0.85 }),
+        [FX, 1.25, FRONT + 0.04],
+      ),
+    );
+    // The water sheet — the React layer scrolls an animated texture onto this
+    // (tagged via userData.waterfall). Engine loads nothing.
+    const water = plane(
+      "waterfall",
+      1.5,
+      2.2,
       new THREE.MeshStandardMaterial({
-        color: new THREE.Color(p.fire),
-        emissive: new THREE.Color(p.fire),
-        emissiveIntensity: 0.9,
+        color: waterCol,
+        emissive: waterCol,
+        emissiveIntensity: 0.28,
+        roughness: 0.18,
+        metalness: 0.0,
+        transparent: true,
+        opacity: 0.94,
       }),
-      [-0.95, 0.5, FRONT + 0.1],
-    ),
-  );
-  g.add(box("hearth-mantel", [1.6, 0.1, 0.22], goldMat, [-0.95, 1.12, FRONT + 0.11]));
+    );
+    water.position.set(FX, 1.25, FRONT + 0.1);
+    water.userData.waterfall = true;
+    g.add(water);
+    // Gold frame around the feature.
+    g.add(box("wf-frame-l", [0.07, 2.55, 0.12], goldMat, [FX - 0.84, 1.25, FRONT + 0.08]));
+    g.add(box("wf-frame-r", [0.07, 2.55, 0.12], goldMat, [FX + 0.84, 1.25, FRONT + 0.08]));
+    g.add(box("wf-frame-top", [1.75, 0.07, 0.12], goldMat, [FX, 2.52, FRONT + 0.08]));
+    // KM emblem above the water (React applies skin.logoImage if provided).
+    const emblem = plane(
+      "km-emblem",
+      0.62,
+      0.62,
+      new THREE.MeshStandardMaterial({
+        color: new THREE.Color(p.trim),
+        emissive: new THREE.Color(p.trim),
+        emissiveIntensity: 0.5,
+        roughness: 0.4,
+        metalness: 0.5,
+        transparent: true,
+      }),
+    );
+    emblem.position.set(FX, 2.02, FRONT + 0.12);
+    emblem.userData.logo = true;
+    g.add(emblem);
+    // Koi pond basin at the base of the waterfall.
+    const pond = plane(
+      "koi-pond",
+      1.7,
+      0.95,
+      new THREE.MeshStandardMaterial({ color: new THREE.Color("#0c2a30"), roughness: 0.08, metalness: 0.3 }),
+    );
+    pond.rotation.x = -Math.PI / 2;
+    pond.position.set(FX, 0.04, FRONT + 0.62);
+    g.add(pond);
+    g.add(box("pond-rim-f", [1.84, 0.09, 0.06], goldMat, [FX, 0.07, FRONT + 1.09]));
+    g.add(box("pond-rim-l", [0.06, 0.09, 1.0], goldMat, [FX - 0.89, 0.07, FRONT + 0.62]));
+    g.add(box("pond-rim-r", [0.06, 0.09, 1.0], goldMat, [FX + 0.89, 0.07, FRONT + 0.62]));
+    // Two koi.
+    g.add(
+      box(
+        "koi-1",
+        [0.24, 0.03, 0.1],
+        new THREE.MeshStandardMaterial({ color: new THREE.Color("#e8743b"), roughness: 0.6 }),
+        [FX - 0.25, 0.06, FRONT + 0.5],
+      ),
+    );
+    g.add(
+      box(
+        "koi-2",
+        [0.24, 0.03, 0.1],
+        new THREE.MeshStandardMaterial({ color: new THREE.Color("#f2f2f2"), roughness: 0.6 }),
+        [FX + 0.32, 0.06, FRONT + 0.74],
+      ),
+    );
+  } else {
+    g.add(
+      box(
+        "hearth-surround",
+        [1.5, 1.0, 0.12],
+        new THREE.MeshStandardMaterial({ color: new THREE.Color(p.wall).multiplyScalar(0.6), roughness: 0.9 }),
+        [-0.95, 0.55, FRONT + 0.06],
+      ),
+    );
+    g.add(
+      box(
+        "hearth",
+        [1.15, 0.62, 0.06],
+        new THREE.MeshStandardMaterial({
+          color: new THREE.Color(p.fire),
+          emissive: new THREE.Color(p.fire),
+          emissiveIntensity: 0.9,
+        }),
+        [-0.95, 0.5, FRONT + 0.1],
+      ),
+    );
+    g.add(box("hearth-mantel", [1.6, 0.1, 0.22], goldMat, [-0.95, 1.12, FRONT + 0.11]));
+  }
 
   // ---- Door 1: the threshold to the office, on the front wall --------------
   const door = box("door-1", [1, 2.1, 0.12], doorMat, [1.0, 1.05, FRONT + 0.07]);
@@ -167,6 +266,32 @@ export function buildSealedRoom(stage: RoomStage, skin: RoomSkin): THREE.Group {
         [1.0, 0.02, FRONT + 0.34],
       ),
     );
+
+    // Greeting reception: a wood front desk + a pair of lavender accent chairs.
+    if (greeting) {
+      const fd = new THREE.Group();
+      fd.name = "front-desk";
+      fd.position.set(-1.45, 0, -0.1);
+      fd.rotation.y = Math.PI / 2; // face into the room
+      fd.add(box("fd-body", [1.5, 1.05, 0.6], woodMat, [0, 0.52, 0]));
+      fd.add(box("fd-top", [1.6, 0.08, 0.72], goldMat, [0, 1.08, 0]));
+      fd.add(box("fd-kick", [1.5, 0.08, 0.62], goldMat, [0, 0.06, 0]));
+      g.add(fd);
+
+      const accentChair = (nm: string, x: number, z: number, ry: number) => {
+        const c = new THREE.Group();
+        c.name = nm;
+        c.position.set(x, 0, z);
+        c.rotation.y = ry;
+        c.add(box(`${nm}-seat`, [0.62, 0.14, 0.6], accentMat, [0, 0.44, 0]));
+        c.add(box(`${nm}-back`, [0.62, 0.62, 0.12], accentMat, [0, 0.78, -0.24]));
+        c.add(box(`${nm}-arm-l`, [0.1, 0.3, 0.56], accentMat, [-0.27, 0.55, 0]));
+        c.add(box(`${nm}-arm-r`, [0.1, 0.3, 0.56], accentMat, [0.27, 0.55, 0]));
+        g.add(c);
+      };
+      accentChair("accent-chair-1", W / 2 - 0.45, 0.5, -Math.PI / 2);
+      accentChair("accent-chair-2", W / 2 - 0.45, 1.5, -Math.PI / 2);
+    }
   }
 
   // ---- office furnishings --------------------------------------------------
