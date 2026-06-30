@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { XR, createXRStore, XROrigin } from "@react-three/xr";
 import { OrbitControls } from "@react-three/drei";
@@ -20,12 +20,16 @@ function RoomScene({
   fade,
   enableOrbit,
   onDoorSelect,
+  intro,
+  onContinue,
 }: {
   skin: RoomSkin;
   stage: RoomStage;
   fade: number;
   enableOrbit: boolean;
   onDoorSelect: () => void;
+  intro: boolean;
+  onContinue: () => void;
 }) {
   const { camera } = useThree();
 
@@ -114,6 +118,12 @@ function RoomScene({
       )}
 
       {presence && <primitive object={presence} />}
+
+      {/* Spatial host hand-off — renders INSIDE the 3D scene so it works in-headset
+          (a 2D DOM overlay does not). The founder greets the visitor and the
+          "Meet your doctor" control crosses into the office. */}
+      {intro && stage === "waiting" && <HostBeat skin={skin} onContinue={onContinue} />}
+
       {enableOrbit && (
         <OrbitControls
           makeDefault
@@ -167,10 +177,26 @@ export function SealedRoomCanvas({ skin, xr }: { skin: RoomSkin; xr: boolean }) 
         {xr ? (
           <XR store={store}>
             <XROrigin position={[0, 0, 1.6]} />
-            <RoomScene skin={skin} stage={stage} fade={fade} enableOrbit={false} onDoorSelect={beginIntro} />
+            <RoomScene
+              skin={skin}
+              stage={stage}
+              fade={fade}
+              enableOrbit={false}
+              onDoorSelect={beginIntro}
+              intro={intro}
+              onContinue={advance}
+            />
           </XR>
         ) : (
-          <RoomScene skin={skin} stage={stage} fade={fade} enableOrbit onDoorSelect={beginIntro} />
+          <RoomScene
+            skin={skin}
+            stage={stage}
+            fade={fade}
+            enableOrbit
+            onDoorSelect={beginIntro}
+            intro={intro}
+            onContinue={advance}
+          />
         )}
       </Canvas>
 
@@ -201,106 +227,171 @@ export function SealedRoomCanvas({ skin, xr }: { skin: RoomSkin; xr: boolean }) 
           Step through Door 1 → the office
         </button>
       )}
-
-      {intro && <HostIntro skin={skin} onContinue={advance} />}
     </>
   );
 }
 
-/** The founder's introduction beat — the warm hand-off from waiting room to office.
- *  Nate is the HOST / CONNECTOR: he personally introduces the visitor to a physician
- *  from his network. (2D cinematic for desktop + the checkpoint; the in-headset 3D
- *  host panel is the follow-up once the concept is approved.) */
-function HostIntro({ skin, onContinue }: { skin: RoomSkin; onContinue: () => void }) {
+// ---- Spatial host beat (works in-headset; a 2D DOM overlay does not) -----------
+
+/** Paint text onto an offscreen canvas → a crisp CanvasTexture. No font fetch:
+ *  uses system fonts on whatever device renders. Returns a transparent-bg texture. */
+function makeCanvasTexture(
+  w: number,
+  h: number,
+  draw: (ctx: CanvasRenderingContext2D, w: number, h: number) => void,
+): THREE.CanvasTexture {
+  const canvas = document.createElement("canvas");
+  canvas.width = w;
+  canvas.height = h;
+  const ctx = canvas.getContext("2d")!;
+  draw(ctx, w, h);
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.anisotropy = 8;
+  tex.needsUpdate = true;
+  return tex;
+}
+
+function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+
+/** The founder's introduction beat, rendered as real geometry in the room.
+ *  Nate is the HOST / CONNECTOR who introduces the visitor to a network physician.
+ *  Billboards toward the viewer (yaw only) and offers a gaze/ray-selectable control. */
+function HostBeat({ skin, onContinue }: { skin: RoomSkin; onContinue: () => void }) {
+  const { camera } = useThree();
+  const group = useRef<THREE.Group>(null);
+  const [hostTex, setHostTex] = useState<THREE.Texture | null>(null);
+  const [hostAspect, setHostAspect] = useState(0.62);
+
+  useEffect(() => {
+    let alive = true;
+    new THREE.TextureLoader().load("/manus-storage/nate-host.png", (tex) => {
+      if (!alive) return;
+      tex.colorSpace = THREE.SRGBColorSpace;
+      const img = tex.image as { width?: number; height?: number } | undefined;
+      if (img?.width && img?.height) setHostAspect(img.width / img.height);
+      setHostTex(tex);
+    });
+    return () => {
+      alive = false;
+    };
+  }, []);
+
+  const gold = skin.palette.trim;
+  const ink = "#f4e9c8";
+
+  // Signed welcome card.
+  const cardTex = useMemo(
+    () =>
+      makeCanvasTexture(1024, 600, (ctx, w, h) => {
+        roundRect(ctx, 8, 8, w - 16, h - 16, 28);
+        ctx.fillStyle = "rgba(9,22,27,0.82)";
+        ctx.fill();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = gold;
+        ctx.stroke();
+
+        ctx.textBaseline = "top";
+        ctx.fillStyle = gold;
+        ctx.font = "700 26px Georgia, serif";
+        ctx.letterSpacing = "7px";
+        ctx.fillText("A WORD FROM YOUR HOST", 56, 58);
+        ctx.letterSpacing = "0px";
+
+        ctx.fillStyle = ink;
+        ctx.font = "600 52px Georgia, serif";
+        ctx.fillText("Welcome. Let me introduce", 56, 120);
+        ctx.fillText("you to your doctor.", 56, 184);
+
+        ctx.fillStyle = "rgba(244,233,200,0.85)";
+        ctx.font = "300 28px Georgia, serif";
+        ctx.fillText("I’ve personally connected you with a trusted", 56, 290);
+        ctx.fillText("physician from our network. Step in when ready.", 56, 332);
+
+        ctx.fillStyle = ink;
+        ctx.font = "italic 600 60px 'Snell Roundhand', 'Brush Script MT', cursive";
+        ctx.fillText("Nate Sillyman", 56, 430);
+        ctx.fillStyle = gold;
+        ctx.font = "700 22px Georgia, serif";
+        ctx.letterSpacing = "6px";
+        ctx.fillText("FOUNDER & HOST", 60, 520);
+        ctx.letterSpacing = "0px";
+      }),
+    [gold],
+  );
+
+  // "Meet your doctor" pill.
+  const btnTex = useMemo(
+    () =>
+      makeCanvasTexture(768, 192, (ctx, w, h) => {
+        roundRect(ctx, 6, 6, w - 12, h - 12, (h - 12) / 2);
+        ctx.fillStyle = gold;
+        ctx.fill();
+        ctx.fillStyle = "#0b1a20";
+        ctx.font = "800 56px Georgia, serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("Meet your doctor  →", w / 2, h / 2 + 4);
+      }),
+    [gold],
+  );
+
+  // Billboard the whole beat toward the viewer (yaw only — stays upright).
+  useFrame(() => {
+    const g = group.current;
+    if (g) g.lookAt(camera.position.x, g.position.y, camera.position.z);
+  });
+
+  const hostH = 1.5;
+  const hostW = hostH * hostAspect;
+
   return (
-    <div
-      style={{
-        position: "absolute",
-        inset: 0,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "clamp(16px, 4vw, 64px)",
-        padding: "4vw",
-        background:
-          "radial-gradient(120% 100% at 50% 35%, rgba(8,21,25,0.74), rgba(8,21,25,0.95))",
-        backdropFilter: "blur(2px)",
-      }}
-    >
+    <group ref={group} position={[0, 1.45, 0.0]}>
+      {/* Cinematic dim behind the beat so it reads. */}
+      <mesh position={[0, 0, -0.06]} renderOrder={10}>
+        <planeGeometry args={[3.6, 2.6]} />
+        <meshBasicMaterial color="#061216" transparent opacity={0.5} depthWrite={false} />
+      </mesh>
+
       {/* Host likeness */}
-      <img
-        src="/manus-storage/nate-host.png"
-        alt="Nate, founder and host"
-        style={{
-          height: "min(74vh, 620px)",
-          objectFit: "contain",
-          filter: "drop-shadow(0 24px 48px rgba(0,0,0,0.55))",
-        }}
-      />
+      {hostTex && (
+        <mesh position={[-0.62, -0.02, 0]} renderOrder={11}>
+          <planeGeometry args={[hostW, hostH]} />
+          <meshBasicMaterial map={hostTex} transparent alphaTest={0.5} toneMapped={false} depthWrite={false} />
+        </mesh>
+      )}
 
       {/* Signed welcome card */}
-      <div style={{ maxWidth: 460, color: "#f4e9c8" }}>
-        <div
-          style={{
-            fontSize: 13,
-            letterSpacing: "0.22em",
-            textTransform: "uppercase",
-            color: "#c9a24b",
-            fontWeight: 700,
-            marginBottom: 18,
-          }}
-        >
-          A word from your host
-        </div>
-        <h1
-          style={{
-            fontFamily: "Georgia, 'Times New Roman', serif",
-            fontSize: "clamp(28px, 3.4vw, 44px)",
-            lineHeight: 1.18,
-            margin: 0,
-            fontWeight: 600,
-          }}
-        >
-          Welcome. Let me introduce you to your doctor.
-        </h1>
-        <p style={{ fontSize: 17, lineHeight: 1.6, opacity: 0.86, marginTop: 18 }}>
-          I’ve personally connected you with a trusted physician from our network.
-          They’re ready for you — step in whenever you are.
-        </p>
+      <mesh position={[0.62, 0.2, 0]} renderOrder={11}>
+        <planeGeometry args={[1.28, 0.75]} />
+        <meshBasicMaterial map={cardTex} transparent toneMapped={false} depthWrite={false} />
+      </mesh>
 
-        <div style={{ marginTop: 26, display: "flex", alignItems: "baseline", gap: 12 }}>
-          <span
-            style={{
-              fontFamily: "'Snell Roundhand', 'Brush Script MT', cursive",
-              fontSize: 34,
-              color: "#f4e9c8",
-            }}
-          >
-            Nate Sillyman
-          </span>
-          <span style={{ fontSize: 13, letterSpacing: "0.12em", color: "#c9a24b", textTransform: "uppercase" }}>
-            Founder &amp; Host
-          </span>
-        </div>
-
-        <button
-          onClick={onContinue}
-          style={{
-            marginTop: 30,
-            padding: "15px 30px",
-            borderRadius: 9999,
-            border: `1px solid ${skin.palette.trim}`,
-            background: skin.palette.trim,
-            color: "#0b1a20",
-            fontWeight: 800,
-            fontSize: 16,
-            cursor: "pointer",
-            boxShadow: "0 10px 30px rgba(0,0,0,0.45)",
-          }}
-        >
-          Meet your doctor →
-        </button>
-      </div>
-    </div>
+      {/* "Meet your doctor" — selectable by ray/gaze/click, with a generous collider */}
+      <group
+        position={[0.62, -0.42, 0.02]}
+        onClick={(e: any) => {
+          e.stopPropagation?.();
+          onContinue();
+        }}
+      >
+        <mesh renderOrder={12}>
+          <planeGeometry args={[0.74, 0.185]} />
+          <meshBasicMaterial map={btnTex} transparent toneMapped={false} depthWrite={false} />
+        </mesh>
+        <mesh position={[0, 0, 0.01]}>
+          <planeGeometry args={[0.95, 0.34]} />
+          <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+        </mesh>
+      </group>
+    </group>
   );
 }
