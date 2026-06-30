@@ -56,8 +56,14 @@ function RoomScene({
 
   return (
     <>
+      {/* Lighting rig: low ambient + a soft sky/ground tint, a warm key from the
+          ceiling fixture, a cool fill toward the visitor so furniture faces aren't
+          black, and a focused emerald glow at the hearth. */}
       <ambientLight intensity={0.5} />
-      <pointLight position={[0, 2.6, 0]} intensity={20} distance={10} />
+      <hemisphereLight args={[0xcfe6df, 0x0b1a20, 0.65]} />
+      <pointLight position={[0, 2.7, -0.4]} intensity={13} distance={10} decay={2} color={0xfff1d4} />
+      <pointLight position={[0, 1.8, 1.6]} intensity={7} distance={9} decay={2} color={0xcfe6e0} />
+      <pointLight position={[-0.95, 0.6, -2.1]} intensity={4} distance={3.5} decay={2} color={0x2fae89} />
       <primitive object={room} onClick={(e: any) => onSelect(e)} />
 
       {/* Oversized INVISIBLE collider over Door 1. The visible door is a 1 m panel
@@ -76,7 +82,14 @@ function RoomScene({
       )}
 
       {presence && <primitive object={presence} />}
-      {enableOrbit && <OrbitControls makeDefault target={[0, 1.4, -1.5]} />}
+      {enableOrbit && (
+        <OrbitControls
+          makeDefault
+          target={[0, 1.15, -1.7]}
+          minPolarAngle={Math.PI * 0.28}
+          maxPolarAngle={Math.PI * 0.6}
+        />
+      )}
 
       {/* Comfort fade overlay. */}
       <mesh position={[0, 1.4, -0.3]} visible={fade > 0} renderOrder={999}>
@@ -105,7 +118,11 @@ export function SealedRoomCanvas({ skin, xr }: { skin: RoomSkin; xr: boolean }) 
 
   return (
     <>
-      <Canvas camera={{ position: [0, 1.6, 1.8], fov: 70 }} style={{ width: "100%", height: "100%" }}>
+      <Canvas
+        camera={{ position: [0, 1.55, 1.5], fov: 66 }}
+        gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.05 }}
+        style={{ width: "100%", height: "100%" }}
+      >
         {xr ? (
           <XR store={store}>
             <XROrigin position={[0, 0, 1.6]} />

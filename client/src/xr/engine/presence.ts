@@ -12,9 +12,13 @@ export function buildPresence(skin: RoomSkin, texture?: THREE.Texture): THREE.Gr
   g.name = "presence";
 
   const mat = new THREE.MeshBasicMaterial({
-    color: texture ? 0xffffff : new THREE.Color(skin.palette.trim),
+    // With a texture: show it true-colour. Without (Stage 1): a soft dark silhouette
+    // that reads as "a person sits here" — NOT a bright placeholder slab. The real
+    // seated presence (image or WebRTC video) replaces this in Stage 2.
+    color: texture ? 0xffffff : new THREE.Color(skin.palette.wall).multiplyScalar(1.5),
     map: texture ?? null,
     transparent: true,
+    opacity: texture ? 1 : 0.92,
     side: THREE.DoubleSide,
   });
   const planeMesh = new THREE.Mesh(new THREE.PlaneGeometry(0.9, 1.6), mat);

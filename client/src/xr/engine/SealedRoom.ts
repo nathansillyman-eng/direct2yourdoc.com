@@ -1,16 +1,27 @@
 // SealedRoom engine — reusable room tech. No brand/medical identity. No specific assets.
+// Everything is palette-driven so a skin re-themes the whole room without touching geometry.
 import * as THREE from "three";
 import type { RoomStage, RoomSkin } from "./RoomSkin";
 
 const W = 4; // room width  (x)
 const D = 5; // room depth  (z)
 const H = 3; // room height (y)
+const FRONT = -D / 2; // front wall plane (z)
 
-function panel(name: string, w: number, h: number, color: string): THREE.Mesh {
-  const m = new THREE.Mesh(
-    new THREE.PlaneGeometry(w, h),
-    new THREE.MeshStandardMaterial({ color: new THREE.Color(color), side: THREE.DoubleSide }),
-  );
+function box(
+  name: string,
+  size: [number, number, number],
+  mat: THREE.Material,
+  pos: [number, number, number],
+): THREE.Mesh {
+  const m = new THREE.Mesh(new THREE.BoxGeometry(...size), mat);
+  m.name = name;
+  m.position.set(...pos);
+  return m;
+}
+
+function plane(name: string, w: number, h: number, mat: THREE.Material): THREE.Mesh {
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), mat);
   m.name = name;
   return m;
 }
@@ -21,86 +32,208 @@ export function buildSealedRoom(stage: RoomStage, skin: RoomSkin): THREE.Group {
   g.name = `sealed-room:${stage}`;
   const p = skin.palette;
 
-  const floor = panel("floor", W, D, p.floor);
+  // ---- palette-driven materials -------------------------------------------
+  // floor colour MUST stay exactly palette.floor (engine contract / test).
+  const floorMat = new THREE.MeshStandardMaterial({
+    color: new THREE.Color(p.floor),
+    roughness: 0.32,
+    metalness: 0.1, // faint sheen so the room reads as a real polished floor
+  });
+  const wallMat = new THREE.MeshStandardMaterial({
+    color: new THREE.Color(p.wall),
+    roughness: 0.96,
+    metalness: 0.0,
+    side: THREE.DoubleSide,
+  });
+  const ceilMat = new THREE.MeshStandardMaterial({
+    color: new THREE.Color(p.wall).multiplyScalar(0.45),
+    roughness: 1,
+    side: THREE.DoubleSide,
+  });
+  // Real metallic gold: with the procedural environment in the React layer this
+  // catches light and gives a genuine sheen instead of a flat tan block.
+  const goldMat = new THREE.MeshStandardMaterial({
+    color: new THREE.Color(p.trim),
+    roughness: 0.35,
+    metalness: 0.45, // reads as warm gold under the light rig (no env map needed)
+    emissive: new THREE.Color(p.trim),
+    emissiveIntensity: 0.14,
+  });
+  const woodMat = new THREE.MeshStandardMaterial({
+    color: new THREE.Color(p.floor).lerp(new THREE.Color(p.trim), 0.1),
+    roughness: 0.72,
+    metalness: 0.05,
+  });
+  const doorMat = new THREE.MeshStandardMaterial({
+    color: new THREE.Color(p.wall).multiplyScalar(0.7),
+    roughness: 0.5,
+    metalness: 0.25,
+  });
+
+  // ---- shell --------------------------------------------------------------
+  const floor = plane("floor", W, D, floorMat);
   floor.rotation.x = -Math.PI / 2;
   g.add(floor);
 
-  const ceiling = panel("ceiling", W, D, p.wall);
+  const ceiling = plane("ceiling", W, D, ceilMat);
   ceiling.rotation.x = Math.PI / 2;
   ceiling.position.y = H;
   g.add(ceiling);
 
-  const wallN = panel("wall-n", W, H, p.wall); // front (-z)
-  wallN.position.set(0, H / 2, -D / 2);
+  const wallN = plane("wall-n", W, H, wallMat); // front (-z)
+  wallN.position.set(0, H / 2, FRONT);
   g.add(wallN);
 
-  const wallS = panel("wall-s", W, H, p.wall); // back (+z)
+  const wallS = plane("wall-s", W, H, wallMat); // back (+z)
   wallS.position.set(0, H / 2, D / 2);
   wallS.rotation.y = Math.PI;
   g.add(wallS);
 
-  const wallW = panel("wall-w", D, H, p.wall);
+  const wallW = plane("wall-w", D, H, wallMat);
   wallW.position.set(-W / 2, H / 2, 0);
   wallW.rotation.y = Math.PI / 2;
   g.add(wallW);
 
-  const wallE = panel("wall-e", D, H, p.wall);
+  const wallE = plane("wall-e", D, H, wallMat);
   wallE.position.set(W / 2, H / 2, 0);
   wallE.rotation.y = -Math.PI / 2;
   g.add(wallE);
 
-  // Hearth: a glowing trim block on the front wall (the warm anchor).
-  const hearth = new THREE.Mesh(
-    new THREE.BoxGeometry(1.2, 0.6, 0.2),
-    new THREE.MeshStandardMaterial({
-      color: new THREE.Color(p.fire),
-      emissive: new THREE.Color(p.fire),
-      emissiveIntensity: 0.6,
-    }),
-  );
-  hearth.name = "hearth";
-  hearth.position.set(0, 0.3, -D / 2 + 0.11);
-  g.add(hearth);
+  // Gold baseboard + crown rings — instantly read "designed room", not a box.
+  const ring = (nm: string, y: number, h: number) => {
+    g.add(box(`${nm}-n`, [W, h, 0.05], goldMat, [0, y, FRONT + 0.03]));
+    g.add(box(`${nm}-s`, [W, h, 0.05], goldMat, [0, y, D / 2 - 0.03]));
+    g.add(box(`${nm}-w`, [0.05, h, D], goldMat, [-W / 2 + 0.03, y, 0]));
+    g.add(box(`${nm}-e`, [0.05, h, D], goldMat, [W / 2 - 0.03, y, 0]));
+  };
+  ring("base", 0.06, 0.12);
+  ring("crown", H - 0.06, 0.08);
 
-  // Door 1: the threshold to the office, on the front wall.
-  const door = new THREE.Mesh(
-    new THREE.BoxGeometry(1, 2.1, 0.12),
-    new THREE.MeshStandardMaterial({ color: new THREE.Color(p.trim) }),
+  // Warm ceiling fixture (also the visual source of the key light).
+  const fixture = box(
+    "ceiling-light",
+    [1.2, 0.05, 1.2],
+    new THREE.MeshStandardMaterial({
+      color: 0xfff3da,
+      emissive: new THREE.Color(0xfff0d0),
+      emissiveIntensity: 1.1,
+    }),
+    [0, H - 0.05, -0.4],
   );
-  door.name = "door-1";
-  door.position.set(1.0, 1.05, -D / 2 + 0.07);
+  g.add(fixture);
+
+  // ---- hearth: a recessed fire niche on the front wall (the warm anchor) ---
+  g.add(
+    box(
+      "hearth-surround",
+      [1.5, 1.0, 0.12],
+      new THREE.MeshStandardMaterial({ color: new THREE.Color(p.wall).multiplyScalar(0.6), roughness: 0.9 }),
+      [-0.95, 0.55, FRONT + 0.06],
+    ),
+  );
+  g.add(
+    box(
+      "hearth",
+      [1.15, 0.62, 0.06],
+      new THREE.MeshStandardMaterial({
+        color: new THREE.Color(p.fire),
+        emissive: new THREE.Color(p.fire),
+        emissiveIntensity: 0.9,
+      }),
+      [-0.95, 0.5, FRONT + 0.1],
+    ),
+  );
+  g.add(box("hearth-mantel", [1.6, 0.1, 0.22], goldMat, [-0.95, 1.12, FRONT + 0.11]));
+
+  // ---- Door 1: the threshold to the office, on the front wall --------------
+  const door = box("door-1", [1, 2.1, 0.12], doorMat, [1.0, 1.05, FRONT + 0.07]);
   door.userData.interactive = true;
   g.add(door);
+  g.add(box("door-frame-l", [0.08, 2.26, 0.16], goldMat, [0.44, 1.13, FRONT + 0.07]));
+  g.add(box("door-frame-r", [0.08, 2.26, 0.16], goldMat, [1.56, 1.13, FRONT + 0.07]));
+  g.add(box("door-frame-top", [1.2, 0.08, 0.16], goldMat, [1.0, 2.22, FRONT + 0.07]));
+  g.add(box("door-handle", [0.06, 0.18, 0.06], goldMat, [1.38, 1.0, FRONT + 0.14]));
+  // A soft threshold glow on the floor — hints the door leads somewhere.
+  if (stage === "waiting") {
+    g.add(
+      box(
+        "door-glow",
+        [0.9, 0.02, 0.3],
+        new THREE.MeshStandardMaterial({
+          color: new THREE.Color(p.fire),
+          emissive: new THREE.Color(p.fire),
+          emissiveIntensity: 0.7,
+        }),
+        [1.0, 0.02, FRONT + 0.34],
+      ),
+    );
+  }
 
+  // ---- office furnishings --------------------------------------------------
   if (stage === "office") {
-    const deskMat = new THREE.MeshStandardMaterial({ color: new THREE.Color(p.trim) });
-    const desk = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.75, 0.7), deskMat);
+    // Rug grounds the meeting (tonal blend of wall + floor).
+    const rug = plane(
+      "rug",
+      2.7,
+      2.1,
+      new THREE.MeshStandardMaterial({
+        color: new THREE.Color(p.wall).lerp(new THREE.Color(p.floor), 0.4),
+        roughness: 0.98,
+      }),
+    );
+    rug.rotation.x = -Math.PI / 2;
+    rug.position.set(0, 0.012, -1.4);
+    g.add(rug);
+
+    // Desk — top, gold edge band, modesty panel, side gables.
+    const desk = new THREE.Group();
     desk.name = "desk";
-    desk.position.set(0, 0.375, -1.4);
+    desk.position.set(0, 0, -1.3);
+    desk.add(box("desk-top", [1.7, 0.08, 0.8], woodMat, [0, 0.74, 0]));
+    desk.add(box("desk-edge", [1.76, 0.04, 0.86], goldMat, [0, 0.7, 0]));
+    desk.add(box("desk-front", [1.6, 0.62, 0.06], woodMat, [0, 0.4, 0.37]));
+    desk.add(box("desk-left", [0.06, 0.7, 0.78], woodMat, [-0.82, 0.36, 0]));
+    desk.add(box("desk-right", [0.06, 0.7, 0.78], woodMat, [0.82, 0.36, 0]));
     g.add(desk);
 
-    const chair = new THREE.Mesh(
-      new THREE.BoxGeometry(0.6, 0.9, 0.6),
-      new THREE.MeshStandardMaterial({ color: new THREE.Color(p.wall) }),
-    );
+    // Chair behind the desk (where the seated presence sits) — FIX: the old
+    // chair sat at z=+0.4, looming on top of the camera. It belongs back here.
+    const chairMat = new THREE.MeshStandardMaterial({
+      color: new THREE.Color(p.wall).multiplyScalar(1.35),
+      roughness: 0.7,
+      metalness: 0.08,
+    });
+    const chair = new THREE.Group();
     chair.name = "chair";
-    chair.position.set(0, 0.45, 0.4);
+    chair.position.set(0, 0, -2.15);
+    chair.add(box("chair-seat", [0.6, 0.1, 0.58], chairMat, [0, 0.5, 0]));
+    chair.add(box("chair-back", [0.6, 0.72, 0.08], chairMat, [0, 0.92, -0.25]));
+    chair.add(box("chair-post", [0.08, 0.46, 0.08], chairMat, [0, 0.26, 0]));
+    chair.add(box("chair-base", [0.5, 0.05, 0.5], chairMat, [0, 0.04, 0]));
     g.add(chair);
 
+    // Command-file hotspots — framed, gently glowing cards on the front wall.
     for (const obj of skin.commandFile) {
-      const hot = new THREE.Mesh(
-        new THREE.PlaneGeometry(0.5, 0.32),
+      const card = new THREE.Group();
+      card.name = `hotspot:${obj.label}`;
+      card.position.set(...obj.position);
+      card.userData.label = obj.label;
+      card.userData.interactive = true;
+      card.add(box("hs-frame", [0.56, 0.38, 0.03], goldMat, [0, 0, -0.012]));
+      const face = plane(
+        "hs-face",
+        0.5,
+        0.32,
         new THREE.MeshStandardMaterial({
-          color: new THREE.Color(p.trim),
+          color: new THREE.Color(p.wall).multiplyScalar(1.3),
           emissive: new THREE.Color(p.fire),
-          emissiveIntensity: 0.15,
+          emissiveIntensity: 0.22,
+          roughness: 0.5,
         }),
       );
-      hot.name = `hotspot:${obj.label}`;
-      hot.position.set(...obj.position);
-      hot.userData.label = obj.label;
-      hot.userData.interactive = true;
-      g.add(hot);
+      face.position.set(0, 0, 0.006);
+      card.add(face);
+      g.add(card);
     }
   }
 
