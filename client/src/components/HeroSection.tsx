@@ -49,17 +49,18 @@ export default function HeroSection() {
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
           background:
-            "linear-gradient(90deg, rgba(18,10,6,0) 34%, rgba(18,10,6,0.48) 50%, rgba(18,10,6,0.90) 66%, rgba(18,10,6,0.97) 100%)",
+            "linear-gradient(90deg, rgba(18,10,6,0) 38%, rgba(18,10,6,0.18) 56%, rgba(18,10,6,0.48) 76%, rgba(18,10,6,0.62) 100%)",
         }}
       />
-      {/* Bottom + top scrims to seat the photo into the page */}
+      {/* Bottom + top scrims to seat the photo into the page (kept light so the
+          warm greeting brightness survives; text shadows carry the legibility) */}
       <div
-        className="absolute inset-x-0 bottom-0 h-44 z-0 pointer-events-none"
-        style={{ background: "linear-gradient(to bottom, transparent, rgba(18,10,6,0.92))" }}
+        className="absolute inset-x-0 bottom-0 h-40 z-0 pointer-events-none"
+        style={{ background: "linear-gradient(to bottom, transparent, rgba(18,10,6,0.6))" }}
       />
       <div
-        className="absolute inset-x-0 top-0 h-28 z-0 pointer-events-none"
-        style={{ background: "linear-gradient(to bottom, rgba(18,10,6,0.7), transparent)" }}
+        className="absolute inset-x-0 top-0 h-24 z-0 pointer-events-none"
+        style={{ background: "linear-gradient(to bottom, rgba(18,10,6,0.5), transparent)" }}
       />
 
       <div className="container relative z-10 pt-24 pb-0">
