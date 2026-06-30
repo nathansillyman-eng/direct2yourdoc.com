@@ -87,7 +87,7 @@ export default function HeroSection() {
 
           {/* Left: Text content — 6/11 */}
           <div
-            className="lg:col-start-7 lg:col-span-5 flex flex-col justify-center py-6 lg:py-20 lg:pl-10"
+            className="lg:col-start-8 lg:col-span-4 flex flex-col justify-center py-6 lg:py-20 lg:pl-8 lg:pr-2"
             ref={textRef}
           >
             {/* Brand mark + label */}
