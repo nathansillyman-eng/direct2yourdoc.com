@@ -26,7 +26,7 @@ export function RoomAudio({ stage, skin, enabled }: { stage: RoomStage; skin: Ro
       a.play().catch(() => {}); // ignore autoplay rejection; re-enabled on the next gesture
       els.current.push(a);
     };
-    if (cfg.bed) make(cfg.bed, 0.32); // bed ≈ −22 dB feel
+    if (cfg.bed) make(cfg.bed, 0.2); // low bed — never competes with a voice
     cfg.sources.forEach((s) => make(s.url, Math.min(0.5, s.gain)));
 
     return () => {
