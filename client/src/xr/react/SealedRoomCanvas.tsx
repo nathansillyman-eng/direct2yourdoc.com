@@ -8,6 +8,7 @@ import { buildPresence } from "@/xr/engine/presence";
 import type { RoomSkin, RoomStage } from "@/xr/engine/RoomSkin";
 import { advanceStage, FADE_MS } from "@/xr/locomotion";
 import { RoomLighting } from "./RoomLighting";
+import { makeWoodTexture } from "./materials";
 
 const store = createXRStore();
 export { store as xrStore };
@@ -111,9 +112,26 @@ function RoomScene({
         m.needsUpdate = true;
       });
     }
+    // Red-oak grain on the panelled walls + wood furniture (skip the floor so its
+    // polished sheen stays; skip gold/accent/upholstery).
+    const woodTex = makeWoodTexture(skin.palette.wood ?? skin.palette.wall);
+    woodTex.repeat.set(3, 2);
+    room.traverse((o) => {
+      const m = o as THREE.Mesh;
+      if (!(m as { isMesh?: boolean }).isMesh) return;
+      if (/^(wall-[nsew]|fd-body|desk-top|desk-front|desk-left|desk-right|shelf-case|ps-arm|ps-leg)/.test(m.name)) {
+        const mat = m.material as THREE.MeshStandardMaterial;
+        if (mat && "map" in mat) {
+          mat.map = woodTex;
+          mat.needsUpdate = true;
+        }
+      }
+    });
+
     return () => {
       waterTex.current?.dispose();
       waterTex.current = null;
+      woodTex.dispose();
     };
   }, [room, skin]);
 

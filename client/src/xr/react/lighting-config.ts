@@ -33,16 +33,16 @@ export function lightingForStage(stage: RoomStage, palette: RoomPalette): RoomLi
       fill: { color: "#e9c58a", intensity: 6, position: [-2, 2.2, 1] },
       rim: { color: palette.trim, intensity: 0.45, position: [-1, 3, -3.5] },
       feature: {
-        color: "#ffcaa0", intensity: 4, position: [1.9, 1.2, -1.4],
-        distance: 6, decay: 2, flicker: "warm", base: 4, amp: 0.5,
+        color: "#ffcaa0", intensity: 2.6, position: [1.5, 1.7, -0.4],
+        distance: 5, decay: 2, flicker: "warm", base: 2.6, amp: 0.35,
       },
     };
   }
   return {
-    ambient: 0.34,
-    hemisphere: { sky: "#dfe7ea", ground: "#241a12", intensity: 0.55 },
+    ambient: 0.5,
+    hemisphere: { sky: "#dfe7ea", ground: "#241a12", intensity: 0.85 },
     key: { color: "#fff2df", intensity: 1.6, position: [3, 4.5, 2], castShadow: true },
-    fill: { color: "#cfe0e6", intensity: 0.6, position: [-3, 2.5, 1] },
+    fill: { color: "#cfe0e6", intensity: 1.1, position: [-3, 2.5, 1] },
     rim: { color: palette.trim, intensity: 0.4, position: [0, 3, -4] },
     feature: {
       color: palette.water ?? "#5fb6cf", intensity: 3.4, position: [-0.7, 1.1, -2.2],

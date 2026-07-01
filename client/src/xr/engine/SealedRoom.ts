@@ -54,10 +54,10 @@ export function buildSealedRoom(stage: RoomStage, skin: RoomSkin): THREE.Group {
   // catches light and gives a genuine sheen instead of a flat tan block.
   const goldMat = new THREE.MeshStandardMaterial({
     color: new THREE.Color(p.trim),
-    roughness: 0.35,
-    metalness: 0.45, // reads as warm gold under the light rig (no env map needed)
+    roughness: 0.28,
+    metalness: 0.85, // high metal — the Environment IBL gives it real reflections now
     emissive: new THREE.Color(p.trim),
-    emissiveIntensity: 0.14,
+    emissiveIntensity: 0.06, // reflection, not glow, carries the gold
   });
   const woodMat = new THREE.MeshStandardMaterial({
     color: new THREE.Color(p.floor).lerp(new THREE.Color(p.trim), 0.1),
@@ -373,13 +373,22 @@ export function buildSealedRoom(stage: RoomStage, skin: RoomSkin): THREE.Group {
     g.add(chair);
 
     // The VISITOR's seat — faces the doctor (−Z), conversational distance in front of the desk.
+    // Muted upholstery (lavender toned way down toward warm greige) so it reads as a
+    // premium chair, not a purple block — lavender stays an ACCENT, never dominant.
+    const seatMat = new THREE.MeshStandardMaterial({
+      color: new THREE.Color(p.accent ?? p.fire).lerp(new THREE.Color("#d8cfc0"), 0.6),
+      roughness: 0.72,
+      metalness: 0.04,
+    });
     const patientSeat = new THREE.Group();
     patientSeat.name = "patient-seat";
     patientSeat.position.set(0, 0, 0.4);
-    patientSeat.add(box("ps-seat", [0.62, 0.12, 0.6], accentMat, [0, 0.46, 0]));
-    patientSeat.add(box("ps-back", [0.62, 0.62, 0.12], accentMat, [0, 0.8, 0.26])); // back behind the sitter (+Z)
-    patientSeat.add(box("ps-arm-l", [0.1, 0.3, 0.56], accentMat, [-0.27, 0.57, 0]));
-    patientSeat.add(box("ps-arm-r", [0.1, 0.3, 0.56], accentMat, [0.27, 0.57, 0]));
+    patientSeat.add(box("ps-seat", [0.62, 0.16, 0.6], seatMat, [0, 0.44, 0]));
+    patientSeat.add(box("ps-back", [0.62, 0.66, 0.12], seatMat, [0, 0.82, 0.26])); // back behind the sitter (+Z)
+    patientSeat.add(box("ps-arm-l", [0.09, 0.26, 0.56], woodMat, [-0.29, 0.56, 0])); // wood arms
+    patientSeat.add(box("ps-arm-r", [0.09, 0.26, 0.56], woodMat, [0.29, 0.56, 0]));
+    patientSeat.add(box("ps-leg-l", [0.07, 0.44, 0.07], woodMat, [-0.26, 0.22, 0.24]));
+    patientSeat.add(box("ps-leg-r", [0.07, 0.44, 0.07], woodMat, [0.26, 0.22, 0.24]));
     g.add(patientSeat);
 
     // Command-file hotspots — framed, gently glowing cards on the front wall.
