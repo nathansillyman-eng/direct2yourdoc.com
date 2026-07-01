@@ -82,7 +82,7 @@ The current room is flat-lit primitives in the right palette — the gap to gorg
 ## Guardrails
 All work on `fix/webxr-door-threshold` in `~/medassurance-webxr-doorfix`; commit as I go; never merge to `main` (Tower sequences merges); never force-push; go-live gated on Nate. Engine stays skin-agnostic — brand/identity/assets live only in the greeting skin + generated assets.
 
-## Open items for Nate / Tower
-1. **Room stays 4×5×3** (engine canonical) — I've adopted this; Tower asked C1 to confirm. **Recommend: keep.**
-2. **Office feature:** I'm making the office back wall a warm credential/bookshelf wall (no orange fireplace, since the brand motif is *water*). OK — or do you want a cozy hearth in the office?
-3. **Ambient audio:** generate the 5 loops now, or defer to after the visual pass?
+## Resolved decisions (Nate, 2026-06-30)
+1. **Room stays 4×5×3** (engine canonical). Confirmed — keep.
+2. **Office feature = warm credential + bookshelf wall** behind the doctor (no orange fireplace; brand motif stays *water*, exclusive to the waiting-room waterfall).
+3. **Ambient audio built last in Phase A** — nail the visual pass (lighting + materials) first, then generate + wire the 5 loops.
