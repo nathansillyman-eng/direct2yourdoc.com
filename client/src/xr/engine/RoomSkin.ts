@@ -35,6 +35,11 @@ export interface RoomSkin {
   feature?: "hearth" | "waterfall";
   /** Optional brand emblem texture for the feature wall (e.g. the KM monogram). */
   logoImage?: string;
+  /** Optional ambient audio. The engine never loads these; the React layer plays them. */
+  audio?: {
+    waiting?: { bed?: string; sources?: { url: string; position: [number, number, number]; gain: number }[] };
+    office?: { bed?: string; sources?: { url: string; position: [number, number, number]; gain: number }[] };
+  };
 }
 
 const FRONT_WALL_Z = -2.3;

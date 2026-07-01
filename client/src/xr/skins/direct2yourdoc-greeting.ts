@@ -26,4 +26,10 @@ export const direct2YourDocGreetingSkin: RoomSkin = {
   feature: "waterfall",
   logoImage: "/brand/km-emblem.png",
   presenceImage: "/manus-storage/d2yd-doctor-presence.png",
+  // Synthesized placeholder ambient beds (gentle water in the waiting room, warm air in
+  // the office). Drop-in replaceable with CC0/produced .mp3s per docs/superpowers specs.
+  audio: {
+    waiting: { bed: "/audio/d2yd/d2yd_waiting.wav" },
+    office: { bed: "/audio/d2yd/d2yd_office.wav" },
+  },
 };

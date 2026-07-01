@@ -9,6 +9,7 @@ import type { RoomSkin, RoomStage } from "@/xr/engine/RoomSkin";
 import { advanceStage, FADE_MS } from "@/xr/locomotion";
 import { RoomLighting } from "./RoomLighting";
 import { makeWoodTexture } from "./materials";
+import { RoomAudio } from "./RoomAudio";
 
 const store = createXRStore();
 export { store as xrStore };
@@ -205,6 +206,14 @@ export function SealedRoomCanvas({ skin, xr, initialStage = "waiting" }: { skin:
   const [stage, setStage] = useState<RoomStage>(initialStage);
   const [fade, setFade] = useState(0); // 0 = clear, 1 = black
   const [intro, setIntro] = useState(false); // host introduction beat is showing
+  const [audioOn, setAudioOn] = useState(false);
+
+  // Browser autoplay policy: start the ambience only after the first user gesture.
+  useEffect(() => {
+    const on = () => setAudioOn(true);
+    window.addEventListener("pointerdown", on, { once: true });
+    return () => window.removeEventListener("pointerdown", on);
+  }, []);
 
   // Crossing the threshold is now a HOST HAND-OFF, not a bare door. Selecting Door 1
   // opens the founder's introduction beat first; the visitor only enters the office
@@ -228,6 +237,7 @@ export function SealedRoomCanvas({ skin, xr, initialStage = "waiting" }: { skin:
 
   return (
     <>
+      <RoomAudio stage={stage} skin={skin} enabled={audioOn} />
       <Canvas
         shadows
         camera={{ position: [0, 1.55, 1.5], fov: 66 }}
