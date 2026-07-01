@@ -61,6 +61,8 @@ export function RoomLighting({ stage, palette }: { stage: RoomStage; palette: Ro
         shadow-normalBias={0.02}
       />
       <directionalLight position={target.fill.position} color={target.fill.color} intensity={target.fill.intensity} />
+      {/* Opposite-side bounce so the right wall / door never goes murky. */}
+      <directionalLight position={[3.4, 2.6, 1.6]} color={target.fill.color} intensity={target.fill.intensity * 0.55} />
       <directionalLight position={target.rim.position} color={target.rim.color} intensity={target.rim.intensity} />
       <pointLight
         ref={feature}
