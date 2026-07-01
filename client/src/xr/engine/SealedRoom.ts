@@ -204,23 +204,27 @@ export function buildSealedRoom(stage: RoomStage, skin: RoomSkin): THREE.Group {
     g.add(box("pond-rim-f", [1.84, 0.09, 0.06], goldMat, [FX, 0.07, FRONT + 1.09]));
     g.add(box("pond-rim-l", [0.06, 0.09, 1.0], goldMat, [FX - 0.89, 0.07, FRONT + 0.62]));
     g.add(box("pond-rim-r", [0.06, 0.09, 1.0], goldMat, [FX + 0.89, 0.07, FRONT + 0.62]));
-    // Two koi.
-    g.add(
-      box(
-        "koi-1",
-        [0.24, 0.03, 0.1],
-        new THREE.MeshStandardMaterial({ color: new THREE.Color("#e8743b"), roughness: 0.6 }),
-        [FX - 0.25, 0.06, FRONT + 0.5],
-      ),
-    );
-    g.add(
-      box(
-        "koi-2",
-        [0.24, 0.03, 0.1],
-        new THREE.MeshStandardMaterial({ color: new THREE.Color("#f2f2f2"), roughness: 0.6 }),
-        [FX + 0.32, 0.06, FRONT + 0.74],
-      ),
-    );
+    // Two koi — each a shaped fish (flat body + tail), not a bare box.
+    const koi = (nm: string, colorHex: string, x: number, z: number, ry: number) => {
+      const k = new THREE.Group();
+      k.name = nm;
+      k.position.set(x, 0.06, z);
+      k.rotation.y = ry;
+      const fishMat = new THREE.MeshStandardMaterial({ color: new THREE.Color(colorHex), roughness: 0.5 });
+      const body = new THREE.Mesh(new THREE.SphereGeometry(0.12, 12, 8), fishMat);
+      body.name = `${nm}-body`;
+      body.scale.set(1.9, 0.5, 1.0); // long, flat fish body
+      k.add(body);
+      const tail = new THREE.Mesh(new THREE.ConeGeometry(0.09, 0.16, 4), fishMat);
+      tail.name = `${nm}-tail`;
+      tail.rotation.z = Math.PI / 2;
+      tail.position.set(-0.22, 0, 0);
+      tail.scale.set(1, 0.5, 1);
+      k.add(tail);
+      g.add(k);
+    };
+    koi("koi-1", "#e8743b", FX - 0.25, FRONT + 0.5, 0.4);
+    koi("koi-2", "#f2f2f2", FX + 0.32, FRONT + 0.74, -0.8);
   } else if (stage === "waiting") {
     g.add(
       box(
@@ -311,6 +315,36 @@ export function buildSealedRoom(stage: RoomStage, skin: RoomSkin): THREE.Group {
     rug.position.set(0, 0.012, -1.4);
     g.add(rug);
 
+    // Warm back wall behind the doctor: a red-oak bookshelf + framed credentials.
+    const shelf = new THREE.Group();
+    shelf.name = "bookshelf";
+    shelf.position.set(-1.15, 0, FRONT + 0.12); // left of the doctor, on the front wall
+    shelf.add(box("shelf-case", [1.5, 1.9, 0.28], woodMat, [0, 0.98, 0]));
+    for (let i = 0; i < 3; i++) {
+      shelf.add(box(`shelf-plank-${i}`, [1.44, 0.04, 0.26], goldMat, [0, 0.5 + i * 0.55, 0.02]));
+      // A row of book spines as slim colour blocks (tonal, premium, not primary).
+      for (let b = 0; b < 7; b++) {
+        const tint = new THREE.Color(p.wall).lerp(new THREE.Color(p.trim), (b % 3) * 0.18 + 0.1);
+        shelf.add(
+          box(`book-${i}-${b}`, [0.14, 0.34, 0.2], new THREE.MeshStandardMaterial({ color: tint, roughness: 0.8 }),
+            [-0.6 + b * 0.19, 0.72 + i * 0.55, 0.03]),
+        );
+      }
+    }
+    g.add(shelf);
+
+    const credential = (nm: string, x: number) => {
+      const c = new THREE.Group();
+      c.name = nm;
+      c.position.set(x, 1.7, FRONT + 0.06);
+      c.add(box(`${nm}-frame`, [0.5, 0.62, 0.04], goldMat, [0, 0, 0]));
+      c.add(box(`${nm}-mat`, [0.42, 0.54, 0.02],
+        new THREE.MeshStandardMaterial({ color: new THREE.Color("#f4ecd8"), roughness: 0.9 }), [0, 0, 0.02]));
+      g.add(c);
+    };
+    credential("credential-1", 0.55);
+    credential("credential-2", 1.15);
+
     // Desk — top, gold edge band, modesty panel, side gables.
     const desk = new THREE.Group();
     desk.name = "desk";
@@ -337,6 +371,16 @@ export function buildSealedRoom(stage: RoomStage, skin: RoomSkin): THREE.Group {
     chair.add(box("chair-post", [0.08, 0.46, 0.08], chairMat, [0, 0.26, 0]));
     chair.add(box("chair-base", [0.5, 0.05, 0.5], chairMat, [0, 0.04, 0]));
     g.add(chair);
+
+    // The VISITOR's seat — faces the doctor (−Z), conversational distance in front of the desk.
+    const patientSeat = new THREE.Group();
+    patientSeat.name = "patient-seat";
+    patientSeat.position.set(0, 0, 0.4);
+    patientSeat.add(box("ps-seat", [0.62, 0.12, 0.6], accentMat, [0, 0.46, 0]));
+    patientSeat.add(box("ps-back", [0.62, 0.62, 0.12], accentMat, [0, 0.8, 0.26])); // back behind the sitter (+Z)
+    patientSeat.add(box("ps-arm-l", [0.1, 0.3, 0.56], accentMat, [-0.27, 0.57, 0]));
+    patientSeat.add(box("ps-arm-r", [0.1, 0.3, 0.56], accentMat, [0.27, 0.57, 0]));
+    g.add(patientSeat);
 
     // Command-file hotspots — framed, gently glowing cards on the front wall.
     for (const obj of skin.commandFile) {

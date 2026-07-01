@@ -72,4 +72,27 @@ describe("feature wall is waiting-room only", () => {
     const g = buildSealedRoom("office", greeting);
     for (const n of ["waterfall", "koi-pond", "km-emblem"]) expect(names(g)).not.toContain(n);
   });
+  it("builds koi as groups (body + tail), not bare boxes", () => {
+    const g = buildSealedRoom("waiting", greeting);
+    const k = g.getObjectByName("koi-1");
+    expect(k).toBeTruthy();
+    expect((k as THREE.Group).children.length).toBeGreaterThanOrEqual(2);
+  });
+});
+
+describe("office back wall + seating", () => {
+  it("gives the office a credential + bookshelf back wall", () => {
+    const g = buildSealedRoom("office", greeting);
+    expect(names(g)).toContain("bookshelf");
+    expect(names(g)).toContain("credential-1");
+    expect(names(g)).toContain("credential-2");
+    const w = buildSealedRoom("waiting", greeting);
+    expect(names(w)).not.toContain("bookshelf");
+  });
+  it("adds a patient sit-anchor seat facing the doctor in the office", () => {
+    const g = buildSealedRoom("office", greeting);
+    const seat = g.getObjectByName("patient-seat");
+    expect(seat).toBeTruthy();
+    expect(seat!.position.z).toBeCloseTo(0.4, 1);
+  });
 });
