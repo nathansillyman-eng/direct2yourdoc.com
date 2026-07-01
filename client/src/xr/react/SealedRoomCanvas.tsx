@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { XR, createXRStore, XROrigin } from "@react-three/xr";
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, Environment, Lightformer } from "@react-three/drei";
 import * as THREE from "three";
 import { buildSealedRoom } from "@/xr/engine/SealedRoom";
 import { buildPresence } from "@/xr/engine/presence";
 import type { RoomSkin, RoomStage } from "@/xr/engine/RoomSkin";
 import { advanceStage, FADE_MS } from "@/xr/locomotion";
+import { RoomLighting } from "./RoomLighting";
 
 const store = createXRStore();
 export { store as xrStore };
@@ -64,6 +65,17 @@ function RoomScene({
   }, [stage, skin]);
 
   const room = useMemo(() => buildSealedRoom(stage, skin), [stage, skin]);
+
+  // Let every mesh in the room cast + receive the key light's shadow.
+  useEffect(() => {
+    room.traverse((o) => {
+      const m = o as THREE.Mesh;
+      if ((m as { isMesh?: boolean }).isMesh) {
+        m.castShadow = true;
+        m.receiveShadow = true;
+      }
+    });
+  }, [room]);
   const presence = useMemo(() => {
     if (stage !== "office") return null;
     if (!presenceTex) return buildPresence(skin); // silhouette until the image resolves
@@ -127,14 +139,8 @@ function RoomScene({
 
   return (
     <>
-      {/* Lighting rig: low ambient + a soft sky/ground tint, a warm key from the
-          ceiling fixture, a cool fill toward the visitor so furniture faces aren't
-          black, and a focused emerald glow at the hearth. */}
-      <ambientLight intensity={0.5} />
-      <hemisphereLight args={[0xcfe6df, 0x0b1a20, 0.65]} />
-      <pointLight position={[0, 2.7, -0.4]} intensity={13} distance={10} decay={2} color={0xfff1d4} />
-      <pointLight position={[0, 1.8, 1.6]} intensity={7} distance={9} decay={2} color={0xcfe6e0} />
-      <pointLight position={[-0.95, 0.6, -2.1]} intensity={4} distance={3.5} decay={2} color={0x2fae89} />
+      {/* Per-room light rig — warm key + soft shadows, cool fill, feature shimmer. */}
+      <RoomLighting stage={stage} palette={skin.palette} />
       <primitive object={room} onClick={(e: any) => onSelect(e)} />
 
       {/* Oversized INVISIBLE collider over Door 1. The visible door is a 1 m panel
@@ -177,8 +183,8 @@ function RoomScene({
   );
 }
 
-export function SealedRoomCanvas({ skin, xr }: { skin: RoomSkin; xr: boolean }) {
-  const [stage, setStage] = useState<RoomStage>("waiting");
+export function SealedRoomCanvas({ skin, xr, initialStage = "waiting" }: { skin: RoomSkin; xr: boolean; initialStage?: RoomStage }) {
+  const [stage, setStage] = useState<RoomStage>(initialStage);
   const [fade, setFade] = useState(0); // 0 = clear, 1 = black
   const [intro, setIntro] = useState(false); // host introduction beat is showing
 
@@ -205,10 +211,16 @@ export function SealedRoomCanvas({ skin, xr }: { skin: RoomSkin; xr: boolean }) 
   return (
     <>
       <Canvas
+        shadows
         camera={{ position: [0, 1.55, 1.5], fov: 66 }}
         gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.05 }}
         style={{ width: "100%", height: "100%" }}
       >
+        {/* Procedural IBL (no network fetch) so gold trim has something to reflect. */}
+        <Environment resolution={64} environmentIntensity={0.3}>
+          <Lightformer intensity={1.2} color="#fff2df" position={[0, 3, -2]} scale={[6, 3, 1]} />
+          <Lightformer intensity={0.6} color="#cfe0e6" position={[-3, 2, 2]} scale={[4, 3, 1]} />
+        </Environment>
         {xr ? (
           <XR store={store}>
             <XROrigin position={[0, 0, 1.6]} />

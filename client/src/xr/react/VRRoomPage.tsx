@@ -26,7 +26,16 @@ export default function VRRoomPage() {
 
   return (
     <div style={{ position: "fixed", inset: 0, background: "#081519" }}>
-      <SealedRoomCanvas skin={skin} xr={support === "supported"} />
+      <SealedRoomCanvas
+        skin={skin}
+        xr={support === "supported"}
+        initialStage={
+          typeof window !== "undefined" &&
+          new URLSearchParams(window.location.search).get("stage") === "office"
+            ? "office"
+            : "waiting"
+        }
+      />
 
       <div style={{ position: "absolute", top: 16, left: 16, right: 16, display: "flex", gap: 12, alignItems: "center" }}>
         {support === "supported" && (
