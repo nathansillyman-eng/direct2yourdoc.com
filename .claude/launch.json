@@ -10,7 +10,7 @@
     {
       "name": "direct2yourdoc-webxr",
       "runtimeExecutable": "corepack",
-      "runtimeArgs": ["pnpm@10.4.1", "run", "dev", "--", "--port", "5183"],
+      "runtimeArgs": ["pnpm@10.4.1", "exec", "vite", "--host", "--port", "5183", "--strictPort"],
       "port": 5183
     }
   ]
