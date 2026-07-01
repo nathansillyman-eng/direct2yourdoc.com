@@ -139,7 +139,8 @@ export function buildSealedRoom(stage: RoomStage, skin: RoomSkin): THREE.Group {
   g.add(fixture);
 
   // ---- feature wall: hearth (default) OR a waterfall + koi pond (greeting) --
-  if (greeting) {
+  // Waiting-room only — the office gets its own warm credential wall (Task 2).
+  if (stage === "waiting" && greeting) {
     const FX = -0.7; // feature centre x (door sits on the right at x=1.0)
     // Pale stone backing behind the water.
     g.add(
@@ -220,7 +221,7 @@ export function buildSealedRoom(stage: RoomStage, skin: RoomSkin): THREE.Group {
         [FX + 0.32, 0.06, FRONT + 0.74],
       ),
     );
-  } else {
+  } else if (stage === "waiting") {
     g.add(
       box(
         "hearth-surround",

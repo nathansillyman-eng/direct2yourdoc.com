@@ -13,6 +13,18 @@ const skin: RoomSkin = {
   ],
 };
 
+const greeting: RoomSkin = {
+  ...neutralSkin,
+  id: "greeting-test",
+  feature: "waterfall",
+  logoImage: "/brand/km-emblem.png",
+  palette: { wall: "#7a4a2c", floor: "#6b3f26", trim: "#c9a24b", fire: "#3aa0b5", accent: "#6c4f93", water: "#5fb6cf" },
+  commandFile: [
+    { label: "Records", position: [-1, 1.4, -2.3] },
+    { label: "Labs", position: [1, 1.4, -2.3] },
+  ],
+};
+
 function names(g: THREE.Group): string[] {
   return g.children.map((c) => c.name);
 }
@@ -48,5 +60,16 @@ describe("buildSealedRoom", () => {
     expect(() => buildSealedRoom("office", neutralSkin)).not.toThrow();
     const g = buildSealedRoom("office", neutralSkin);
     expect(g.children.filter((c) => c.name.startsWith("hotspot:"))).toHaveLength(0);
+  });
+});
+
+describe("feature wall is waiting-room only", () => {
+  it("puts the waterfall + koi + emblem in the waiting room", () => {
+    const g = buildSealedRoom("waiting", greeting);
+    for (const n of ["waterfall", "koi-pond", "km-emblem"]) expect(names(g)).toContain(n);
+  });
+  it("does NOT put the waterfall in the office", () => {
+    const g = buildSealedRoom("office", greeting);
+    for (const n of ["waterfall", "koi-pond", "km-emblem"]) expect(names(g)).not.toContain(n);
   });
 });
