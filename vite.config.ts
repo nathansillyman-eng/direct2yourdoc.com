@@ -86,6 +86,7 @@ export default defineConfig({
       ".manusvm.computer",
       "localhost",
       "127.0.0.1",
+      ".trycloudflare.com",
     ],
     fs: {
       strict: true,

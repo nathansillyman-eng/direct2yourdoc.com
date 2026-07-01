@@ -1,42 +1,60 @@
 import { useEffect, useRef } from "react";
+import { useThree } from "@react-three/fiber";
+import * as THREE from "three";
 import type { RoomSkin, RoomStage } from "@/xr/engine/RoomSkin";
 import { audioForStage } from "./audio-config";
 
-/** Ambient beds for the sealed room. Plain HTML5 <audio> loops — no spatialization in
- *  v1 (positions are carried in the config for a future PositionalAudio upgrade). Gated
- *  on a user gesture so it respects browser autoplay policy. Gains stay low so nothing
- *  masks a spoken presence. Renders no DOM; manages audio elements imperatively. */
-export function RoomAudio({ stage, skin, enabled }: { stage: RoomStage; skin: RoomSkin; enabled: boolean }) {
-  const els = useRef<HTMLAudioElement[]>([]);
+/** Ambient beds that play INSIDE the WebXR session. A THREE.AudioListener is attached
+ *  to the (XR) camera so sound routes to the headset — a plain HTML <audio> element
+ *  does NOT play through an immersive session on Quest. Must render inside the Canvas.
+ *  Gesture-gated via `enabled`: the AudioContext starts suspended and is resumed on the
+ *  first user gesture (desktop pointer / enter-VR). Low gain so nothing masks a voice. */
+export function RoomAudio({ skin, stage, enabled }: { skin: RoomSkin; stage: RoomStage; enabled: boolean }) {
+  const { camera } = useThree();
+  const listenerRef = useRef<THREE.AudioListener | null>(null);
+  const audioRef = useRef<THREE.Audio | null>(null);
 
+  // One listener on the active camera for the component's lifetime.
   useEffect(() => {
-    // Tear down the previous stage's audio.
-    els.current.forEach((a) => {
-      a.pause();
-      a.src = "";
-    });
-    els.current = [];
-    if (!enabled) return;
-
-    const cfg = audioForStage(stage, skin);
-    const make = (url: string, vol: number) => {
-      const a = new Audio(url);
-      a.loop = true;
-      a.volume = vol;
-      a.play().catch(() => {}); // ignore autoplay rejection; re-enabled on the next gesture
-      els.current.push(a);
+    const listener = new THREE.AudioListener();
+    camera.add(listener);
+    listenerRef.current = listener;
+    return () => {
+      camera.remove(listener);
+      listenerRef.current = null;
     };
-    if (cfg.bed) make(cfg.bed, 0.2); // low bed — never competes with a voice
-    cfg.sources.forEach((s) => make(s.url, Math.min(0.5, s.gain)));
+  }, [camera]);
+
+  // Load + play the stage's bed once enabled (and swap it on stage change).
+  useEffect(() => {
+    const listener = listenerRef.current;
+    if (!listener || !enabled) return;
+    void listener.context.resume?.(); // suspended until a user gesture
+
+    const { bed } = audioForStage(stage, skin);
+    if (!bed) return;
+
+    let alive = true;
+    const audio = new THREE.Audio(listener);
+    new THREE.AudioLoader().load(bed, (buf) => {
+      if (!alive) return;
+      audio.setBuffer(buf);
+      audio.setLoop(true);
+      audio.setVolume(0.2); // low bed — never competes with a voice
+      if (!audio.isPlaying) audio.play();
+    });
+    audioRef.current = audio;
 
     return () => {
-      els.current.forEach((a) => {
-        a.pause();
-        a.src = "";
-      });
-      els.current = [];
+      alive = false;
+      try {
+        audioRef.current?.stop();
+      } catch {
+        /* not yet playing */
+      }
+      audioRef.current = null;
     };
-  }, [stage, skin, enabled]);
+  }, [skin, stage, enabled]);
 
   return null;
 }

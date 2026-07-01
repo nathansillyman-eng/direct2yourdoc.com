@@ -25,6 +25,7 @@ function RoomScene({
   onDoorSelect,
   intro,
   onContinue,
+  audioOn,
 }: {
   skin: RoomSkin;
   stage: RoomStage;
@@ -33,6 +34,7 @@ function RoomScene({
   onDoorSelect: () => void;
   intro: boolean;
   onContinue: () => void;
+  audioOn: boolean;
 }) {
   const { camera } = useThree();
 
@@ -160,6 +162,8 @@ function RoomScene({
     <>
       {/* Per-room light rig — warm key + soft shadows, cool fill, feature shimmer. */}
       <RoomLighting stage={stage} palette={skin.palette} />
+      {/* Ambient bed on the (XR) camera — audible in-headset, gesture-gated. */}
+      <RoomAudio skin={skin} stage={stage} enabled={audioOn} />
       <primitive object={room} onClick={(e: any) => onSelect(e)} />
 
       {/* Oversized INVISIBLE collider over Door 1. The visible door is a 1 m panel
@@ -208,11 +212,19 @@ export function SealedRoomCanvas({ skin, xr, initialStage = "waiting" }: { skin:
   const [intro, setIntro] = useState(false); // host introduction beat is showing
   const [audioOn, setAudioOn] = useState(false);
 
-  // Browser autoplay policy: start the ambience only after the first user gesture.
+  // Autoplay policy: start the ambience only after a user gesture. Desktop → the first
+  // pointer down; in-headset there is no DOM pointer, so also arm it when the immersive
+  // XR session starts (the enter-VR tap is the gesture that unlocks audio).
   useEffect(() => {
     const on = () => setAudioOn(true);
     window.addEventListener("pointerdown", on, { once: true });
-    return () => window.removeEventListener("pointerdown", on);
+    const unsub = store.subscribe((s: { session?: unknown }) => {
+      if (s?.session) setAudioOn(true);
+    });
+    return () => {
+      window.removeEventListener("pointerdown", on);
+      unsub();
+    };
   }, []);
 
   // Crossing the threshold is now a HOST HAND-OFF, not a bare door. Selecting Door 1
@@ -237,7 +249,6 @@ export function SealedRoomCanvas({ skin, xr, initialStage = "waiting" }: { skin:
 
   return (
     <>
-      <RoomAudio stage={stage} skin={skin} enabled={audioOn} />
       <Canvas
         shadows
         camera={{ position: [0, 1.55, 1.5], fov: 66 }}
@@ -260,6 +271,7 @@ export function SealedRoomCanvas({ skin, xr, initialStage = "waiting" }: { skin:
               onDoorSelect={beginIntro}
               intro={intro}
               onContinue={advance}
+              audioOn={audioOn}
             />
           </XR>
         ) : (
@@ -271,6 +283,7 @@ export function SealedRoomCanvas({ skin, xr, initialStage = "waiting" }: { skin:
             onDoorSelect={beginIntro}
             intro={intro}
             onContinue={advance}
+            audioOn={audioOn}
           />
         )}
       </Canvas>
