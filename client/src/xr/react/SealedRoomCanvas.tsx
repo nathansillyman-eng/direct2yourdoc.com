@@ -159,7 +159,8 @@ function RoomScene({
     while (o) {
       if (o.name === "door-1" || o.name === "door-1-collider") {
         e.stopPropagation?.();
-        return onDoorSelect();
+        // Door 1 is the way IN from the waiting room and the way OUT of the office.
+        return stage === "office" ? onExit() : onDoorSelect();
       }
       o = o.parent;
     }
@@ -167,6 +168,15 @@ function RoomScene({
 
   return (
     <>
+      {/* Warm atmospheric fog for depth + coziness (tighter/warmer in the office). */}
+      <fog
+        attach="fog"
+        args={[
+          stage === "office" ? "#150e08" : "#1d130c",
+          stage === "office" ? 2.4 : 3.4,
+          stage === "office" ? 8 : 11,
+        ]}
+      />
       {/* Per-room light rig — warm key + soft shadows, cool fill, feature shimmer. */}
       <RoomLighting stage={stage} palette={skin.palette} />
       {/* Ambient bed on the (XR) camera — audible in-headset, gesture-gated. */}
@@ -177,16 +187,14 @@ function RoomScene({
           ~4 m away — a fragile target for a Quest controller ray or a desktop
           click. This widens the hit area without changing the look. Only present
           while there is somewhere to go. */}
-      {stage === "waiting" && (
-        <mesh
-          name="door-1-collider"
-          position={[1.0, 1.2, -2.3]}
-          onClick={(e: any) => { e.stopPropagation?.(); onDoorSelect(); }}
-        >
-          <planeGeometry args={[1.8, 2.4]} />
-          <meshBasicMaterial transparent opacity={0} depthWrite={false} />
-        </mesh>
-      )}
+      <mesh
+        name="door-1-collider"
+        position={[1.0, 1.2, -2.3]}
+        onClick={(e: any) => { e.stopPropagation?.(); stage === "office" ? onExit() : onDoorSelect(); }}
+      >
+        <planeGeometry args={[1.8, 2.4]} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+      </mesh>
 
       {cast.length > 0
         ? cast.map((m, i) => (
@@ -399,7 +407,7 @@ function ExitControl({ onExit }: { onExit: () => void }) {
   return (
     <group
       ref={group}
-      position={[0.95, 1.4, 0.4]}
+      position={[0.55, 1.2, 0.9]}
       onClick={(e: any) => {
         e.stopPropagation?.();
         onExit();
