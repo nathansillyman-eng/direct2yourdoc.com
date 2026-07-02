@@ -295,7 +295,9 @@ export function SealedRoomCanvas({ skin, xr, initialStage = "waiting" }: { skin:
         </Environment>
         {xr ? (
           <XR store={store}>
-            <XROrigin position={[0, 0, 1.6]} />
+            {/* Waiting: stand at the entrance facing the greeting. Office: seated in the
+                PATIENT chair across the desk, facing the doctor (−Z). */}
+            <XROrigin position={stage === "office" ? [0, 0, 0.4] : [0, 0, 1.6]} />
             <RoomScene
               skin={skin}
               stage={stage}
