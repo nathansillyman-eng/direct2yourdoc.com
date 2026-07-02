@@ -28,6 +28,7 @@ function RoomScene({
   intro,
   onContinue,
   audioOn,
+  onExit,
 }: {
   skin: RoomSkin;
   stage: RoomStage;
@@ -37,6 +38,7 @@ function RoomScene({
   intro: boolean;
   onContinue: () => void;
   audioOn: boolean;
+  onExit: () => void;
 }) {
   const { camera } = useThree();
 
@@ -197,6 +199,9 @@ function RoomScene({
           "Meet your doctor" control crosses into the office. */}
       {intro && stage === "waiting" && <HostBeat skin={skin} onContinue={onContinue} />}
 
+      {/* Always-available way out of the office — in-scene so it works in-headset. */}
+      {stage === "office" && <ExitControl onExit={onExit} />}
+
       {enableOrbit && (
         <OrbitControls
           makeDefault
@@ -256,6 +261,17 @@ export function SealedRoomCanvas({ skin, xr, initialStage = "waiting" }: { skin:
     }, FADE_MS);
   }
 
+  // Always-available way OUT of the office — never trap the visitor. Fades back to the
+  // waiting room (the "front door"), mirroring the comfort fade of the crossing in.
+  function exitOffice() {
+    if (stage !== "office") return;
+    setFade(1);
+    window.setTimeout(() => {
+      setStage("waiting");
+      setFade(0);
+    }, FADE_MS);
+  }
+
   return (
     <>
       <Canvas
@@ -281,6 +297,7 @@ export function SealedRoomCanvas({ skin, xr, initialStage = "waiting" }: { skin:
               intro={intro}
               onContinue={advance}
               audioOn={audioOn}
+              onExit={exitOffice}
             />
           </XR>
         ) : (
@@ -293,6 +310,7 @@ export function SealedRoomCanvas({ skin, xr, initialStage = "waiting" }: { skin:
             intro={intro}
             onContinue={advance}
             audioOn={audioOn}
+            onExit={exitOffice}
           />
         )}
       </Canvas>
@@ -324,7 +342,78 @@ export function SealedRoomCanvas({ skin, xr, initialStage = "waiting" }: { skin:
           Step through Door 1 → the office
         </button>
       )}
+      {stage === "office" && (
+        <button
+          onClick={exitOffice}
+          style={{
+            position: "absolute",
+            bottom: 28,
+            left: "50%",
+            transform: "translateX(-50%)",
+            padding: "14px 26px",
+            borderRadius: 9999,
+            border: "1px solid #c9a24b",
+            background: "#0f2a33",
+            color: "#f4e9c8",
+            fontWeight: 600,
+            fontSize: 16,
+            cursor: "pointer",
+            boxShadow: "0 6px 24px rgba(0,0,0,0.45)",
+          }}
+        >
+          ← Leave the office
+        </button>
+      )}
     </>
+  );
+}
+
+// ---- Office exit control (in-scene, works in-headset) --------------------------
+
+/** A billboarded "Leave the office" pill, always reachable by ray/gaze/click, so the
+ *  visitor is never trapped. Fades back to the waiting room via onExit. */
+function ExitControl({ onExit }: { onExit: () => void }) {
+  const { camera } = useThree();
+  const group = useRef<THREE.Group>(null);
+  const tex = useMemo(
+    () =>
+      makeCanvasTexture(768, 192, (ctx, w, h) => {
+        roundRect(ctx, 6, 6, w - 12, h - 12, (h - 12) / 2);
+        ctx.fillStyle = "rgba(11,26,32,0.92)";
+        ctx.fill();
+        ctx.lineWidth = 4;
+        ctx.strokeStyle = "#c9a24b";
+        ctx.stroke();
+        ctx.fillStyle = "#f4e9c8";
+        ctx.font = "700 46px Georgia, serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("←  Leave the office", w / 2, h / 2 + 2);
+      }),
+    [],
+  );
+  useFrame(() => {
+    const g = group.current;
+    if (g) g.lookAt(camera.position.x, g.position.y, camera.position.z);
+  });
+  return (
+    <group
+      ref={group}
+      position={[0.95, 1.4, 0.4]}
+      onClick={(e: any) => {
+        e.stopPropagation?.();
+        onExit();
+      }}
+    >
+      <mesh renderOrder={12}>
+        <planeGeometry args={[0.82, 0.205]} />
+        <meshBasicMaterial map={tex} transparent toneMapped={false} depthWrite={false} />
+      </mesh>
+      <mesh position={[0, 0, 0.01]}>
+        <planeGeometry args={[1.05, 0.4]} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+      </mesh>
+    </group>
   );
 }
 
