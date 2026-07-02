@@ -29,7 +29,7 @@ export const direct2YourDocGreetingSkin: RoomSkin = {
   // Synthesized placeholder ambient beds (gentle water in the waiting room, warm air in
   // the office). Drop-in replaceable with CC0/produced .mp3s per docs/superpowers specs.
   audio: {
-    music: "/audio/d2yd/d2yd_lounge.wav", // soft original lounge pad, low under the water
+    music: "/audio/d2yd/dockside-doctor.mp3", // Nate's jazz cut ("Dockside Doctor")
     waiting: { bed: "/audio/d2yd/d2yd_waiting.wav" },
     office: { bed: "/audio/d2yd/d2yd_office.wav" },
   },

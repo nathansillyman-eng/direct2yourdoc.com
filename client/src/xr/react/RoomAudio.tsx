@@ -71,7 +71,7 @@ export function RoomAudio({ skin, stage, enabled }: { skin: RoomSkin; stage: Roo
       if (!alive) return;
       music.setBuffer(buf);
       music.setLoop(true);
-      music.setVolume(0.1); // sits low, under the water hush
+      music.setVolume(0.18); // warm featured bed, still under a spoken voice
       if (!music.isPlaying) music.play();
     });
     musicRef.current = music;
