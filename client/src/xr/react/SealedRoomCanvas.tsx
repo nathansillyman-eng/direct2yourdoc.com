@@ -10,6 +10,8 @@ import { advanceStage, FADE_MS } from "@/xr/locomotion";
 import { RoomLighting } from "./RoomLighting";
 import { makeWoodTexture } from "./materials";
 import { RoomAudio } from "./RoomAudio";
+import { CastMember } from "./CastMember";
+import { castForStage } from "./cast-config";
 
 const store = createXRStore();
 export { store as xrStore };
@@ -86,6 +88,9 @@ function RoomScene({
     const height = 1.2; // seated upper-body height in metres (tuned to the desk)
     return buildPresence(skin, presenceTex, { width: height * aspect, height, y: 1.05 });
   }, [stage, skin, presenceTex, aspect]);
+
+  // Rigged 3D cast for this stage (e.g. the office doctor). Falls back to the billboard.
+  const cast = castForStage(stage, skin);
 
   // Greeting skin: drive the waterfall (animated scrolling texture) and the KM
   // emblem (loaded image). Both are tagged by the engine via userData; the engine
@@ -181,7 +186,11 @@ function RoomScene({
         </mesh>
       )}
 
-      {presence && <primitive object={presence} />}
+      {cast.length > 0
+        ? cast.map((m, i) => (
+            <CastMember key={i} entry={m} fallback={presence ? <primitive object={presence} /> : null} />
+          ))
+        : presence && <primitive object={presence} />}
 
       {/* Spatial host hand-off — renders INSIDE the 3D scene so it works in-headset
           (a 2D DOM overlay does not). The founder greets the visitor and the

@@ -62,6 +62,9 @@ const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginStorageProxy(
 export default defineConfig({
   plugins,
   resolve: {
+    // Force a single three.js instance — a second copy (0.165 via a transitive dep)
+    // breaks GLTF loading (loaded meshes render under a different THREE than the scene).
+    dedupe: ["three"],
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),
       "@shared": path.resolve(import.meta.dirname, "shared"),

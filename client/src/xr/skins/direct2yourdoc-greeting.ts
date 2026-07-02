@@ -32,4 +32,17 @@ export const direct2YourDocGreetingSkin: RoomSkin = {
     waiting: { bed: "/audio/d2yd/d2yd_waiting.wav" },
     office: { bed: "/audio/d2yd/d2yd_office.wav" },
   },
+  // Rigged de-identified network physician (image→3D, auto-rigged, idle clip). Stands
+  // behind the desk; the seated billboard presence is the automatic fallback.
+  cast: {
+    office: [
+      {
+        model: "/models/d2yd-doctor.glb",
+        clip: "Armature|Idle|baselayer",
+        position: [0, 0, -2.25],
+        rotationY: 0,
+        scale: 1,
+      },
+    ],
+  },
 };

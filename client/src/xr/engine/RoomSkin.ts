@@ -40,6 +40,17 @@ export interface RoomSkin {
     waiting?: { bed?: string; sources?: { url: string; position: [number, number, number]; gain: number }[] };
     office?: { bed?: string; sources?: { url: string; position: [number, number, number]; gain: number }[] };
   };
+  /** Optional rigged 3D cast placed per stage. The engine loads nothing; the React layer does. */
+  cast?: { waiting?: CastEntry[]; office?: CastEntry[] };
+}
+
+/** A rigged character (GLB) placed in the room. */
+export interface CastEntry {
+  model: string; // GLB URL
+  clip?: string; // animation clip name; defaults to the first clip in the GLB
+  position: [number, number, number];
+  rotationY?: number;
+  scale?: number;
 }
 
 const FRONT_WALL_Z = -2.3;
