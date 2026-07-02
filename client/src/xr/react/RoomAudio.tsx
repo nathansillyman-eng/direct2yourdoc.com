@@ -13,6 +13,7 @@ export function RoomAudio({ skin, stage, enabled }: { skin: RoomSkin; stage: Roo
   const { camera } = useThree();
   const listenerRef = useRef<THREE.AudioListener | null>(null);
   const audioRef = useRef<THREE.Audio | null>(null);
+  const musicRef = useRef<THREE.Audio | null>(null);
 
   // One listener on the active camera for the component's lifetime.
   useEffect(() => {
@@ -55,6 +56,37 @@ export function RoomAudio({ skin, stage, enabled }: { skin: RoomSkin; stage: Roo
       audioRef.current = null;
     };
   }, [skin, stage, enabled]);
+
+  // Continuous low music bed — plays across BOTH rooms and does NOT restart on stage
+  // change (deps intentionally omit `stage`), so the jazz/lounge feel is unbroken.
+  useEffect(() => {
+    const listener = listenerRef.current;
+    const url = skin.audio?.music;
+    if (!listener || !enabled || !url) return;
+    void listener.context.resume?.();
+
+    let alive = true;
+    const music = new THREE.Audio(listener);
+    new THREE.AudioLoader().load(url, (buf) => {
+      if (!alive) return;
+      music.setBuffer(buf);
+      music.setLoop(true);
+      music.setVolume(0.1); // sits low, under the water hush
+      if (!music.isPlaying) music.play();
+    });
+    musicRef.current = music;
+
+    return () => {
+      alive = false;
+      try {
+        musicRef.current?.stop();
+      } catch {
+        /* not yet playing */
+      }
+      musicRef.current = null;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [enabled]);
 
   return null;
 }
