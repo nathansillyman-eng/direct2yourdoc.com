@@ -8,7 +8,6 @@ import { buildPresence } from "@/xr/engine/presence";
 import type { RoomSkin, RoomStage } from "@/xr/engine/RoomSkin";
 import { advanceStage, FADE_MS } from "@/xr/locomotion";
 import { RoomLighting } from "./RoomLighting";
-import { makeWoodTexture } from "./materials";
 import { RoomAudio } from "./RoomAudio";
 import { CastMember } from "./CastMember";
 import { castForStage } from "./cast-config";
@@ -98,6 +97,7 @@ function RoomScene({
   // emblem (loaded image). Both are tagged by the engine via userData; the engine
   // itself loads/animates nothing.
   const waterTex = useRef<THREE.CanvasTexture | null>(null);
+  const woodTexRef = useRef<THREE.Texture[] | null>(null);
   useEffect(() => {
     const wf = room.getObjectByName("waterfall") as THREE.Mesh | null;
     if (wf) {
@@ -122,26 +122,41 @@ function RoomScene({
         m.needsUpdate = true;
       });
     }
-    // Red-oak grain on the panelled walls + wood furniture (skip the floor so its
-    // polished sheen stays; skip gold/accent/upholstery).
-    const woodTex = makeWoodTexture(skin.palette.wood ?? skin.palette.wall);
-    woodTex.repeat.set(3, 2);
-    room.traverse((o) => {
-      const m = o as THREE.Mesh;
-      if (!(m as { isMesh?: boolean }).isMesh) return;
-      if (/^(wall-[nsew]|fd-body|desk-top|desk-front|desk-left|desk-right|shelf-case|ps-arm|ps-leg)/.test(m.name)) {
+    // Real red-oak PHOTO texture on the panelled walls, floor, and wood furniture —
+    // replaces the flat/procedural surfaces (the biggest "greybox/Sims" tell). Colour is
+    // set white so the texture shows at full warmth instead of being tinted dark.
+    new THREE.TextureLoader().load("/brand/wood-redoak.png", (tex) => {
+      tex.colorSpace = THREE.SRGBColorSpace;
+      tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+      tex.anisotropy = 8;
+      const floorTex = tex.clone();
+      floorTex.needsUpdate = true;
+      floorTex.repeat.set(3, 3.5);
+      tex.repeat.set(2.4, 1.8);
+      room.traverse((o) => {
+        const m = o as THREE.Mesh;
+        if (!(m as { isMesh?: boolean }).isMesh) return;
         const mat = m.material as THREE.MeshStandardMaterial;
-        if (mat && "map" in mat) {
-          mat.map = woodTex;
+        if (!mat || !("map" in mat)) return;
+        if (m.name === "floor") {
+          mat.map = floorTex;
+          mat.color = new THREE.Color(0xffffff);
+          mat.roughness = 0.5; // keep a little polished sheen
+          mat.needsUpdate = true;
+        } else if (/^(wall-[nsew]|fd-body|fd-top|desk-top|desk-front|desk-left|desk-right|shelf-case|ps-seat|ps-back|ps-arm|ps-leg|pc-seat|pc-back)/.test(m.name)) {
+          mat.map = tex;
+          mat.color = new THREE.Color(0xffffff);
           mat.needsUpdate = true;
         }
-      }
+      });
+      woodTexRef.current = [tex, floorTex];
     });
 
     return () => {
       waterTex.current?.dispose();
       waterTex.current = null;
-      woodTex.dispose();
+      woodTexRef.current?.forEach((t) => t.dispose());
+      woodTexRef.current = null;
     };
   }, [room, skin]);
 
