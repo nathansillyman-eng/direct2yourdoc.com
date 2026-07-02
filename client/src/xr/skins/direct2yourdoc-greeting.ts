@@ -35,6 +35,15 @@ export const direct2YourDocGreetingSkin: RoomSkin = {
   // Rigged de-identified network physician (image→3D, auto-rigged, idle clip). Stands
   // behind the desk; the seated billboard presence is the automatic fallback.
   cast: {
+    // The greeting tableau: Nate (host) welcoming a pregnant couple, two Pomeranians.
+    // Everyone faces +Z toward the entering visitor (spawn at z≈1.6). Positions tuned live.
+    waiting: [
+      { model: "/models/d2yd-host.glb", clip: "Armature|Idle|baselayer", position: [0.6, 0, -1.05], rotationY: -0.2, scale: 1 },
+      { model: "/models/d2yd-woman.glb", clip: "Armature|Idle|baselayer", position: [-0.5, 0, -1.1], rotationY: 0.15, scale: 1 },
+      { model: "/models/d2yd-husband.glb", clip: "Armature|Idle|baselayer", position: [-1.2, 0, -0.95], rotationY: 0.3, scale: 1 },
+      { model: "/models/d2yd-dog-white.glb", position: [0.15, 0, -0.4], rotationY: Math.PI, scale: 0.2 },
+      { model: "/models/d2yd-dog-black.glb", position: [-0.35, 0, -0.3], rotationY: 2.9, scale: 0.2 },
+    ],
     office: [
       {
         model: "/models/d2yd-doctor.glb",

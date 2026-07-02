@@ -200,7 +200,7 @@ function RoomScene({
       {enableOrbit && (
         <OrbitControls
           makeDefault
-          target={[0, 1.15, -1.7]}
+          target={[0, 1.2, -1.0]}
           minPolarAngle={Math.PI * 0.28}
           maxPolarAngle={Math.PI * 0.6}
         />
@@ -260,7 +260,7 @@ export function SealedRoomCanvas({ skin, xr, initialStage = "waiting" }: { skin:
     <>
       <Canvas
         shadows
-        camera={{ position: [0, 1.55, 1.5], fov: 66 }}
+        camera={{ position: [0, 1.6, 2.1], fov: 62 }}
         gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.05 }}
         style={{ width: "100%", height: "100%" }}
       >
