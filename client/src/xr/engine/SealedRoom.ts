@@ -80,9 +80,11 @@ export function buildSealedRoom(stage: RoomStage, skin: RoomSkin): THREE.Group {
     floorMat.metalness = 0.12;
   }
   const accentMat = new THREE.MeshStandardMaterial({
-    color: new THREE.Color(p.accent ?? p.fire), // lavender accent (sparingly)
-    roughness: 0.55,
-    metalness: 0.05,
+    // Muted toward warm greige so the chairs read as premium upholstery, not a
+    // bright purple block — lavender stays a whisper of an accent.
+    color: new THREE.Color(p.accent ?? p.fire).lerp(new THREE.Color("#d8cfc0"), 0.62),
+    roughness: 0.8,
+    metalness: 0.03,
   });
   const waterCol = new THREE.Color(p.water ?? "#6fb6cf");
 
@@ -160,11 +162,11 @@ export function buildSealedRoom(stage: RoomStage, skin: RoomSkin): THREE.Group {
       new THREE.MeshStandardMaterial({
         color: waterCol,
         emissive: waterCol,
-        emissiveIntensity: 0.28,
+        emissiveIntensity: 0.1,
         roughness: 0.18,
         metalness: 0.0,
         transparent: true,
-        opacity: 0.94,
+        opacity: 0.5,
       }),
     );
     water.position.set(FX, 1.25, FRONT + 0.1);

@@ -9,6 +9,23 @@ function CastModel({ entry }: { entry: CastEntry }) {
   const { scene, animations } = useGLTF(entry.model);
   const { actions, names } = useAnimations(animations, group);
 
+  // De-wax: the auto-generated GLB materials come back glossy/plasticky. Matte them
+  // (high roughness, no metalness, low env reflection) so the cast reads less "wax".
+  useEffect(() => {
+    scene.traverse((o) => {
+      const mesh = o as THREE.Mesh;
+      const mats = Array.isArray(mesh.material) ? mesh.material : mesh.material ? [mesh.material] : [];
+      for (const m of mats as THREE.MeshStandardMaterial[]) {
+        if ("roughness" in m) {
+          m.roughness = 1;
+          m.metalness = 0;
+          m.envMapIntensity = 0.25;
+          m.needsUpdate = true;
+        }
+      }
+    });
+  }, [scene]);
+
   useEffect(() => {
     const name = entry.clip && names.includes(entry.clip) ? entry.clip : names[0];
     const action = name ? actions[name] : null;

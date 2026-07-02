@@ -37,12 +37,13 @@ export const direct2YourDocGreetingSkin: RoomSkin = {
   cast: {
     // The greeting tableau: Nate (host) welcoming a pregnant couple, two Pomeranians.
     // Everyone faces +Z toward the entering visitor (spawn at z≈1.6). Positions tuned live.
+    // Group clusters to the RIGHT so the waterfall + KM emblem stay a clear backdrop
+    // on the left; pulled forward for depth separation from the water wall. Dogs are
+    // parked — the auto-generated quadruped meshes read as "dead"; need a proper pet pass.
     waiting: [
-      { model: "/models/d2yd-host.glb", clip: "Armature|Idle|baselayer", position: [0.6, 0, -1.05], rotationY: -0.2, scale: 1 },
-      { model: "/models/d2yd-woman.glb", clip: "Armature|Idle|baselayer", position: [-0.5, 0, -1.1], rotationY: 0.15, scale: 1 },
-      { model: "/models/d2yd-husband.glb", clip: "Armature|Idle|baselayer", position: [-1.2, 0, -0.95], rotationY: 0.3, scale: 1 },
-      { model: "/models/d2yd-dog-white.glb", position: [0.15, 0, -0.4], rotationY: Math.PI, scale: 0.2 },
-      { model: "/models/d2yd-dog-black.glb", position: [-0.35, 0, -0.3], rotationY: 2.9, scale: 0.2 },
+      { model: "/models/d2yd-host.glb", clip: "Armature|Idle|baselayer", position: [1.15, 0, -0.5], rotationY: -0.5, scale: 1 },
+      { model: "/models/d2yd-woman.glb", clip: "Armature|Idle|baselayer", position: [0.3, 0, -0.35], rotationY: 0.1, scale: 1 },
+      { model: "/models/d2yd-husband.glb", clip: "Armature|Idle|baselayer", position: [0.75, 0, -0.9], rotationY: -0.15, scale: 1 },
     ],
     office: [
       {

@@ -40,7 +40,7 @@ export function RoomAudio({ skin, stage, enabled }: { skin: RoomSkin; stage: Roo
       if (!alive) return;
       audio.setBuffer(buf);
       audio.setLoop(true);
-      audio.setVolume(0.2); // low bed — never competes with a voice
+      audio.setVolume(0.14); // very low bed — a hush, never competes with a voice
       if (!audio.isPlaying) audio.play();
     });
     audioRef.current = audio;
