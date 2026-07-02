@@ -27,9 +27,9 @@ export interface RoomLightingConfig {
 export function lightingForStage(stage: RoomStage, palette: RoomPalette): RoomLightingConfig {
   if (stage === "office") {
     return {
-      ambient: 0.28,
-      hemisphere: { sky: "#3a2c22", ground: "#160d07", intensity: 0.4 },
-      key: { color: "#ffdcae", intensity: 1.3, position: [2.5, 4, 2.5], castShadow: true },
+      ambient: 0.42,
+      hemisphere: { sky: "#43342a", ground: "#241811", intensity: 0.55 },
+      key: { color: "#ffdcae", intensity: 1.5, position: [2.5, 4, 2.5], castShadow: true },
       fill: { color: "#e9c58a", intensity: 6, position: [-2, 2.2, 1] },
       rim: { color: palette.trim, intensity: 0.45, position: [-1, 3, -3.5] },
       feature: {
@@ -39,11 +39,11 @@ export function lightingForStage(stage: RoomStage, palette: RoomPalette): RoomLi
     };
   }
   return {
-    ambient: 0.5,
-    hemisphere: { sky: "#dfe7ea", ground: "#241a12", intensity: 0.85 },
-    key: { color: "#fff2df", intensity: 1.6, position: [3, 4.5, 2], castShadow: true },
-    fill: { color: "#cfe0e6", intensity: 1.1, position: [-3, 2.5, 1] },
-    rim: { color: palette.trim, intensity: 0.4, position: [0, 3, -4] },
+    ambient: 0.72,
+    hemisphere: { sky: "#efe6da", ground: "#3a2a1c", intensity: 1.05 },
+    key: { color: "#fff2df", intensity: 1.85, position: [3, 4.5, 2], castShadow: true },
+    fill: { color: "#d7e2e0", intensity: 1.6, position: [-3, 2.5, 1] },
+    rim: { color: palette.trim, intensity: 0.45, position: [0, 3, -4] },
     feature: {
       color: palette.water ?? "#5fb6cf", intensity: 3.4, position: [-0.7, 1.1, -2.2],
       distance: 4.5, decay: 2, flicker: "water", base: 3.4, amp: 0.6,
