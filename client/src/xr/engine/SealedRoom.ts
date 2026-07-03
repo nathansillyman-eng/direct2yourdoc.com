@@ -376,6 +376,40 @@ export function buildSealedRoom(stage: RoomStage, skin: RoomSkin): THREE.Group {
     patientSeat.add(box("ps-leg-r", [0.07, 0.44, 0.07], woodMat, [0.26, 0.22, 0.24]));
     g.add(patientSeat);
 
+    // Feng-shui living element (calm-positive design direction, spec
+    // 2026-07-03-office-live-handoff-design.md §2): a plant reads as living/breathing,
+    // not sterile-clinical. Placed in the free corner beside the desk, clear of the
+    // door-to-seat walking path (door at x≈1.0, path runs along x≈0).
+    const plant = new THREE.Group();
+    plant.name = "office-plant";
+    plant.position.set(1.55, 0, -1.85);
+    const potMat = new THREE.MeshStandardMaterial({
+      color: new THREE.Color(p.floor).lerp(new THREE.Color(p.trim), 0.15),
+      roughness: 0.75,
+      metalness: 0.05,
+    });
+    const leafMat = new THREE.MeshStandardMaterial({
+      color: new THREE.Color("#4a6b52"),
+      roughness: 0.8,
+      metalness: 0.0,
+    });
+    const pot = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.2, 0.32, 12), potMat);
+    pot.position.y = 0.16;
+    plant.add(pot);
+    const leafPositions: [number, number, number][] = [
+      [0, 0.55, 0],
+      [0.12, 0.62, 0.08],
+      [-0.1, 0.6, -0.09],
+      [0.05, 0.72, -0.06],
+    ];
+    leafPositions.forEach((pos, i) => {
+      const leaf = new THREE.Mesh(new THREE.ConeGeometry(0.09, 0.4, 6), leafMat);
+      leaf.position.set(...pos);
+      leaf.rotation.z = (i - 1.5) * 0.35;
+      plant.add(leaf);
+    });
+    g.add(plant);
+
     // Command-file hotspots — framed, gently glowing cards on the front wall.
     for (const obj of skin.commandFile) {
       const card = new THREE.Group();

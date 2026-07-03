@@ -95,4 +95,10 @@ describe("office back wall + seating", () => {
     expect(seat).toBeTruthy();
     expect(seat!.position.z).toBeCloseTo(0.4, 1);
   });
+  it("adds a living plant element to the office (feng-shui calm-positive direction)", () => {
+    const g = buildSealedRoom("office", greeting);
+    expect(names(g)).toContain("office-plant");
+    const w = buildSealedRoom("waiting", greeting);
+    expect(names(w)).not.toContain("office-plant");
+  });
 });
