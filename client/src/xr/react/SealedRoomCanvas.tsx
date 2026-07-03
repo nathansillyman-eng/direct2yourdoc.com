@@ -98,6 +98,7 @@ function RoomScene({
   // itself loads/animates nothing.
   const waterTex = useRef<THREE.CanvasTexture | null>(null);
   const woodTexRef = useRef<THREE.Texture[] | null>(null);
+  const fabricTexRef = useRef<THREE.CanvasTexture | null>(null);
   useEffect(() => {
     const wf = room.getObjectByName("waterfall") as THREE.Mesh | null;
     if (wf) {
@@ -152,11 +153,30 @@ function RoomScene({
       woodTexRef.current = [tex, floorTex];
     });
 
+    // Subtle woven fabric on the greige accent chairs so they read as upholstery,
+    // not pale plastic boxes (the last obvious "greybox" tell in the waiting room).
+    const fabricTex = makeFabricTexture("#8f7d64");
+    fabricTexRef.current = fabricTex;
+    room.traverse((o) => {
+      const m = o as THREE.Mesh;
+      if (!(m as { isMesh?: boolean }).isMesh) return;
+      const mat = m.material as THREE.MeshStandardMaterial;
+      if (!mat || !("map" in mat)) return;
+      if (/^accent-chair-\d+-(seat|back|arm-[lr])$/.test(m.name)) {
+        mat.map = fabricTex;
+        mat.color = new THREE.Color(0xffffff);
+        mat.roughness = 0.92;
+        mat.needsUpdate = true;
+      }
+    });
+
     return () => {
       waterTex.current?.dispose();
       waterTex.current = null;
       woodTexRef.current?.forEach((t) => t.dispose());
       woodTexRef.current = null;
+      fabricTexRef.current?.dispose();
+      fabricTexRef.current = null;
     };
   }, [room, skin]);
 
@@ -465,6 +485,41 @@ function makeCanvasTexture(
 
 /** A tall canvas of vertical water streaks → a tiling, scrollable CanvasTexture.
  *  Cheap (no shader), Quest-friendly; the React layer scrolls offset.y to "flow". */
+// A subtle woven-fabric canvas texture — fine cross-hatched threads + speckle so
+// upholstery reads as cloth, not a flat plastic box.
+function makeFabricTexture(colorHex: string): THREE.CanvasTexture {
+  const s = 256;
+  const canvas = document.createElement("canvas");
+  canvas.width = canvas.height = s;
+  const ctx = canvas.getContext("2d")!;
+  const base = new THREE.Color(colorHex);
+  ctx.fillStyle = `#${base.getHexString()}`;
+  ctx.fillRect(0, 0, s, s);
+  const light = `#${base.clone().lerp(new THREE.Color(0xffffff), 0.12).getHexString()}`;
+  const dark = `#${base.clone().lerp(new THREE.Color(0x000000), 0.14).getHexString()}`;
+  for (let y = 0; y < s; y += 3) {
+    ctx.globalAlpha = 0.5;
+    ctx.fillStyle = (y / 3) % 2 ? light : dark;
+    ctx.fillRect(0, y, s, 1);
+  }
+  for (let x = 0; x < s; x += 3) {
+    ctx.globalAlpha = 0.26;
+    ctx.fillStyle = (x / 3) % 2 ? light : dark;
+    ctx.fillRect(x, 0, 1, s);
+  }
+  ctx.globalAlpha = 0.06;
+  for (let i = 0; i < 1600; i++) {
+    ctx.fillStyle = i % 2 ? "#ffffff" : "#000000";
+    ctx.fillRect(Math.random() * s, Math.random() * s, 1, 1);
+  }
+  ctx.globalAlpha = 1;
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+  tex.repeat.set(2, 2);
+  return tex;
+}
+
 function makeWaterTexture(colorHex: string): THREE.CanvasTexture {
   const w = 128;
   const h = 512;

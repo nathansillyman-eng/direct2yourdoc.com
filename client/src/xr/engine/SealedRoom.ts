@@ -80,10 +80,10 @@ export function buildSealedRoom(stage: RoomStage, skin: RoomSkin): THREE.Group {
     floorMat.metalness = 0.12;
   }
   const accentMat = new THREE.MeshStandardMaterial({
-    // Muted toward warm greige so the chairs read as premium upholstery, not a
-    // bright purple block — lavender stays a whisper of an accent.
-    color: new THREE.Color(p.accent ?? p.fire).lerp(new THREE.Color("#d8cfc0"), 0.62),
-    roughness: 0.8,
+    // Warm taupe upholstery — the old pale-greige lerp blew out to near-white plastic
+    // under the room light. The React layer lays a woven fabric map over this.
+    color: new THREE.Color("#8f7d64"),
+    roughness: 0.85,
     metalness: 0.03,
   });
   const waterCol = new THREE.Color(p.water ?? "#6fb6cf");
