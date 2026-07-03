@@ -45,8 +45,9 @@ export function lightingForStage(stage: RoomStage, palette: RoomPalette): RoomLi
     fill: { color: "#d7e2e0", intensity: 1.6, position: [-3, 2.5, 1] },
     rim: { color: palette.trim, intensity: 0.45, position: [0, 3, -4] },
     feature: {
-      color: palette.water ?? "#5fb6cf", intensity: 3.4, position: [-0.7, 1.1, -2.2],
-      distance: 4.5, decay: 2, flicker: "water", base: 3.4, amp: 0.6,
+      // Softer, grazing shimmer (was 3.4 @ z -2.2 — blew a white hotspot into the panel).
+      color: palette.water ?? "#5fb6cf", intensity: 1.7, position: [-0.7, 1.4, -1.9],
+      distance: 4.5, decay: 2, flicker: "water", base: 1.7, amp: 0.4,
     },
   };
 }

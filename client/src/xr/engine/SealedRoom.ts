@@ -162,11 +162,11 @@ export function buildSealedRoom(stage: RoomStage, skin: RoomSkin): THREE.Group {
       new THREE.MeshStandardMaterial({
         color: waterCol,
         emissive: waterCol,
-        emissiveIntensity: 0.1,
-        roughness: 0.18,
+        emissiveIntensity: 0.05, // was 0.1 — less self-lit "screen" glow
+        roughness: 0.6, // was 0.18 — matte wet sheet diffuses the light, no mirror hotspot
         metalness: 0.0,
         transparent: true,
-        opacity: 0.5,
+        opacity: 0.6,
       }),
     );
     water.position.set(FX, 1.25, FRONT + 0.1);

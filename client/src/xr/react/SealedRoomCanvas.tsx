@@ -473,16 +473,31 @@ function makeWaterTexture(colorHex: string): THREE.CanvasTexture {
   canvas.height = h;
   const ctx = canvas.getContext("2d")!;
   const base = new THREE.Color(colorHex);
+  // Deep vertical gradient: catches light up top, deepens to teal in the basin.
   const grad = ctx.createLinearGradient(0, 0, 0, h);
-  grad.addColorStop(0, `#${base.clone().lerp(new THREE.Color(0xffffff), 0.35).getHexString()}`);
-  grad.addColorStop(1, `#${base.clone().lerp(new THREE.Color(0x000000), 0.35).getHexString()}`);
+  grad.addColorStop(0, `#${base.clone().lerp(new THREE.Color(0xffffff), 0.24).getHexString()}`);
+  grad.addColorStop(0.55, `#${base.clone().getHexString()}`);
+  grad.addColorStop(1, `#${base.clone().lerp(new THREE.Color(0x02141a), 0.62).getHexString()}`);
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, w, h);
-  for (let i = 0; i < 26; i++) {
-    const x = (i / 26) * w + (((i * 53) % 7) - 3);
-    ctx.globalAlpha = 0.1 + ((i * 37) % 22) / 100;
-    ctx.fillStyle = i % 2 ? "#ffffff" : "#cfeefa";
-    ctx.fillRect(x, 0, 1 + (i % 3), h);
+  // Many fine, faint falling threads (thin + translucent = a flowing sheet, not fat bars).
+  for (let i = 0; i < 60; i++) {
+    const x = ((i * 97) % 1000) / 1000 * w;
+    ctx.globalAlpha = 0.04 + ((i * 29) % 13) / 100;
+    ctx.fillStyle = i % 3 === 0 ? "#eafaff" : `#${base.clone().lerp(new THREE.Color(0xffffff), 0.5).getHexString()}`;
+    ctx.fillRect(x, 0, i % 5 === 0 ? 2 : 1, h);
+  }
+  // A few brighter sparkle threads.
+  for (let i = 0; i < 7; i++) {
+    ctx.globalAlpha = 0.16;
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect((i * 151) % w, 0, 1, h);
+  }
+  // Soft horizontal ripples where the sheet meets the pool.
+  for (let y = h - 64; y < h; y += 6) {
+    ctx.globalAlpha = 0.06;
+    ctx.fillStyle = "#dff6ff";
+    ctx.fillRect(0, y, w, 2);
   }
   ctx.globalAlpha = 1;
   const tex = new THREE.CanvasTexture(canvas);
