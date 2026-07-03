@@ -144,7 +144,7 @@ function RoomScene({
           mat.color = new THREE.Color(0xffffff);
           mat.roughness = 0.5; // keep a little polished sheen
           mat.needsUpdate = true;
-        } else if (/^(wall-[nsew]|fd-body|fd-top|desk-top|desk-front|desk-left|desk-right|shelf-case|ps-seat|ps-back|ps-arm|ps-leg|pc-seat|pc-back)/.test(m.name)) {
+        } else if (/^(wall-[nsew]|fd-body|fd-top|desk-top|desk-front|desk-left|desk-right|shelf-case|ps-arm|ps-leg)/.test(m.name)) {
           mat.map = tex;
           mat.color = new THREE.Color(0xffffff);
           mat.needsUpdate = true;
@@ -162,7 +162,7 @@ function RoomScene({
       if (!(m as { isMesh?: boolean }).isMesh) return;
       const mat = m.material as THREE.MeshStandardMaterial;
       if (!mat || !("map" in mat)) return;
-      if (/^accent-chair-\d+-(seat|back|arm-[lr])$/.test(m.name)) {
+      if (/^(accent-chair-\d+-(seat|back|arm-[lr])|ps-seat|ps-back|pc-seat|pc-back)$/.test(m.name)) {
         mat.map = fabricTex;
         mat.color = new THREE.Color(0xffffff);
         mat.roughness = 0.92;
