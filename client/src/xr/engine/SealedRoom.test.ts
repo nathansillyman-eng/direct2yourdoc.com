@@ -72,11 +72,11 @@ describe("feature wall is waiting-room only", () => {
     const g = buildSealedRoom("office", greeting);
     for (const n of ["waterfall", "koi-pond", "km-emblem"]) expect(names(g)).not.toContain(n);
   });
-  it("builds koi as groups (body + tail), not bare boxes", () => {
+  it("keeps the reflecting pool but no procedural koi fish (pulled — read as dead clutter)", () => {
     const g = buildSealedRoom("waiting", greeting);
-    const k = g.getObjectByName("koi-1");
-    expect(k).toBeTruthy();
-    expect((k as THREE.Group).children.length).toBeGreaterThanOrEqual(2);
+    expect(g.getObjectByName("koi-pond")).toBeTruthy();
+    expect(g.getObjectByName("koi-1")).toBeFalsy();
+    expect(g.getObjectByName("koi-2")).toBeFalsy();
   });
 });
 

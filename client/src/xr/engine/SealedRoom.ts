@@ -206,27 +206,10 @@ export function buildSealedRoom(stage: RoomStage, skin: RoomSkin): THREE.Group {
     g.add(box("pond-rim-f", [1.84, 0.09, 0.06], goldMat, [FX, 0.07, FRONT + 1.09]));
     g.add(box("pond-rim-l", [0.06, 0.09, 1.0], goldMat, [FX - 0.89, 0.07, FRONT + 0.62]));
     g.add(box("pond-rim-r", [0.06, 0.09, 1.0], goldMat, [FX + 0.89, 0.07, FRONT + 0.62]));
-    // Two koi — each a shaped fish (flat body + tail), not a bare box.
-    const koi = (nm: string, colorHex: string, x: number, z: number, ry: number) => {
-      const k = new THREE.Group();
-      k.name = nm;
-      k.position.set(x, 0.06, z);
-      k.rotation.y = ry;
-      const fishMat = new THREE.MeshStandardMaterial({ color: new THREE.Color(colorHex), roughness: 0.5 });
-      const body = new THREE.Mesh(new THREE.SphereGeometry(0.12, 12, 8), fishMat);
-      body.name = `${nm}-body`;
-      body.scale.set(1.9, 0.5, 1.0); // long, flat fish body
-      k.add(body);
-      const tail = new THREE.Mesh(new THREE.ConeGeometry(0.09, 0.16, 4), fishMat);
-      tail.name = `${nm}-tail`;
-      tail.rotation.z = Math.PI / 2;
-      tail.position.set(-0.22, 0, 0);
-      tail.scale.set(1, 0.5, 1);
-      k.add(tail);
-      g.add(k);
-    };
-    koi("koi-1", "#e8743b", FX - 0.25, FRONT + 0.5, 0.4);
-    koi("koi-2", "#f2f2f2", FX + 0.32, FRONT + 0.74, -0.8);
+    // Koi PULLED (2026-07-03): the procedural sphere+cone fish read as dead clutter
+    // on the floor — the same reason C1 pulled the dogs. The still, dark reflecting
+    // pool reads calmer and more premium without them; a proper koi pass waits for
+    // real modeled assets (parked "pet pass").
   } else if (stage === "waiting") {
     g.add(
       box(
