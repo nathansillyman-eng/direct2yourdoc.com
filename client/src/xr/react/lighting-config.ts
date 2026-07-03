@@ -27,9 +27,9 @@ export interface RoomLightingConfig {
 export function lightingForStage(stage: RoomStage, palette: RoomPalette): RoomLightingConfig {
   if (stage === "office") {
     return {
-      ambient: 0.42,
+      ambient: 0.5,
       hemisphere: { sky: "#43342a", ground: "#241811", intensity: 0.55 },
-      key: { color: "#ffdcae", intensity: 1.5, position: [2.5, 4, 2.5], castShadow: true },
+      key: { color: "#ffdcae", intensity: 1.25, position: [2.5, 4, 2.5], castShadow: true },
       fill: { color: "#e9c58a", intensity: 6, position: [-2, 2.2, 1] },
       rim: { color: palette.trim, intensity: 0.45, position: [-1, 3, -3.5] },
       feature: {

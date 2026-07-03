@@ -15,4 +15,9 @@ describe("lightingForStage", () => {
     expect(l.feature.flicker).toBe("warm");
     expect(l.key.castShadow).toBe(true);
   });
+  it("office reads calm-positive: a soft key (not a harsh clinical spot) and lifted ambient fill", () => {
+    const l = lightingForStage("office", palette);
+    expect(l.key.intensity).toBeLessThanOrEqual(1.3);
+    expect(l.ambient).toBeGreaterThanOrEqual(0.48);
+  });
 });
