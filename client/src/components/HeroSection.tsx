@@ -7,7 +7,7 @@
 import { useEffect, useRef } from "react";
 import { ArrowRight, Phone } from "lucide-react";
 
-const HERO_OFFICE = "/brand/office-lounge.jpg";
+const HERO_OFFICE = "/brand/founder-nate-welcoming.png";
 const KEEPMORE_MARK = "/brand/keepmore-km.svg";
 
 export default function HeroSection() {
@@ -187,9 +187,9 @@ export default function HeroSection() {
             <div className="relative">
               <img
                 src={HERO_OFFICE}
-                alt="The Direct2YourDoc private office"
+                alt="Nate Sillyman, founder, welcoming you into Direct2YourDoc"
                 className="w-full object-cover sm:rounded-sm"
-                style={{ height: "300px", objectPosition: "center", filter: "brightness(0.82) saturate(0.9)" }}
+                style={{ height: "300px", objectPosition: "25% center", filter: "brightness(0.82) saturate(0.9)" }}
               />
               <div
                 className="absolute inset-x-0 bottom-0 h-20 pointer-events-none"
@@ -220,9 +220,9 @@ export default function HeroSection() {
             />
             <img
               src={HERO_OFFICE}
-              alt="The Direct2YourDoc private office"
+              alt="Nate Sillyman, founder, welcoming you into Direct2YourDoc"
               className="absolute inset-0 w-full h-full object-cover"
-              style={{ objectPosition: "center", filter: "brightness(0.78) saturate(0.9) contrast(1.05)" }}
+              style={{ objectPosition: "25% center", filter: "brightness(0.78) saturate(0.9) contrast(1.05)" }}
             />
             {/* Caption card */}
             <div
