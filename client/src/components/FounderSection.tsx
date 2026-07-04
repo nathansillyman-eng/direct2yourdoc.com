@@ -7,7 +7,7 @@
 import { useEffect, useRef } from "react";
 import { Lightbulb, Zap, Compass } from "lucide-react";
 
-const FOUNDER_IMG = "/brand/founder-nate.png";
+const FOUNDER_IMG = "/brand/founder-nate-office.png";
 
 const para: React.CSSProperties = {
   fontFamily: "'DM Sans', sans-serif",

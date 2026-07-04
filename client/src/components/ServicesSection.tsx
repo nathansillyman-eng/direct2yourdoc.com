@@ -6,8 +6,8 @@
 import { useEffect, useRef } from "react";
 import { FileText, Stethoscope, ShieldCheck, Clock } from "lucide-react";
 
-const CONSULT_IMG = "/manus-storage/service-consultation-EZRzCNnVu5vjNNBxFh2hjS.webp";
-const RX_IMG = "/manus-storage/service-prescription-YuXJvDQs9bHsSpt7KVRhLC.webp";
+const CONSULT_IMG = "/brand/founder-nate-welcoming.png";
+const RX_IMG = "/brand/founder-nate-desk.png";
 
 const services = [
   {
