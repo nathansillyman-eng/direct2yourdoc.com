@@ -12,7 +12,7 @@ export default function OfficeBand() {
         src={BAND_IMG}
         alt="Nate Sillyman, founder, standing before The KeepMore Company sign"
         className="absolute inset-0 w-full h-full object-cover"
-        style={{ objectPosition: "center 12%", filter: "brightness(0.82) saturate(0.95)" }}
+        style={{ objectPosition: "center 22%", filter: "brightness(0.82) saturate(0.95)" }}
       />
       {/* Right scrim for text legibility — Nate is centered in this photo, so the
           text panel and its dark scrim sit on the right, keeping his face and the
