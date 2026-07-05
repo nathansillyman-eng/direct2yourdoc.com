@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import type { RoomSkin, RoomStage } from "@/xr/engine/RoomSkin";
-import { audioForStage } from "./audio-config";
+import { audioForStage, musicPlaylist } from "./audio-config";
 
 /** Ambient beds that play INSIDE the WebXR session. A THREE.AudioListener is attached
  *  to the (XR) camera so sound routes to the headset — a plain HTML <audio> element
@@ -59,22 +59,33 @@ export function RoomAudio({ skin, stage, enabled }: { skin: RoomSkin; stage: Roo
 
   // Continuous low music bed — plays across BOTH rooms and does NOT restart on stage
   // change (deps intentionally omit `stage`), so the jazz/lounge feel is unbroken.
+  // With ONE track it loops seamlessly; with a PLAYLIST it rotates track-to-track and
+  // wraps (founder QA 2026-07-05: a single song on infinite repeat = headache).
   useEffect(() => {
     const listener = listenerRef.current;
-    const url = skin.audio?.music;
-    if (!listener || !enabled || !url) return;
+    const playlist = musicPlaylist(skin);
+    if (!listener || !enabled || playlist.length === 0) return;
     void listener.context.resume?.();
 
     let alive = true;
     const music = new THREE.Audio(listener);
-    new THREE.AudioLoader().load(url, (buf) => {
-      if (!alive) return;
-      music.setBuffer(buf);
-      music.setLoop(true);
-      music.setVolume(0.18); // warm featured bed, still under a spoken voice
-      if (!music.isPlaying) music.play();
-    });
     musicRef.current = music;
+
+    const playTrack = (i: number) => {
+      new THREE.AudioLoader().load(playlist[i], (buf) => {
+        if (!alive) return;
+        music.setBuffer(buf);
+        music.setLoop(playlist.length === 1); // solo track: gapless native loop
+        music.setVolume(0.18); // warm featured bed, still under a spoken voice
+        music.onEnded = () => {
+          music.isPlaying = false; // three.js contract: mirror the default onEnded
+          if (!alive || playlist.length === 1) return;
+          playTrack((i + 1) % playlist.length); // rotate, wrap after the last track
+        };
+        if (!music.isPlaying) music.play();
+      });
+    };
+    playTrack(0);
 
     return () => {
       alive = false;

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { audioForStage } from "./audio-config";
+import { audioForStage, musicPlaylist } from "./audio-config";
 import type { RoomSkin } from "@/xr/engine/RoomSkin";
 
 const skin = {
@@ -22,5 +22,19 @@ describe("audioForStage", () => {
     const a = audioForStage("office", {} as RoomSkin);
     expect(a.bed).toBeUndefined();
     expect(a.sources).toEqual([]);
+  });
+});
+
+describe("musicPlaylist", () => {
+  it("wraps a single track into a one-item playlist", () => {
+    const s = { audio: { music: "/audio/a.mp3" } } as unknown as RoomSkin;
+    expect(musicPlaylist(s)).toEqual(["/audio/a.mp3"]);
+  });
+  it("passes a playlist through in order", () => {
+    const s = { audio: { music: ["/audio/a.mp3", "/audio/b.mp3"] } } as unknown as RoomSkin;
+    expect(musicPlaylist(s)).toEqual(["/audio/a.mp3", "/audio/b.mp3"]);
+  });
+  it("is empty when the skin has no music", () => {
+    expect(musicPlaylist({} as RoomSkin)).toEqual([]);
   });
 });

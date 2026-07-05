@@ -37,8 +37,10 @@ export interface RoomSkin {
   logoImage?: string;
   /** Optional ambient audio. The engine never loads these; the React layer plays them. */
   audio?: {
-    /** A continuous low music bed that plays across both rooms (under the ambience). */
-    music?: string;
+    /** A continuous low music bed that plays across both rooms (under the ambience).
+     *  A single URL loops seamlessly; a LIST rotates track-to-track (then wraps) so a
+     *  long visit never reads as one song on repeat. */
+    music?: string | string[];
     waiting?: { bed?: string; sources?: { url: string; position: [number, number, number]; gain: number }[] };
     office?: { bed?: string; sources?: { url: string; position: [number, number, number]; gain: number }[] };
   };
