@@ -41,10 +41,14 @@ export const direct2YourDocGreetingSkin: RoomSkin = {
     // Group clusters to the RIGHT so the waterfall + KM emblem stay a clear backdrop
     // on the left; pulled forward for depth separation from the water wall. Dogs are
     // parked — the auto-generated quadruped meshes read as "dead"; need a proper pet pass.
+    // Scales from MEASURED skeleton heights (2026-07-05: host 1.99m, woman 1.85m,
+    // husband 2.00m, doctor 1.97m — everyone rendered NBA-sized; the visitor is
+    // their real height in VR, so the guests loomed ~6in over Nate). Targets:
+    // host 1.83m, woman 1.65m, husband 1.80m, doctor 1.81m — natural, nobody looms.
     waiting: [
-      { model: "/models/d2yd-host.glb", clip: "Armature|Idle|baselayer", position: [1.15, 0, -0.5], rotationY: -0.5, scale: 1 },
-      { model: "/models/d2yd-woman.glb", clip: "Armature|Idle|baselayer", position: [0.3, 0, -0.35], rotationY: 0.1, scale: 1 },
-      { model: "/models/d2yd-husband.glb", clip: "Armature|Idle|baselayer", position: [0.75, 0, -0.9], rotationY: -0.15, scale: 1 },
+      { model: "/models/d2yd-host.glb", clip: "Armature|Idle|baselayer", position: [1.15, 0, -0.5], rotationY: -0.5, scale: 0.92 },
+      { model: "/models/d2yd-woman.glb", clip: "Armature|Idle|baselayer", position: [0.3, 0, -0.35], rotationY: 0.1, scale: 0.89 },
+      { model: "/models/d2yd-husband.glb", clip: "Armature|Idle|baselayer", position: [0.75, 0, -0.9], rotationY: -0.15, scale: 0.9 },
     ],
     office: [
       {
@@ -55,7 +59,7 @@ export const direct2YourDocGreetingSkin: RoomSkin = {
         // report 2026-07-04). The React layer hides the chair when he's present.
         position: [0, 0, -2.0],
         rotationY: 0,
-        scale: 1,
+        scale: 0.92,
       },
     ],
   },

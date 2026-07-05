@@ -57,7 +57,17 @@ function vitePluginStorageProxy(): Plugin {
   };
 }
 
-const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginStorageProxy()];
+// jsxLocPlugin (Builder.io template leftover) injects data-loc props into ALL JSX —
+// including react-three-fiber elements, where applyProps crashes the whole Canvas
+// ("R3F: Cannot set data-loc") and takes the WebGL context down with it (observed
+// 2026-07-05, incl. in-headset via the dev tunnel). Off by default; opt back in with
+// JSX_LOC=1 if Builder visual editing is ever actually needed.
+const plugins = [
+  react(),
+  tailwindcss(),
+  ...(process.env.JSX_LOC ? [jsxLocPlugin()] : []),
+  vitePluginStorageProxy(),
+];
 
 export default defineConfig({
   plugins,
