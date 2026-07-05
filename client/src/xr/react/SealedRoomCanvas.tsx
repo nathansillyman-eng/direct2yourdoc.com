@@ -373,7 +373,9 @@ function CompensatedOrigin({ stage }: { stage: RoomStage }) {
 
   useFrame(() => {
     if (pending.current === null) return;
-    const target: [number, number] = pending.current === "office" ? [0, 0.4] : [0, 1.6];
+    // Office target is BEHIND the patient chair (seat z=0.4, back to z≈0.66) — a
+    // standing visitor spawned at the seat centre was literally inside the chair.
+    const target: [number, number] = pending.current === "office" ? [0, 1.05] : [0, 1.6];
     pending.current = null;
     if (!gl.xr.isPresenting) {
       setPos([target[0], 0, target[1]]);
@@ -464,6 +466,15 @@ export function SealedRoomCanvas({ skin, xr, initialStage = "waiting" }: { skin:
           gl.domElement.addEventListener("webglcontextlost", (e) => {
             e.preventDefault();
             setCtxLost(true);
+            // End any immersive session: a DOM overlay is INVISIBLE inside VR, so a
+            // lost context in-headset must kick back to the 2D page to show recovery.
+            try {
+              (store.getState() as { session?: { end?: () => Promise<void> } }).session
+                ?.end?.()
+                .catch(() => {});
+            } catch {
+              /* no session */
+            }
           });
           gl.domElement.addEventListener("webglcontextrestored", () => setCtxLost(false));
         }}
