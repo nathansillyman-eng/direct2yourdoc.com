@@ -217,6 +217,7 @@ export default function ServicesSection() {
               src={CONSULT_IMG}
               alt="Nate Sillyman, founder, in a private consultation setting"
               className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+              style={{ objectPosition: "50% 0%" }}
             />
             <div
               className="absolute inset-0"
