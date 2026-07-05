@@ -280,3 +280,58 @@
     .logo-shimmer::after { animation: none; opacity: 0; }
   }
 }
+
+/* Legal pages (Privacy Policy, Terms of Service, Accessibility Statement) */
+.legal-content {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--charcoal-mid);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+.legal-content h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--charcoal);
+  margin-top: 2.75rem;
+  margin-bottom: 1rem;
+}
+.legal-content h2:first-child {
+  margin-top: 0;
+}
+.legal-content h3 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--charcoal);
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+.legal-content p {
+  margin-bottom: 1.1rem;
+}
+.legal-content ul, .legal-content ol {
+  margin: 0 0 1.1rem 1.4rem;
+  padding: 0;
+}
+.legal-content li {
+  margin-bottom: 0.5rem;
+  padding-left: 0.3rem;
+}
+.legal-content a {
+  color: var(--forest-green-dark);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.legal-content strong {
+  color: var(--charcoal);
+  font-weight: 700;
+}
+.legal-callout {
+  background: oklch(0.94 0.03 90 / 0.4);
+  border: 1px solid var(--aged-bronze);
+  border-radius: var(--radius-md);
+  padding: 1.1rem 1.4rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.92rem;
+}

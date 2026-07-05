@@ -6,7 +6,7 @@
 import { useEffect, useRef } from "react";
 import { FileText, Stethoscope, ShieldCheck, Clock } from "lucide-react";
 
-const CONSULT_IMG = "/brand/founder-nate-welcoming.png";
+const CONSULT_IMG = "/brand/founder-nate-consult.png";
 const RX_IMG = "/brand/founder-nate-desk.png";
 
 const services = [
@@ -215,7 +215,7 @@ export default function ServicesSection() {
           <div className="md:col-span-3 relative overflow-hidden rounded-sm" style={{ height: "380px" }}>
             <img
               src={CONSULT_IMG}
-              alt="Private consultation"
+              alt="Nate Sillyman, founder, in a private consultation setting"
               className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
             />
             <div

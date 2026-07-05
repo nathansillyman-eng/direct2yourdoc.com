@@ -3,20 +3,20 @@
  * Full-width cinematic office image with overlaid line. A mid-page visual breather
  * that reinforces the "the headset is the door" idea. Brand-matched reception image.
  */
-const BAND_IMG = "/brand/founder-nate-welcoming.png";
+const BAND_IMG = "/brand/founder-nate-band.png";
 
 export default function OfficeBand() {
   return (
     <section className="relative w-full overflow-hidden" style={{ height: "clamp(360px, 54vh, 640px)" }}>
       <img
         src={BAND_IMG}
-        alt="Nate Sillyman, founder, welcoming you into Direct2YourDoc"
+        alt="Nate Sillyman, founder, standing before The KeepMore Company sign"
         className="absolute inset-0 w-full h-full object-cover"
-        style={{ objectPosition: "25% center", filter: "brightness(0.82) saturate(0.95)" }}
+        style={{ objectPosition: "center 12%", filter: "brightness(0.82) saturate(0.95)" }}
       />
-      {/* Right scrim for text legibility — Nate stands on the left of this photo,
-          so the text panel and its dark scrim sit on the right instead, to avoid
-          darkening him out. */}
+      {/* Right scrim for text legibility — Nate is centered in this photo, so the
+          text panel and its dark scrim sit on the right, keeping his face and the
+          KeepMore signage behind him visible on the left. */}
       <div
         className="absolute inset-0"
         style={{ background: "linear-gradient(270deg, oklch(0.10 0.05 200 / 0.94) 0%, oklch(0.10 0.05 200 / 0.5) 52%, oklch(0.10 0.05 200 / 0.15) 100%)" }}

@@ -106,13 +106,51 @@ export default function Footer() {
 
         </div>
 
+        {/* Legal links */}
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pt-8">
+          {[
+            { label: "Privacy Policy", href: "/privacy-policy" },
+            { label: "Terms of Service", href: "/terms-of-service" },
+            { label: "Accessibility", href: "/accessibility" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: "0.78rem",
+                color: "oklch(0.55 0.03 200)",
+                textDecoration: "none",
+                letterSpacing: "0.02em",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "white")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "oklch(0.55 0.03 200)")}
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+
         {/* Bottom bar */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-6">
           <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.78rem", color: "oklch(0.42 0.03 200)" }}>
             © {currentYear} The KeepMore Company LLC · Direct2YourDoc · All rights reserved.
           </p>
           <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.72rem", color: "oklch(0.38 0.03 200)", letterSpacing: "0.06em", textAlign: "center" }}>
             Direct2YourDoc is a private concierge medical service and does not constitute insurance or a substitute for emergency care.
+          </p>
+        </div>
+        <div className="pt-3">
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.68rem", color: "oklch(0.42 0.03 200)", textAlign: "center", lineHeight: 1.6 }}>
+            Direct2YourDoc is committed to digital accessibility for all users. If you use assistive technology and
+            encounter an issue on this site, contact us at{" "}
+            <a href="mailto:accessibility@direct2yourdoc.com" style={{ color: "oklch(0.55 0.03 200)" }}>
+              accessibility@direct2yourdoc.com
+            </a>{" "}
+            — see our{" "}
+            <a href="/accessibility" style={{ color: "oklch(0.55 0.03 200)" }}>
+              Accessibility Statement
+            </a>.
           </p>
         </div>
       </div>
