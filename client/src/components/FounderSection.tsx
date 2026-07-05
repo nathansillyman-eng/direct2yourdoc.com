@@ -7,7 +7,7 @@
 import { useEffect, useRef } from "react";
 import { Lightbulb, Zap, Compass } from "lucide-react";
 
-const OFFICE_IMG = "/brand/office-lounge-b.jpg";
+const FOUNDER_IMG = "/brand/founder-nate-office.png";
 
 const para: React.CSSProperties = {
   fontFamily: "'DM Sans', sans-serif",
@@ -17,9 +17,9 @@ const para: React.CSSProperties = {
 };
 
 const principles = [
-  { icon: Lightbulb, text: "His idea — conceived and built independently, from the ground up" },
-  { icon: Zap, text: "Eight weeks of work, now turned out in a single day" },
-  { icon: Compass, text: "One mission: remove the barrier between you and your care" },
+  { icon: Lightbulb, text: "A decade-plus inside brokerage & advisory firms — he's seen exactly where systems fail people" },
+  { icon: Zap, text: "Self-taught builder — an outside team's eight weeks, shipped in a single day" },
+  { icon: Compass, text: "One mission — remove the wall between you and the doctor who can help" },
 ];
 
 export default function FounderSection() {
@@ -51,7 +51,7 @@ export default function FounderSection() {
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-11 gap-12 lg:gap-20 items-center">
 
-          {/* Left: office image — 5/11 */}
+          {/* Left: founder portrait — 5/11 */}
           <div className="lg:col-span-5 fade-up">
             <div className="relative">
               <div
@@ -59,10 +59,10 @@ export default function FounderSection() {
                 style={{ border: "2px solid var(--forest-green)", opacity: 0.45 }}
               />
               <img
-                src={OFFICE_IMG}
-                alt="The Direct2YourDoc private office"
+                src={FOUNDER_IMG}
+                alt="Nate Sillyman, founder of Direct2YourDoc"
                 className="relative rounded-sm w-full object-cover"
-                style={{ height: "560px", objectPosition: "center", filter: "brightness(0.92)" }}
+                style={{ height: "560px", objectPosition: "center top", filter: "brightness(0.98)" }}
               />
               {/* Founder badge */}
               <div
@@ -95,38 +95,38 @@ export default function FounderSection() {
                   lineHeight: 1.1,
                 }}
               >
-                One conviction.<br />
-                <em style={{ color: "var(--forest-green-light)" }}>Built by hand.</em>
+                He watched the wall go up for a decade.<br />
+                <em style={{ color: "var(--forest-green-light)" }}>Then he took it down.</em>
               </h2>
             </div>
 
             <div className="fade-up mt-6">
               <p style={para}>
-                Direct2YourDoc began with a single conviction — one{" "}
-                <strong style={{ color: "oklch(0.82 0.03 200)", fontWeight: 600 }}>Nate Sillyman</strong>,
-                founder and CEO of The KeepMore Company, came by honestly. He was raised by a father devoted to
-                the truth, and to the daily, unglamorous work of earning wisdom: show up, test what you
-                believe, and keep only what holds. That discipline became the family inheritance.
+                <strong style={{ color: "oklch(0.82 0.03 200)", fontWeight: 600 }}>Nate Sillyman</strong>{" "}
+                spent more than a decade in and around the country's brokerages and advisory firms — a gold
+                desk, an options desk, a fraud hotline, the advisory floor. Everywhere he looked, the same
+                thing: capable people kept one phone tree away from the experts who could actually help them.
+                He decided that wall was worth tearing down.
               </p>
               <p className="mt-4" style={para}>
-                Nate carried it into the build. With no formal training in code or medicine, he taught
-                himself — and then made the thing. What once took an outside team eight weeks, he now
-                ships in a single day; the work in front of you went from idea to live in the time most
-                companies spend scheduling a kickoff call. The idea, the build, and the company are his.
+                With no formal training in code, he taught himself to build — at a pace that turns an outside
+                team's eight weeks into a single day.{" "}
+                <em style={{ color: "var(--forest-green)" }}>Direct2YourDoc is what he built with it</em>:
+                a real doctor on call, from home, the moment you need one. No waiting room, no portal login,
+                no hold music — just the person who can help, one tap away.
               </p>
               <p className="mt-4" style={para}>
-                It is all one mission — taking down the barriers between people and what they need: first to{" "}
-                <em style={{ color: "var(--forest-green)" }}>knowledge</em>, now to{" "}
-                <em style={{ color: "var(--forest-green)" }}>care</em>. He built it so that reaching a real
-                doctor for a real answer is never again something you have to fight a system to do. The
-                physicians of Direct2YourDoc are the hands that deliver it.
+                He isn't your physician. He's the one who makes the introduction — the host who vouches you
+                into a network of doctors who actually pick up. The idea, the build, and the company are his;
+                the care is delivered by real physicians. It's the same conviction behind everything he makes
+                at The KeepMore Company: close the distance between people and what they need.
               </p>
             </div>
 
             <div className="fade-up mt-8">
               <div className="pull-quote" style={{ borderLeftColor: "var(--forest-green)" }}>
-                "I was tired of watching good people get stuck behind a phone tree just to reach their
-                own doctor. So I built the thing that takes the wall down."
+                "I spent years watching good people get stuck one phone tree away from help. So I taught
+                myself to build the thing that takes the wall down — and I haven't stopped since."
                 <footer
                   className="mt-3"
                   style={{
