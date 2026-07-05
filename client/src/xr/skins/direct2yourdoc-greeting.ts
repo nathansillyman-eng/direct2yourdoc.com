@@ -30,13 +30,15 @@ export const direct2YourDocGreetingSkin: RoomSkin = {
   // the office). Drop-in replaceable with CC0/produced .mp3s per docs/superpowers specs.
   audio: {
     // Nate's jazz cuts, rotated end-to-end (a solo track on repeat = headache).
-    // Interleaved by feel: Dockside 1 → Direct 1 → Dockside 2 → Direct 2, ~14 min
-    // of music before anything repeats.
+    // Interleaved by family so the sound keeps shifting: ~20 min of music before
+    // anything repeats — longer than any visit.
     music: [
       "/audio/d2yd/dockside-doctor.mp3",
       "/audio/d2yd/direct-to-your-doctor.mp3",
       "/audio/d2yd/dockside-doctor2.mp3",
+      "/audio/d2yd/direct-to-your-doctor3.mp3",
       "/audio/d2yd/direct-to-your-doctor2.mp3",
+      "/audio/d2yd/direct-to-your-doctor4.mp3",
     ],
     waiting: { bed: "/audio/d2yd/d2yd_waiting.wav" },
     office: { bed: "/audio/d2yd/d2yd_office.wav" },
