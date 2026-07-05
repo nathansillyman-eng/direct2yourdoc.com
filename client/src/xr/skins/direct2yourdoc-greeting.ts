@@ -50,7 +50,10 @@ export const direct2YourDocGreetingSkin: RoomSkin = {
       {
         model: "/models/d2yd-doctor.glb",
         clip: "Armature|Idle|baselayer",
-        position: [0, 0, -2.25],
+        // Standing BEHIND the desk (back edge z=−1.7), clear of the desk chair at
+        // z=−2.15 — the old −2.25 stood him inside the chair's volume (in-headset
+        // report 2026-07-04). The React layer hides the chair when he's present.
+        position: [0, 0, -2.0],
         rotationY: 0,
         scale: 1,
       },

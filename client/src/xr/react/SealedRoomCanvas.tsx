@@ -1,12 +1,20 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { XR, createXRStore, XROrigin } from "@react-three/xr";
-import { OrbitControls, Environment, Lightformer } from "@react-three/drei";
+import { OrbitControls, Environment, Lightformer, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { buildSealedRoom } from "@/xr/engine/SealedRoom";
 import { buildPresence } from "@/xr/engine/presence";
+import { koiPose } from "@/xr/engine/koi";
 import type { RoomSkin, RoomStage } from "@/xr/engine/RoomSkin";
 import { advanceStage, FADE_MS } from "@/xr/locomotion";
+import {
+  compensatedOrigin,
+  dampYawTowards,
+  inDoorZone,
+  beatPlacement,
+  deskChairVisible,
+} from "./xr-comfort";
 import { RoomLighting } from "./RoomLighting";
 import { RoomAudio } from "./RoomAudio";
 import { CastMember } from "./CastMember";
@@ -14,6 +22,12 @@ import { castForStage } from "./cast-config";
 
 const store = createXRStore();
 export { store as xrStore };
+
+// Session-resident texture cache. Stage swaps must NOT re-decode/re-upload textures —
+// that churn (plus GLB re-uploads) was the Quest transition spike behind the
+// "exit → black darkness" report. Keyed by recipe; deliberately never disposed
+// mid-session (a few MB resident beats a context loss).
+const textureCache = new Map<string, THREE.Texture>();
 
 /** Renders the current engine group + (in office) the presence, with comfort fades.
  *  Stage + the advance action are now OWNED BY THE PARENT so a guaranteed,
@@ -93,19 +107,29 @@ function RoomScene({
   // Rigged 3D cast for this stage (e.g. the office doctor). Falls back to the billboard.
   const cast = castForStage(stage, skin);
 
+  // A standing rigged doctor REPLACES the engine's desk chair (built for the seated
+  // billboard fallback) — showing both stands him inside the chair.
+  useEffect(() => {
+    const chair = room.getObjectByName("chair");
+    if (chair) chair.visible = deskChairVisible(stage, cast.length);
+  }, [room, stage, cast.length]);
+
   // Greeting skin: drive the waterfall (animated scrolling texture) and the KM
   // emblem (loaded image). Both are tagged by the engine via userData; the engine
   // itself loads/animates nothing.
   const waterTex = useRef<THREE.CanvasTexture | null>(null);
-  const woodTexRef = useRef<THREE.Texture[] | null>(null);
-  const fabricTexRef = useRef<THREE.CanvasTexture | null>(null);
   useEffect(() => {
     const wf = room.getObjectByName("waterfall") as THREE.Mesh | null;
     if (wf) {
-      const tex = makeWaterTexture(skin.palette.water ?? "#6fb6cf");
-      tex.wrapS = THREE.RepeatWrapping;
-      tex.wrapT = THREE.RepeatWrapping;
-      tex.repeat.set(1, 2);
+      const waterKey = `water:${skin.palette.water ?? "#6fb6cf"}`;
+      let tex = textureCache.get(waterKey) as THREE.CanvasTexture | undefined;
+      if (!tex) {
+        tex = makeWaterTexture(skin.palette.water ?? "#6fb6cf");
+        tex.wrapS = THREE.RepeatWrapping;
+        tex.wrapT = THREE.RepeatWrapping;
+        tex.repeat.set(1, 2);
+        textureCache.set(waterKey, tex);
+      }
       const m = wf.material as THREE.MeshStandardMaterial;
       m.map = tex;
       m.emissiveMap = tex;
@@ -126,14 +150,8 @@ function RoomScene({
     // Real red-oak PHOTO texture on the panelled walls, floor, and wood furniture —
     // replaces the flat/procedural surfaces (the biggest "greybox/Sims" tell). Colour is
     // set white so the texture shows at full warmth instead of being tinted dark.
-    new THREE.TextureLoader().load("/brand/wood-redoak.png", (tex) => {
-      tex.colorSpace = THREE.SRGBColorSpace;
-      tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
-      tex.anisotropy = 8;
-      const floorTex = tex.clone();
-      floorTex.needsUpdate = true;
-      floorTex.repeat.set(3, 3.5);
-      tex.repeat.set(2.4, 1.8);
+    // Loaded ONCE per session via the cache — stage swaps re-use the resident GPU copy.
+    const applyWood = (wallTex: THREE.Texture, floorTex: THREE.Texture) => {
       room.traverse((o) => {
         const m = o as THREE.Mesh;
         if (!(m as { isMesh?: boolean }).isMesh) return;
@@ -145,18 +163,38 @@ function RoomScene({
           mat.roughness = 0.5; // keep a little polished sheen
           mat.needsUpdate = true;
         } else if (/^(wall-[nsew]|fd-body|fd-top|desk-top|desk-front|desk-left|desk-right|shelf-case|ps-arm|ps-leg)/.test(m.name)) {
-          mat.map = tex;
+          mat.map = wallTex;
           mat.color = new THREE.Color(0xffffff);
           mat.needsUpdate = true;
         }
       });
-      woodTexRef.current = [tex, floorTex];
-    });
+    };
+    const cachedWall = textureCache.get("wood-wall");
+    const cachedFloor = textureCache.get("wood-floor");
+    if (cachedWall && cachedFloor) {
+      applyWood(cachedWall, cachedFloor);
+    } else {
+      new THREE.TextureLoader().load("/brand/wood-redoak.png", (tex) => {
+        tex.colorSpace = THREE.SRGBColorSpace;
+        tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+        tex.anisotropy = 8;
+        const floorTex = tex.clone();
+        floorTex.needsUpdate = true;
+        floorTex.repeat.set(3, 3.5);
+        tex.repeat.set(2.4, 1.8);
+        textureCache.set("wood-wall", tex);
+        textureCache.set("wood-floor", floorTex);
+        applyWood(tex, floorTex);
+      });
+    }
 
     // Subtle woven fabric on the greige accent chairs so they read as upholstery,
     // not pale plastic boxes (the last obvious "greybox" tell in the waiting room).
-    const fabricTex = makeFabricTexture("#8f7d64");
-    fabricTexRef.current = fabricTex;
+    let fabricTex = textureCache.get("fabric:#8f7d64") as THREE.CanvasTexture | undefined;
+    if (!fabricTex) {
+      fabricTex = makeFabricTexture("#8f7d64");
+      textureCache.set("fabric:#8f7d64", fabricTex);
+    }
     room.traverse((o) => {
       const m = o as THREE.Mesh;
       if (!(m as { isMesh?: boolean }).isMesh) return;
@@ -169,23 +207,47 @@ function RoomScene({
         mat.needsUpdate = true;
       }
     });
-
-    return () => {
-      waterTex.current?.dispose();
-      waterTex.current = null;
-      woodTexRef.current?.forEach((t) => t.dispose());
-      woodTexRef.current = null;
-      fabricTexRef.current?.dispose();
-      fabricTexRef.current = null;
-    };
+    // No dispose on cleanup: every texture above lives in the session cache so a
+    // stage swap never re-decodes or re-uploads (Quest context-loss protection).
   }, [room, skin]);
 
-  // Billboard presence toward the camera + flow the waterfall downward each frame.
+  // Billboard presence toward the camera + flow the waterfall + swim the koi +
+  // watch for a PHYSICAL walk into Door 1's threshold (in-headset first-class entry).
+  const { gl } = useThree();
+  const headPos = useRef(new THREE.Vector3());
+  const koiClock = useRef(0);
+  const doorArmed = useRef(true);
   useFrame((_, dt) => {
     presence?.traverse((o) => {
       if (o.userData.billboard) o.lookAt(camera.position.x, o.position.y, camera.position.z);
     });
     if (waterTex.current) waterTex.current.offset.y -= dt * 0.35;
+
+    // Koi swim: engine builds them tagged with their pond bounds; we drive the poses.
+    koiClock.current += dt;
+    room.traverse((o) => {
+      if (o.userData.koi === undefined) return;
+      const k = o.userData.koi as number;
+      const pond = o.userData.pond as { cx: number; cz: number; rx: number; rz: number };
+      const p = koiPose(koiClock.current, k);
+      o.position.set(pond.cx + p.x * pond.rx, 0.052 + Math.sin(koiClock.current * 0.9 + k * 2) * 0.006, pond.cz + p.z * pond.rz);
+      o.rotation.y = p.yaw;
+      const tail = o.getObjectByName(`koi-${k}-tail`);
+      if (tail) tail.rotation.y = p.wag;
+    });
+
+    // Walking INTO the doorway advances — never the ray alone. In-headset only:
+    // the desktop orbit camera swinging through that spot must not trigger it.
+    if (stage === "waiting" && gl.xr.isPresenting && !intro) {
+      camera.getWorldPosition(headPos.current);
+      if (doorArmed.current && inDoorZone(headPos.current.x, headPos.current.z)) {
+        doorArmed.current = false;
+        onDoorSelect();
+      } else if (!inDoorZone(headPos.current.x, headPos.current.z)) {
+        doorArmed.current = true;
+      }
+    }
+    if (stage !== "waiting") doorArmed.current = true;
   });
 
   // Raycast click/select on interactive meshes (Door 1 advances the stage).
@@ -254,13 +316,78 @@ function RoomScene({
         />
       )}
 
-      {/* Comfort fade overlay. */}
-      <mesh position={[0, 1.4, -0.3]} visible={fade > 0} renderOrder={999}>
-        <planeGeometry args={[8, 8]} />
-        <meshBasicMaterial color="black" transparent opacity={fade} depthTest={false} />
-      </mesh>
+      {/* Comfort fade overlay — rides the CAMERA. The old world-pinned plane sat at
+          z=−0.3; a roaming in-headset visitor was often past it and saw a hard snap
+          instead of a fade. */}
+      <FadeVeil fade={fade} />
     </>
   );
+}
+
+/** A black veil parented to the viewer's pose every frame, so comfort fades cover
+ *  the whole view no matter where the visitor has physically walked. */
+function FadeVeil({ fade }: { fade: number }) {
+  const { camera } = useThree();
+  const group = useRef<THREE.Group>(null);
+  const q = useRef(new THREE.Quaternion());
+  useFrame(() => {
+    const g = group.current;
+    if (!g) return;
+    camera.getWorldPosition(g.position);
+    g.quaternion.copy(camera.getWorldQuaternion(q.current));
+  });
+  return (
+    <group ref={group}>
+      <mesh position={[0, 0, -0.35]} visible={fade > 0} renderOrder={999}>
+        <planeGeometry args={[2.4, 2.4]} />
+        <meshBasicMaterial color="black" transparent opacity={fade} depthTest={false} depthWrite={false} toneMapped={false} />
+      </mesh>
+    </group>
+  );
+}
+
+/** XROrigin that cancels the visitor's real-world walk on every stage swap (and on
+ *  session start), so the head — not the abstract origin — lands on the target spot. */
+function CompensatedOrigin({ stage }: { stage: RoomStage }) {
+  const { camera, gl } = useThree();
+  const [pos, setPos] = useState<[number, number, number]>([0, 0, 1.6]);
+  const posRef = useRef(pos);
+  posRef.current = pos;
+  const stageRef = useRef(stage);
+  stageRef.current = stage;
+  const pending = useRef<RoomStage | null>(stage);
+  const head = useRef(new THREE.Vector3());
+
+  useEffect(() => {
+    pending.current = stage;
+  }, [stage]);
+  // Re-anchor when an immersive session begins — the pre-session desktop camera
+  // pose must never leak into the compensation.
+  useEffect(
+    () =>
+      store.subscribe((s: { session?: unknown }) => {
+        if (s?.session) pending.current = stageRef.current;
+      }),
+    [],
+  );
+
+  useFrame(() => {
+    if (pending.current === null) return;
+    const target: [number, number] = pending.current === "office" ? [0, 0.4] : [0, 1.6];
+    pending.current = null;
+    if (!gl.xr.isPresenting) {
+      setPos([target[0], 0, target[1]]);
+      return;
+    }
+    camera.getWorldPosition(head.current);
+    const [nx, nz] = compensatedOrigin(target, [
+      head.current.x - posRef.current[0],
+      head.current.z - posRef.current[2],
+    ]);
+    setPos([nx, 0, nz]);
+  });
+
+  return <XROrigin position={pos} />;
 }
 
 export function SealedRoomCanvas({ skin, xr, initialStage = "waiting" }: { skin: RoomSkin; xr: boolean; initialStage?: RoomStage }) {
@@ -268,6 +395,15 @@ export function SealedRoomCanvas({ skin, xr, initialStage = "waiting" }: { skin:
   const [fade, setFade] = useState(0); // 0 = clear, 1 = black
   const [intro, setIntro] = useState(false); // host introduction beat is showing
   const [audioOn, setAudioOn] = useState(false);
+  const [ctxLost, setCtxLost] = useState(false); // WebGL context loss (Quest) — never a silent black void
+
+  // Preload EVERY stage's cast up front: a stage swap must never upload heavy GLBs
+  // mid-transition (that one-frame spike is a Quest context-loss trigger).
+  useEffect(() => {
+    for (const entry of [...(skin.cast?.waiting ?? []), ...(skin.cast?.office ?? [])]) {
+      useGLTF.preload(entry.model);
+    }
+  }, [skin]);
 
   // Autoplay policy: start the ambience only after a user gesture. Desktop → the first
   // pointer down; in-headset there is no DOM pointer, so also arm it when the immersive
@@ -322,6 +458,15 @@ export function SealedRoomCanvas({ skin, xr, initialStage = "waiting" }: { skin:
         camera={{ position: [0, 1.6, 2.1], fov: 62 }}
         gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.05 }}
         style={{ width: "100%", height: "100%" }}
+        onCreated={({ gl }) => {
+          // If the GPU ever drops us (Quest under memory pressure), say so and offer a
+          // way back in — a lost context otherwise renders as permanent black void.
+          gl.domElement.addEventListener("webglcontextlost", (e) => {
+            e.preventDefault();
+            setCtxLost(true);
+          });
+          gl.domElement.addEventListener("webglcontextrestored", () => setCtxLost(false));
+        }}
       >
         {/* Procedural IBL (no network fetch) so gold trim has something to reflect. */}
         <Environment resolution={64} environmentIntensity={0.3}>
@@ -330,9 +475,11 @@ export function SealedRoomCanvas({ skin, xr, initialStage = "waiting" }: { skin:
         </Environment>
         {xr ? (
           <XR store={store}>
-            {/* Waiting: stand at the entrance facing the greeting. Office: seated in the
-                PATIENT chair across the desk, facing the doctor (−Z). */}
-            <XROrigin position={stage === "office" ? [0, 0, 0.4] : [0, 0, 1.6]} />
+            {/* Waiting: stand at the entrance facing the greeting. Office: at the
+                PATIENT seat across the desk, facing the doctor (−Z). Compensated:
+                real-world walking is cancelled on every stage swap, so nobody
+                spawns inside the desk (in-headset report 2026-07-04). */}
+            <CompensatedOrigin stage={stage} />
             <RoomScene
               skin={skin}
               stage={stage}
@@ -409,6 +556,42 @@ export function SealedRoomCanvas({ skin, xr, initialStage = "waiting" }: { skin:
           ← Leave the office
         </button>
       )}
+
+      {ctxLost && (
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            display: "grid",
+            placeItems: "center",
+            background: "rgba(4,10,12,0.94)",
+            color: "#f4e9c8",
+            zIndex: 20,
+            textAlign: "center",
+          }}
+        >
+          <div style={{ maxWidth: 420, padding: 24 }}>
+            <p style={{ fontSize: 18, marginBottom: 18 }}>
+              The room flickered out — the headset ran low on graphics memory.
+            </p>
+            <button
+              onClick={() => window.location.reload()}
+              style={{
+                padding: "14px 26px",
+                borderRadius: 9999,
+                border: "1px solid #c9a24b",
+                background: "#0f2a33",
+                color: "#f4e9c8",
+                fontWeight: 600,
+                fontSize: 16,
+                cursor: "pointer",
+              }}
+            >
+              Re-enter the room
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 }
@@ -437,9 +620,17 @@ function ExitControl({ onExit }: { onExit: () => void }) {
       }),
     [],
   );
-  useFrame(() => {
+  // Damped yaw: 1:1 head-tracked lookAt reads "nervous" in-headset — every micro-sway
+  // snapped the pill. Ease toward the viewer instead, with a small hold-still deadzone.
+  const camPos = useRef(new THREE.Vector3());
+  const oriented = useRef(false);
+  useFrame((_, dt) => {
     const g = group.current;
-    if (g) g.lookAt(camera.position.x, g.position.y, camera.position.z);
+    if (!g) return;
+    camera.getWorldPosition(camPos.current);
+    const target = Math.atan2(camPos.current.x - g.position.x, camPos.current.z - g.position.z);
+    g.rotation.y = oriented.current ? dampYawTowards(g.rotation.y, target, dt) : target;
+    oriented.current = true;
   });
   return (
     <group
@@ -652,17 +843,33 @@ function HostBeat({ skin, onContinue }: { skin: RoomSkin; onContinue: () => void
     [gold],
   );
 
-  // Billboard the whole beat toward the viewer (yaw only — stays upright).
-  useFrame(() => {
+  // Spawn the beat in FRONT of wherever the visitor actually stands (they roam
+  // in-headset; the old fixed [0,1.45,0] could appear BEHIND someone at the door).
+  const [beatPos] = useState<[number, number, number]>(() => {
+    const v = new THREE.Vector3();
+    camera.getWorldPosition(v);
+    const d = new THREE.Vector3();
+    camera.getWorldDirection(d);
+    return beatPlacement(v.x, v.z, Math.atan2(-d.x, -d.z));
+  });
+
+  // Billboard the whole beat toward the viewer — damped yaw, never a 1:1 head-snap.
+  const camPos = useRef(new THREE.Vector3());
+  const oriented = useRef(false);
+  useFrame((_, dt) => {
     const g = group.current;
-    if (g) g.lookAt(camera.position.x, g.position.y, camera.position.z);
+    if (!g) return;
+    camera.getWorldPosition(camPos.current);
+    const target = Math.atan2(camPos.current.x - g.position.x, camPos.current.z - g.position.z);
+    g.rotation.y = oriented.current ? dampYawTowards(g.rotation.y, target, dt) : target;
+    oriented.current = true;
   });
 
   const hostH = 1.5;
   const hostW = hostH * hostAspect;
 
   return (
-    <group ref={group} position={[0, 1.45, 0.0]}>
+    <group ref={group} position={beatPos}>
       {/* Cinematic dim behind the beat so it reads. */}
       <mesh position={[0, 0, -0.06]} renderOrder={10}>
         <planeGeometry args={[3.6, 2.6]} />

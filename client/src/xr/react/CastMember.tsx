@@ -42,7 +42,11 @@ function CastModel({ entry }: { entry: CastEntry }) {
       rotation={[0, entry.rotationY ?? 0, 0]}
       scale={entry.scale ?? 1}
     >
-      <primitive object={scene} />
+      {/* dispose={null}: the GLTF scene is CACHED by useGLTF and shared across stage
+          swaps. Without this, unmounting (waiting→office) destroys its GPU buffers and
+          the return trip re-uploads ~20 MB of humans in one frame — a context-loss
+          spike on Quest (the "exit to black darkness" report). */}
+      <primitive object={scene} dispose={null} />
     </group>
   );
 }

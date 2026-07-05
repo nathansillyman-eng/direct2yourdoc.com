@@ -72,11 +72,20 @@ describe("feature wall is waiting-room only", () => {
     const g = buildSealedRoom("office", greeting);
     for (const n of ["waterfall", "koi-pond", "km-emblem"]) expect(names(g)).not.toContain(n);
   });
-  it("keeps the reflecting pool but no procedural koi fish (pulled — read as dead clutter)", () => {
+  it("stocks the pool with SWIMMING koi — tagged with pond bounds for the React layer (v2, 2026-07-04: static koi were pulled as dead clutter; life is motion)", () => {
     const g = buildSealedRoom("waiting", greeting);
     expect(g.getObjectByName("koi-pond")).toBeTruthy();
-    expect(g.getObjectByName("koi-1")).toBeFalsy();
-    expect(g.getObjectByName("koi-2")).toBeFalsy();
+    for (const k of [0, 1, 2]) {
+      const koi = g.getObjectByName(`koi-${k}`)!;
+      expect(koi).toBeTruthy();
+      expect(koi.userData.koi).toBe(k);
+      const pond = koi.userData.pond;
+      expect(pond.rx).toBeGreaterThan(0);
+      expect(pond.rz).toBeGreaterThan(0);
+      expect(koi.getObjectByName(`koi-${k}-tail`)).toBeTruthy(); // wag pivot for the swim
+    }
+    // Koi belong to the GREETING pond only — never the classic hearth room.
+    expect(buildSealedRoom("waiting", skin).getObjectByName("koi-0")).toBeFalsy();
   });
 });
 

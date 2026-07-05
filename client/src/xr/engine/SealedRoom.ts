@@ -206,10 +206,37 @@ export function buildSealedRoom(stage: RoomStage, skin: RoomSkin): THREE.Group {
     g.add(box("pond-rim-f", [1.84, 0.09, 0.06], goldMat, [FX, 0.07, FRONT + 1.09]));
     g.add(box("pond-rim-l", [0.06, 0.09, 1.0], goldMat, [FX - 0.89, 0.07, FRONT + 0.62]));
     g.add(box("pond-rim-r", [0.06, 0.09, 1.0], goldMat, [FX + 0.89, 0.07, FRONT + 0.62]));
-    // Koi PULLED (2026-07-03): the procedural sphere+cone fish read as dead clutter
-    // on the floor — the same reason C1 pulled the dogs. The still, dark reflecting
-    // pool reads calmer and more premium without them; a proper koi pass waits for
-    // real modeled assets (parked "pet pass").
+    // Koi v2 (2026-07-04): the 2026-07-03 pull was because STATIC fish read as dead
+    // clutter. Life is motion — these are built here but SWIM (position/yaw/tail-wag
+    // driven by the React layer via engine/koi.ts poses). They skim the dark surface
+    // so the pond reads alive, not decorated.
+    for (let k = 0; k < 3; k++) {
+      const koi = new THREE.Group();
+      koi.name = `koi-${k}`;
+      koi.userData.koi = k;
+      // Swim bounds (unit-ellipse → pond metres), safely inside the gold rim.
+      koi.userData.pond = { cx: FX, cz: FRONT + 0.62, rx: 0.68, rz: 0.32 };
+      const koiMat = new THREE.MeshStandardMaterial({
+        color: new THREE.Color(k === 1 ? "#e9e2d4" : k === 2 ? "#c96a2e" : "#d98a3a"),
+        roughness: 0.38,
+        metalness: 0.05,
+      });
+      const body = new THREE.Mesh(new THREE.SphereGeometry(0.055, 10, 8), koiMat);
+      body.name = `koi-${k}-body`;
+      body.scale.set(0.5, 0.36, 1.5); // slender body, head toward +z
+      koi.add(body);
+      const tailPivot = new THREE.Group();
+      tailPivot.name = `koi-${k}-tail`;
+      tailPivot.position.z = -0.075;
+      const tail = new THREE.Mesh(new THREE.ConeGeometry(0.026, 0.06, 6), koiMat);
+      tail.rotation.x = -Math.PI / 2; // tip trailing behind (−z)
+      tail.position.z = -0.03;
+      tail.scale.set(1, 1, 0.35); // flattened caudal fin
+      tailPivot.add(tail);
+      koi.add(tailPivot);
+      koi.position.set(FX, 0.052, FRONT + 0.62); // skims the pond surface (y=0.04)
+      g.add(koi);
+    }
   } else if (stage === "waiting") {
     g.add(
       box(
