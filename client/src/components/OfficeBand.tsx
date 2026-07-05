@@ -7,12 +7,15 @@ const BAND_IMG = "/brand/founder-nate-band.png";
 
 export default function OfficeBand() {
   return (
-    <section className="relative w-full overflow-hidden" style={{ height: "clamp(360px, 54vh, 640px)" }}>
+    <section
+      className="relative w-full overflow-hidden"
+      style={{ height: "clamp(360px, 54vh, 640px)", backgroundColor: "oklch(0.14 0.05 200)" }}
+    >
       <img
         src={BAND_IMG}
         alt="Nate Sillyman, founder, standing before The KeepMore Company sign"
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{ objectPosition: "center 22%", filter: "brightness(0.82) saturate(0.95)" }}
+        className="absolute inset-0 w-full h-full object-contain"
+        style={{ objectPosition: "center center", filter: "brightness(0.9) saturate(0.95)" }}
       />
       {/* Right scrim for text legibility — Nate is centered in this photo, so the
           text panel and its dark scrim sit on the right, keeping his face and the
