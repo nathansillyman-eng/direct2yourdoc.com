@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { SealedRoomCanvas, xrStore } from "./SealedRoomCanvas";
 import { direct2YourDocSkin } from "@/xr/skins/direct2yourdoc";
+import { direct2YourDocCopy } from "@/xr/skins/direct2yourdoc.content";
 
 type XRSupport = "checking" | "supported" | "unsupported";
 
@@ -17,7 +18,11 @@ export default function VRRoomPage() {
 
   return (
     <div style={{ position: "fixed", inset: 0, background: "#081519" }}>
-      <SealedRoomCanvas skin={direct2YourDocSkin} xr={support === "supported"} />
+      <SealedRoomCanvas
+        skin={direct2YourDocSkin}
+        xr={support === "supported"}
+        content={direct2YourDocCopy}
+      />
 
       <div style={{ position: "absolute", top: 16, left: 16, right: 16, display: "flex", gap: 12, alignItems: "center" }}>
         {support === "supported" && (
