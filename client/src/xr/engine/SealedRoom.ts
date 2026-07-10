@@ -88,8 +88,10 @@ export function buildSealedRoom(stage: RoomStage, skin: RoomSkin): THREE.Group {
     g.add(chair);
 
     for (const obj of skin.commandFile) {
+      // 0.4 m wide plaque: narrower than the 7-across arc() spacing (3.2/6 ≈ 0.533 m)
+      // so adjacent hotspots never overlap (overlap = double-fire on one click).
       const hot = new THREE.Mesh(
-        new THREE.PlaneGeometry(0.5, 0.32),
+        new THREE.PlaneGeometry(0.4, 0.28),
         new THREE.MeshStandardMaterial({
           color: new THREE.Color(p.trim),
           emissive: new THREE.Color(p.fire),

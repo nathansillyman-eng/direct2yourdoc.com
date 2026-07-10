@@ -32,11 +32,19 @@ describe("direct2YourDocSkin", () => {
     expect(direct2YourDocSkin.commandFile.map((o) => o.label)).toEqual(EXPECTED_LABELS);
   });
 
-  it("lays hotspots on the front wall at x = -1.2 + 0.4i, y = 1.4, z = -2.3", () => {
+  it("lays hotspots on the front wall at x = -1.6 + (3.2/6)i, y = 2.1, z = -2.3", () => {
     direct2YourDocSkin.commandFile.forEach((o, i) => {
-      expect(o.position[0]).toBeCloseTo(-1.2 + 0.4 * i);
-      expect(o.position[1]).toBeCloseTo(1.4);
+      expect(o.position[0]).toBeCloseTo(-1.6 + (3.2 / 6) * i);
+      expect(o.position[1]).toBeCloseTo(2.1);
       expect(o.position[2]).toBeCloseTo(-2.3);
+    });
+  });
+
+  it("keeps the plaque rail clear of the opaque founder portrait (top edge 1.9 m)", () => {
+    // Plaques are 0.28 m tall; bottom edge must sit above the presence plane so
+    // every hotspot is visible and ray-hittable from a standing viewpoint in VR.
+    direct2YourDocSkin.commandFile.forEach((o) => {
+      expect(o.position[1] - 0.28 / 2).toBeGreaterThan(1.9);
     });
   });
 

@@ -12,8 +12,44 @@ const store = createXRStore();
 export { store as xrStore };
 
 const HOTSPOT_PREFIX = "hotspot:";
-// Info panel sits offset from its hotspot, toward the viewer.
-const PANEL_OFFSET: [number, number, number] = [0, -0.55, 0.4];
+// Info panel opens below its plaque (plaque rail is at y=2.1), pulled toward the
+// viewer so it renders in front of the presence portrait (z=-2.0) and above the desk.
+const PANEL_OFFSET: [number, number, number] = [0, -0.75, 0.5];
+// Panel is 1.7 m wide in a 4 m room: clamp its centre so it never clips a side wall.
+const PANEL_X_LIMIT = 1.05;
+
+/** Walk up from a raycast hit to the interactive target (door or hotspot label). */
+function hitTarget(object: THREE.Object3D): { door: boolean; label: string | null } {
+  let o: THREE.Object3D | null = object;
+  while (o) {
+    if (o.name === "door-1") return { door: true, label: null };
+    if (o.name.startsWith(HOTSPOT_PREFIX))
+      return { door: false, label: o.name.slice(HOTSPOT_PREFIX.length) };
+    o = o.parent;
+  }
+  return { door: false, label: null };
+}
+
+/**
+ * Discoverability: hotspots idle-pulse (staggered emissive breathing) and flare
+ * when the pointer/controller ray hovers them. Purely visual — engine stays pure.
+ */
+function HotspotGlow({ room, hovered }: { room: THREE.Group; hovered: string | null }) {
+  useFrame(({ clock }) => {
+    const t = clock.getElapsedTime();
+    let i = 0;
+    room.traverse((o) => {
+      if (!(o instanceof THREE.Mesh) || !o.name.startsWith(HOTSPOT_PREFIX)) return;
+      const mat = o.material as THREE.MeshStandardMaterial;
+      const isHovered = o.name.slice(HOTSPOT_PREFIX.length) === hovered;
+      mat.emissiveIntensity = isHovered
+        ? 0.8
+        : 0.18 + 0.22 * (0.5 + 0.5 * Math.sin(t * 2.2 + i * 0.9));
+      i += 1;
+    });
+  });
+  return null;
+}
 
 /** Renders a presence group and keeps any billboard-flagged plane facing the camera. */
 function BillboardedPresence({ group }: { group: THREE.Group }) {
@@ -49,6 +85,7 @@ function RoomScene({
   const [stage, setStage] = useState<RoomStage>("waiting");
   const [fade, setFade] = useState(0); // 0 = clear, 1 = black
   const [activeLabel, setActiveLabel] = useState<string | null>(null);
+  const [hoveredLabel, setHoveredLabel] = useState<string | null>(null);
 
   const room = useMemo(() => buildSealedRoom(stage, skin), [stage, skin]);
   const fallbackPresence = useMemo(
@@ -65,19 +102,27 @@ function RoomScene({
     }, FADE_MS);
   }
 
-  // Raycast click/select on interactive meshes. door-1 is the ONLY stage-advance
-  // trigger; hotspot:* meshes only toggle their info panel.
-  function onSelect(e: { object: THREE.Object3D }) {
-    let o: THREE.Object3D | null = e.object;
-    while (o) {
-      if (o.name === "door-1") return trigger();
-      if (o.name.startsWith(HOTSPOT_PREFIX)) {
-        const label = o.name.slice(HOTSPOT_PREFIX.length);
-        setActiveLabel((cur) => (cur === label ? null : label));
-        return;
-      }
-      o = o.parent;
+  // Raycast click/select on interactive meshes. Fires for mouse clicks on desktop
+  // AND for controller/hand ray "select" (trigger pull) inside the immersive
+  // session — @react-three/xr v6 routes XR pointers through the same R3F events.
+  // door-1 is the ONLY stage-advance trigger; hotspot:* meshes toggle their panel.
+  function onSelect(e: { object: THREE.Object3D; stopPropagation?: () => void }) {
+    const hit = hitTarget(e.object);
+    if (hit.door) {
+      e.stopPropagation?.(); // consume: don't re-fire on meshes behind the door
+      return trigger();
     }
+    if (hit.label != null) {
+      e.stopPropagation?.(); // consume: overlapping/behind meshes must not double-fire
+      const label = hit.label;
+      setActiveLabel((cur) => (cur === label ? null : label));
+    }
+    // Unhandled hits (walls, presence plane) do NOT stop propagation, so a ray
+    // passing through the portrait still reaches a plaque behind it.
+  }
+
+  function onHover(e: { object: THREE.Object3D }) {
+    setHoveredLabel(hitTarget(e.object).label);
   }
 
   const activeSpot =
@@ -88,7 +133,29 @@ function RoomScene({
     <>
       <ambientLight intensity={0.5} />
       <pointLight position={[0, 2.6, 0]} intensity={20} distance={10} />
-      <primitive object={room} onClick={(e: any) => onSelect(e)} />
+      <primitive
+        object={room}
+        onClick={(e: any) => onSelect(e)}
+        onPointerOver={(e: any) => onHover(e)}
+        onPointerOut={() => setHoveredLabel(null)}
+      />
+      <HotspotGlow room={room} hovered={hoveredLabel} />
+      {/* Plaque titles — in-world Text meshes so they're readable inside the headset. */}
+      {stage === "office" &&
+        skin.commandFile.map((spot) => (
+          <Text
+            key={spot.label}
+            position={[spot.position[0], spot.position[1], spot.position[2] + 0.011]}
+            fontSize={0.05}
+            color={skin.palette.floor}
+            anchorX="center"
+            anchorY="middle"
+            maxWidth={0.38}
+            textAlign="center"
+          >
+            {spot.label}
+          </Text>
+        ))}
       {stage === "office" &&
         (skin.presenceImage ? (
           <Suspense fallback={fallbackPresence && <BillboardedPresence group={fallbackPresence} />}>
@@ -100,12 +167,20 @@ function RoomScene({
       {activeSpot && activeBody && (
         <Billboard
           position={[
-            activeSpot.position[0] + PANEL_OFFSET[0],
+            Math.max(
+              -PANEL_X_LIMIT,
+              Math.min(PANEL_X_LIMIT, activeSpot.position[0] + PANEL_OFFSET[0]),
+            ),
             activeSpot.position[1] + PANEL_OFFSET[1],
             activeSpot.position[2] + PANEL_OFFSET[2],
           ]}
         >
-          <mesh onClick={() => setActiveLabel(null)}>
+          <mesh
+            onClick={(e: any) => {
+              e.stopPropagation?.(); // closing must not re-toggle a plaque behind the panel
+              setActiveLabel(null);
+            }}
+          >
             <planeGeometry args={[1.7, 1.05]} />
             <meshBasicMaterial color={skin.palette.floor} transparent opacity={0.92} />
           </mesh>

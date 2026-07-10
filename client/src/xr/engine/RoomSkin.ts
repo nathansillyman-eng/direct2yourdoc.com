@@ -28,8 +28,11 @@ export interface RoomSkin {
 }
 
 const FRONT_WALL_Z = -2.3;
-const HOTSPOT_Y = 1.4;
-const HOTSPOT_SPAN = 2.4; // total width the labels spread across, in metres
+// Plaque rail sits ABOVE the presence plane (opaque portrait, top edge ~1.9 m at
+// z=-2.0): at y=2.1 every plaque clears the portrait from any standing viewpoint.
+// The old y=1.4 row put the middle three plaques directly behind the founder.
+const HOTSPOT_Y = 2.1;
+const HOTSPOT_SPAN = 3.2; // total width the labels spread across, in metres
 
 /** Lay command-file labels out evenly along the front wall (twin of Swift RoomSkin.arc). */
 export function arc(labels: string[]): RoomObject[] {
