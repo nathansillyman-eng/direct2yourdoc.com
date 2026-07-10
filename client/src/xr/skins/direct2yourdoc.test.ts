@@ -61,8 +61,13 @@ describe("direct2YourDocSkin", () => {
   it("has the presence asset on disk (founder-forward: the plane is never empty)", () => {
     const asset = path.resolve(HERE, "../../../public/brand/founder-nate-presence.png");
     expect(fs.existsSync(asset)).toBe(true);
-    // the full-resolution source it was optimized from also ships with the skin
-    const source = path.resolve(HERE, "../../../public/brand/founder-nate-office.png");
+  });
+
+  it("keeps the 8.7 MB full-res source OUT of the build (lives in /art-source)", () => {
+    // client/public ships verbatim in the deploy; the unreferenced source must not.
+    const shipped = path.resolve(HERE, "../../../public/brand/founder-nate-office.png");
+    expect(fs.existsSync(shipped)).toBe(false);
+    const source = path.resolve(HERE, "../../../../art-source/founder-nate-office.png");
     expect(fs.existsSync(source)).toBe(true);
   });
 

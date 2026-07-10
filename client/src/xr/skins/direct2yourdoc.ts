@@ -28,7 +28,7 @@ export const direct2YourDocSkin: RoomSkin = {
     "The Door",
     "The Window",
   ]),
-  // EXISTING founder portrait (sips-optimized from founder-nate-office.png).
+  // EXISTING founder portrait (sips-optimized from /art-source/founder-nate-office.png).
   // NEVER /manus-storage/* — the dev storage proxy intercepts that path.
   presenceImage: "/brand/founder-nate-presence.png",
 };
