@@ -32,4 +32,17 @@ describe("buildPresence", () => {
   it("does not throw when the skin has no presenceImage", () => {
     expect(() => buildPresence(neutralSkin)).not.toThrow();
   });
+
+  it("sizes the plane to the texture's true aspect (portrait never squeezed)", () => {
+    const tex = new THREE.Texture();
+    (tex as any).image = { width: 896, height: 1200 };
+    const geo = plane(buildPresence(neutralSkin, tex)).geometry as THREE.PlaneGeometry;
+    expect(geo.parameters.height).toBeCloseTo(1.6);
+    expect(geo.parameters.width / geo.parameters.height).toBeCloseTo(896 / 1200);
+  });
+
+  it("gives the untextured fallback the same footprint as the shipped portrait", () => {
+    const geo = plane(buildPresence(neutralSkin)).geometry as THREE.PlaneGeometry;
+    expect(geo.parameters.width / geo.parameters.height).toBeCloseTo(896 / 1200);
+  });
 });
