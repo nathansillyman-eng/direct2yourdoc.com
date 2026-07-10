@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import * as THREE from "three";
 import { buildSealedRoom } from "./SealedRoom";
-import { neutralSkin, type RoomSkin } from "./RoomSkin";
+import { arc, neutralSkin, type RoomSkin } from "./RoomSkin";
 
 const skin: RoomSkin = {
   ...neutralSkin,
@@ -42,6 +42,19 @@ describe("buildSealedRoom", () => {
     const floor = g.getObjectByName("floor") as THREE.Mesh;
     const mat = floor.material as THREE.MeshStandardMaterial;
     expect(`#${mat.color.getHexString()}`).toBe("#0a0a0a");
+  });
+
+  it("keeps hotspot plaques narrower than the tightest arc() spacing (no overlap => no double-fire)", () => {
+    // 7 labels is the densest shipped layout; one click must never hit two plaques.
+    const labels = ["A", "B", "C", "D", "E", "F", "G"];
+    const dense: RoomSkin = { ...skin, commandFile: arc(labels) };
+    const xs = dense.commandFile.map((o) => o.position[0]);
+    const minSpacing = Math.min(...xs.slice(1).map((x, i) => x - xs[i]));
+    const g = buildSealedRoom("office", dense);
+    for (const h of g.children.filter((c) => c.name.startsWith("hotspot:"))) {
+      const geo = (h as THREE.Mesh).geometry as THREE.PlaneGeometry;
+      expect(geo.parameters.width).toBeLessThan(minSpacing);
+    }
   });
 
   it("builds without throwing for the neutral skin (no brand, empty command file)", () => {
