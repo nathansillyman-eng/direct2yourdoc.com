@@ -1,4 +1,4 @@
-import { Suspense, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { XR, createXRStore, XROrigin } from "@react-three/xr";
 import { Billboard, OrbitControls, Text, useTexture } from "@react-three/drei";
@@ -7,8 +7,15 @@ import { buildSealedRoom } from "@/xr/engine/SealedRoom";
 import { buildPresence } from "@/xr/engine/presence";
 import type { RoomSkin, RoomStage } from "@/xr/engine/RoomSkin";
 import { advanceStage, FADE_MS } from "@/xr/locomotion";
+import { devuiRequested } from "@/xr/devui";
 
-const store = createXRStore();
+// emulate:false keeps production and normal desktop visits clean (no IWER/DevUI
+// auto-inject on localhost, no Meta+Alt+E hotkey). ?devui=1 opts in and forces
+// injection on any hostname — @pmndrs/xr still yields to a real headset, since
+// it never injects when native immersive-vr/ar is supported.
+const store = createXRStore({
+  emulate: devuiRequested() ? { type: "metaQuest3", inject: true } : false,
+});
 export { store as xrStore };
 
 const HOTSPOT_PREFIX = "hotspot:";
@@ -49,6 +56,75 @@ function HotspotGlow({ room, hovered }: { room: THREE.Group; hovered: string | n
     });
   });
   return null;
+}
+
+// Desktop walkthrough bounds: keep the eye inside the 4x5 m shell, off the walls.
+const WALK_X = 1.75;
+const WALK_Z_MIN = -0.7; // stop at the desk (desk front edge z=-1.05)
+const WALK_Z_MAX = 2.25;
+const WALK_SPEED = 2; // m/s
+const EYE_HEIGHT = 1.6;
+
+/**
+ * First-person desktop mode: drag to look around from where you stand (negative
+ * rotateSpeed + near-camera target turns OrbitControls into mouse-look), WASD or
+ * arrow keys to walk. Clicking hotspots keeps working through normal R3F events.
+ */
+function DesktopWalkControls() {
+  const controls = useRef<any>(null);
+  const keys = useRef<Set<string>>(new Set());
+
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => keys.current.add(e.code);
+    const up = (e: KeyboardEvent) => keys.current.delete(e.code);
+    window.addEventListener("keydown", down);
+    window.addEventListener("keyup", up);
+    return () => {
+      window.removeEventListener("keydown", down);
+      window.removeEventListener("keyup", up);
+    };
+  }, []);
+
+  useFrame(({ camera }, dt) => {
+    const c = controls.current;
+    if (!c) return;
+    const k = keys.current;
+    const fwd = Number(k.has("KeyW") || k.has("ArrowUp")) - Number(k.has("KeyS") || k.has("ArrowDown"));
+    const strafe = Number(k.has("KeyD") || k.has("ArrowRight")) - Number(k.has("KeyA") || k.has("ArrowLeft"));
+    if (fwd === 0 && strafe === 0) return;
+
+    const dir = new THREE.Vector3();
+    camera.getWorldDirection(dir);
+    dir.y = 0;
+    if (dir.lengthSq() < 1e-6) return;
+    dir.normalize();
+    const right = new THREE.Vector3(-dir.z, 0, dir.x); // forward x up
+
+    const step = dir
+      .multiplyScalar(fwd)
+      .add(right.multiplyScalar(strafe))
+      .multiplyScalar(WALK_SPEED * Math.min(dt, 0.05));
+
+    const next = camera.position.clone().add(step);
+    next.x = Math.max(-WALK_X, Math.min(WALK_X, next.x));
+    next.z = Math.max(WALK_Z_MIN, Math.min(WALK_Z_MAX, next.z));
+    next.y = EYE_HEIGHT;
+    const delta = next.clone().sub(camera.position);
+    camera.position.copy(next);
+    c.target.add(delta); // carry the look pivot with us so the view direction holds
+    c.update();
+  });
+
+  // Target 0.1 m in front of the starting camera (0, 1.6, 1.8): rotation = look.
+  return (
+    <OrbitControls
+      ref={controls}
+      target={[0, EYE_HEIGHT, 1.7]}
+      enableZoom={false}
+      enablePan={false}
+      rotateSpeed={-0.4}
+    />
+  );
 }
 
 /** Renders a presence group and keeps any billboard-flagged plane facing the camera. */
@@ -208,7 +284,7 @@ function RoomScene({
           </Text>
         </Billboard>
       )}
-      {enableOrbit && <OrbitControls target={[0, 1.4, -1.5]} />}
+      {enableOrbit && <DesktopWalkControls />}
       {/* Comfort fade overlay. */}
       <mesh position={[0, 1.4, -0.3]} visible={fade > 0} renderOrder={999}>
         <planeGeometry args={[8, 8]} />
