@@ -73,7 +73,7 @@ const TIMES = [
 const DAYS = ["Mon 7", "Tue 8", "Wed 9", "Thu 10", "Fri 11"];
 // Booking link — opens the founder's Calendly in a new tab.
 const CALENDLY_URL =
-  "https://calendly.com/thekeepmoreco/advisor-prep-15-mins-advisor-convo-15-mins";
+  "https://calendly.com/thekeepmoreco/doctors-appointment-illness-injury";
 const openCalendly = () =>
   window.open(CALENDLY_URL, "_blank", "noopener,noreferrer");
 const BOOKED: Record<string, boolean> = {
