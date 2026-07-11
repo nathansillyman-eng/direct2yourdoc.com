@@ -39,6 +39,12 @@ const kit = [
   { icon: Lock, name: "Secure document upload", note: "Send records straight to your file", soon: true },
 ];
 
+const lifetime = [
+  { tier: "Single Adult", price: "$50,000", note: "One member, cared for — for life." },
+  { tier: "Family of 4", price: "$100,000", note: "Your household, covered for life." },
+  { tier: "Family of 6", price: "$120,000", note: "The whole family, for life." },
+];
+
 export default function MembershipSection() {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -192,6 +198,25 @@ color: "oklch(0.65 0.03 200)",
                     </div>
                   ))}
                 </div>
+
+                {/* Access promise + provider-billed note */}
+                <div
+                  className="mt-6 rounded-sm px-5 py-4"
+                  style={{
+                    backgroundColor: "oklch(0.38 0.15 165 / 0.1)",
+                    border: "1px solid oklch(0.38 0.15 165 / 0.25)",
+                  }}
+                >
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.9rem", fontWeight: 600, color: "white" }}>
+                    Every appointment included — no per-visit fees, ever.
+                  </p>
+                  <p
+                    className="mt-1.5"
+                    style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.76rem", color: "oklch(0.62 0.03 200)", lineHeight: 1.5 }}
+                  >
+                    Medications, labs, imaging, and outside specialists are billed directly by the provider.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -298,6 +323,92 @@ border: "1px solid oklch(0.97 0.02 200 / 0.18)",
               </p>
             </div>
 
+          </div>
+        </div>
+
+        {/* Lifetime — founding memberships (pay once) */}
+        <div className="fade-up mt-8" style={{ transitionDelay: "80ms" }}>
+          <div className="flex items-baseline justify-between flex-wrap gap-2 mb-6">
+            <p
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: "0.72rem",
+                fontWeight: 500,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                color: "var(--aged-bronze)",
+              }}
+            >
+              Founding · Lifetime
+            </p>
+            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.35rem", fontWeight: 600, color: "white" }}>
+              Pay once. Never think about it again.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {lifetime.map((t, i) => (
+              <div
+                key={i}
+                className="rounded-sm p-7 flex flex-col group relative overflow-hidden"
+                style={{
+                  border: "1px solid oklch(0.7 0.12 85 / 0.28)",
+                  backgroundColor: "oklch(0.205 0.045 200)",
+                }}
+              >
+                {/* Hover state — tiers shown but not yet purchasable */}
+                <div
+                  className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{ backgroundColor: "oklch(0.13 0.05 200 / 0.93)", backdropFilter: "blur(2px)" }}
+                >
+                  <span
+                    style={{
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: "0.72rem",
+                      fontWeight: 500,
+                      letterSpacing: "0.14em",
+                      textTransform: "uppercase",
+                      color: "var(--aged-bronze)",
+                      border: "1px solid oklch(0.7 0.12 85 / 0.4)",
+                      borderRadius: "999px",
+                      padding: "6px 16px",
+                    }}
+                  >
+                    Not currently available
+                  </span>
+                </div>
+                <p
+                  style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: "0.68rem",
+                    fontWeight: 500,
+                    letterSpacing: "0.14em",
+                    textTransform: "uppercase",
+                    color: "var(--aged-bronze)",
+                  }}
+                >
+                  {t.tier}
+                </p>
+                <p
+                  className="mt-3"
+                  style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "2.6rem", fontWeight: 600, color: "white", lineHeight: 1 }}
+                >
+                  {t.price}
+                </p>
+                <p
+                  className="mt-1"
+                  style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(0.55 0.03 200)" }}
+                >
+                  One-time · lifetime
+                </p>
+                <p
+                  className="mt-4"
+                  style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.86rem", color: "oklch(0.68 0.03 200)", lineHeight: 1.55 }}
+                >
+                  {t.note}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
 
