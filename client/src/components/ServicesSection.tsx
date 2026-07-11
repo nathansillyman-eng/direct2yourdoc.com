@@ -212,12 +212,14 @@ export default function ServicesSection() {
 
         {/* Two image panels — full bleed editorial */}
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mt-20 fade-up">
-          <div className="md:col-span-3 relative overflow-hidden rounded-sm" style={{ height: "380px" }}>
+          <div className="md:col-span-3 relative overflow-hidden rounded-sm" style={{ height: "460px" }}>
             <img
               src={CONSULT_IMG}
               alt="Nate Sillyman, founder, in a private consultation setting"
               className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-              style={{ objectPosition: "50% 0%" }}
+              style={{ objectPosition: "50% 8%" }}
+              loading="lazy"
+              decoding="async"
             />
             <div
               className="absolute inset-0"
@@ -232,11 +234,14 @@ export default function ServicesSection() {
               </p>
             </div>
           </div>
-          <div className="md:col-span-2 relative overflow-hidden rounded-sm" style={{ height: "380px" }}>
+          <div className="md:col-span-2 relative overflow-hidden rounded-sm" style={{ height: "460px" }}>
             <img
               src={RX_IMG}
-              alt="Prescription writing"
+              alt="Nate Sillyman, founder, at his desk"
               className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+              style={{ objectPosition: "50% 8%" }}
+              loading="lazy"
+              decoding="async"
             />
             <div
               className="absolute inset-0"
