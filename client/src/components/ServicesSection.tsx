@@ -154,7 +154,7 @@ export default function ServicesSection() {
                       fontWeight: 500,
                       letterSpacing: "0.14em",
                       textTransform: "uppercase",
-                      color: "var(--aged-bronze)",
+                      color: "var(--bronze-ink)",
                       marginBottom: "0.4rem",
                       display: "block",
                     }}

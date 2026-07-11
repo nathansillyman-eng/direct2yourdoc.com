@@ -209,8 +209,9 @@ export default function ContactSection() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label style={labelStyle}>Full Name</label>
+                      <label htmlFor="cs-name" style={labelStyle}>Full Name</label>
                       <input
+                        id="cs-name"
                         type="text"
                         required
                         placeholder="Your name"
@@ -222,8 +223,9 @@ export default function ContactSection() {
                       />
                     </div>
                     <div>
-                      <label style={labelStyle}>Phone</label>
+                      <label htmlFor="cs-phone" style={labelStyle}>Phone</label>
                       <input
+                        id="cs-phone"
                         type="tel"
                         placeholder="Your phone"
                         value={form.phone}
@@ -236,8 +238,9 @@ export default function ContactSection() {
                   </div>
 
                   <div>
-                    <label style={labelStyle}>Email Address</label>
+                    <label htmlFor="cs-email" style={labelStyle}>Email Address</label>
                     <input
+                      id="cs-email"
                       type="email"
                       required
                       placeholder="your@email.com"
@@ -250,8 +253,9 @@ export default function ContactSection() {
                   </div>
 
                   <div>
-                    <label style={labelStyle}>How Can We Help You?</label>
+                    <label htmlFor="cs-message" style={labelStyle}>How Can We Help You?</label>
                     <textarea
+                      id="cs-message"
                       rows={4}
                       placeholder="Briefly describe your situation or what you're looking for..."
                       value={form.message}
@@ -268,7 +272,7 @@ export default function ContactSection() {
                     style={{
                       backgroundColor: "white",
                       borderColor: "white",
-                      color: "var(--forest-green)",
+                      color: "var(--forest-green-dark)",
                       fontWeight: 600,
                       padding: "1rem",
                     }}
@@ -280,7 +284,7 @@ export default function ContactSection() {
                     style={{
                       fontFamily: "'DM Sans', sans-serif",
                       fontSize: "0.72rem",
-                      color: "oklch(0.6 0.04 200)",
+                      color: "oklch(0.63 0.04 200)",
                       textAlign: "center",
                       letterSpacing: "0.06em",
                     }}

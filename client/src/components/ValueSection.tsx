@@ -58,7 +58,7 @@ export default function ValueSection() {
         {/* Asymmetric header: large quote left, intro right */}
         <div className="grid grid-cols-1 lg:grid-cols-11 gap-12 mb-20">
           <div className="lg:col-span-7 fade-up">
-            <span className="section-label mb-6 block">The Direct2YourDoc Difference</span>
+            <span className="section-label mb-6 block" style={{ color: "var(--aged-bronze)" }}>The Direct2YourDoc Difference</span>
             <blockquote
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
@@ -113,7 +113,7 @@ color: "white",
               fontWeight: 500,
               letterSpacing: "0.16em",
               textTransform: "uppercase",
-              color: "oklch(0.52 0.03 200)",
+              color: "oklch(0.63 0.03 200)",
           }}
         >
           Real situations. Real responses.

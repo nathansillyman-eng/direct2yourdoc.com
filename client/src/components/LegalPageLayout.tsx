@@ -20,7 +20,7 @@ export default function LegalPageLayout({
     <div className="min-h-screen" style={{ backgroundColor: "var(--warm-linen)" }}>
       <Navigation />
       <div className="container" style={{ paddingTop: "9rem", paddingBottom: "6rem", maxWidth: "780px" }}>
-        <span className="section-label mb-4 block" style={{ color: "var(--aged-bronze)" }}>
+        <span className="section-label mb-4 block" style={{ color: "var(--bronze-ink)" }}>
           Direct2YourDoc
         </span>
         <h1

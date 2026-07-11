@@ -85,7 +85,7 @@ export default function StatsBar() {
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: "0.72rem",
-                  color: "oklch(0.52 0.03 200)",
+                  color: "oklch(0.63 0.03 200)",
                   letterSpacing: "0.1em",
                   textTransform: "uppercase",
                 }}

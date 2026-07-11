@@ -216,7 +216,7 @@ export default function HeroSection() {
                 </span>
               </div>
               <span style={{ color: "oklch(0.3 0.03 200)" }}>·</span>
-              <div className="flex items-center gap-2" style={{ color: "oklch(0.55 0.03 200)", fontSize: "0.78rem", fontFamily: "'DM Sans', sans-serif" }}>
+              <div className="flex items-center gap-2" style={{ color: "oklch(0.64 0.03 200)", fontSize: "0.78rem", fontFamily: "'DM Sans', sans-serif" }}>
                 <Phone size={13} />
                 48-hour activation
               </div>

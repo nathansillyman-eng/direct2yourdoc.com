@@ -76,7 +76,7 @@ export default function MembershipSection() {
 
         {/* Header */}
         <div className="fade-up text-left max-w-2xl mb-16">
-          <span className="section-label mb-4 block">Membership</span>
+          <span className="section-label mb-4 block" style={{ color: "var(--aged-bronze)" }}>Membership</span>
           <h2
             style={{
               fontFamily: "'Cormorant Garamond', serif",
@@ -115,7 +115,7 @@ color: "oklch(0.65 0.03 200)",
               {/* Card header */}
               <div
                 className="px-8 py-7"
-                style={{ backgroundColor: "var(--forest-green)", borderBottom: "none" }}
+                style={{ backgroundColor: "var(--forest-green-dark)", borderBottom: "none" }}
               >
                 <div className="flex items-start justify-between">
                   <div>
@@ -126,7 +126,7 @@ color: "oklch(0.65 0.03 200)",
                         fontWeight: 500,
                         letterSpacing: "0.16em",
                         textTransform: "uppercase",
-                        color: "oklch(0.75 0.04 200)",
+                        color: "oklch(0.96 0.02 200)",
                       }}
                     >
                       Annual Membership
@@ -151,7 +151,7 @@ color: "oklch(0.65 0.03 200)",
                       paddingLeft: "1.5rem",
                     }}
                   >
-                    <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(0.75 0.04 200)" }}>
+                    <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(0.96 0.02 200)" }}>
                       Pricing by
                     </p>
                     <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.4rem", fontWeight: 600, color: "white", marginTop: "0.2rem" }}>
@@ -241,7 +241,7 @@ border: "1px solid oklch(0.97 0.02 200 / 0.18)",
                   fontWeight: 500,
                   letterSpacing: "0.14em",
                   textTransform: "uppercase",
-                  color: "oklch(0.52 0.03 200)",
+                  color: "oklch(0.63 0.03 200)",
               }}>
                 Not Included
               </p>
@@ -258,7 +258,7 @@ border: "1px solid oklch(0.97 0.02 200 / 0.18)",
                       style={{
                         fontFamily: "'DM Sans', sans-serif",
                         fontSize: "0.88rem",
-                        color: "oklch(0.55 0.03 200)",
+                        color: "oklch(0.64 0.03 200)",
                         lineHeight: 1.5,
                       }}
                     >
@@ -306,7 +306,7 @@ border: "1px solid oklch(0.97 0.02 200 / 0.18)",
                 href="#contact"
                 onClick={(e) => { e.preventDefault(); document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" }); }}
                 className="btn-primary w-full justify-center"
-                style={{ backgroundColor: "var(--aged-bronze)", borderColor: "var(--aged-bronze)" }}
+                style={{ backgroundColor: "var(--aged-bronze)", borderColor: "var(--aged-bronze)", color: "var(--charcoal)" }}
               >
                 Begin Inquiry <ArrowRight size={15} />
               </a>
@@ -314,7 +314,7 @@ border: "1px solid oklch(0.97 0.02 200 / 0.18)",
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: "0.72rem",
-                  color: "oklch(0.5 0.03 200)",
+                  color: "oklch(0.63 0.03 200)",
                   textAlign: "center",
                   letterSpacing: "0.06em",
                 }}
@@ -397,7 +397,7 @@ border: "1px solid oklch(0.97 0.02 200 / 0.18)",
                 </p>
                 <p
                   className="mt-1"
-                  style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(0.55 0.03 200)" }}
+                  style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(0.64 0.03 200)" }}
                 >
                   One-time · lifetime
                 </p>
@@ -516,7 +516,7 @@ border: "1px solid oklch(0.97 0.02 200 / 0.18)",
             style={{
               fontFamily: "'DM Sans', sans-serif",
               fontSize: "0.72rem",
-              color: "oklch(0.5 0.03 200)",
+              color: "oklch(0.63 0.03 200)",
               letterSpacing: "0.04em",
             }}
           >
