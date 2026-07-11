@@ -9,6 +9,27 @@ export interface RoomPalette {
   fire: string;
 }
 
+export type RoomMaterialSlot =
+  | "wall"
+  | "floor"
+  | "trim"
+  | "hearth"
+  | "desk"
+  | "chair"
+  | "hotspot";
+
+export interface RoomMaterialSpec {
+  color?: string;
+  texture?: string;
+  repeat?: [number, number];
+  roughness?: number;
+  metalness?: number;
+  emissive?: string;
+  emissiveIntensity?: number;
+}
+
+export type RoomMaterials = Partial<Record<RoomMaterialSlot, RoomMaterialSpec>>;
+
 export interface RoomObject {
   label: string;
   position: [number, number, number];
@@ -21,6 +42,9 @@ export interface RoomSkin {
   professional: string;
   officeTitle: string;
   palette: RoomPalette;
+  /** Optional room-surface material data. Paths stay in the skin; the React shell
+   *  loads textures and passes them into the generic engine. */
+  materials?: RoomMaterials;
   commandFile: RoomObject[];
   /** Optional presence image (e.g. the seated professional). Generic on purpose — NOT
    *  medical-specific. The engine never fetches it; the React layer loads it and passes a texture. */
@@ -39,7 +63,10 @@ export function arc(labels: string[]): RoomObject[] {
   const n = labels.length;
   return labels.map((label, i) => {
     const x = n === 1 ? 0 : (i / (n - 1) - 0.5) * HOTSPOT_SPAN;
-    return { label, position: [x, HOTSPOT_Y, FRONT_WALL_Z] as [number, number, number] };
+    return {
+      label,
+      position: [x, HOTSPOT_Y, FRONT_WALL_Z] as [number, number, number],
+    };
   });
 }
 
@@ -49,6 +76,11 @@ export const neutralSkin: RoomSkin = {
   tagline: "A private space.",
   professional: "",
   officeTitle: "Office",
-  palette: { wall: "#2a2f3a", floor: "#1c2029", trim: "#3a4150", fire: "#c8762e" },
+  palette: {
+    wall: "#2a2f3a",
+    floor: "#1c2029",
+    trim: "#3a4150",
+    fire: "#c8762e",
+  },
   commandFile: [],
 };

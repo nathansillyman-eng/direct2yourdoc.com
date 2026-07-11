@@ -29,7 +29,9 @@ describe("direct2YourDocSkin", () => {
   });
 
   it("exposes the 7 room hotspots in exact order", () => {
-    expect(direct2YourDocSkin.commandFile.map((o) => o.label)).toEqual(EXPECTED_LABELS);
+    expect(direct2YourDocSkin.commandFile.map(o => o.label)).toEqual(
+      EXPECTED_LABELS
+    );
   });
 
   it("lays hotspots on the front wall at x = -1.6 + (3.2/6)i, y = 2.1, z = -2.3", () => {
@@ -43,52 +45,93 @@ describe("direct2YourDocSkin", () => {
   it("keeps the plaque rail clear of the opaque founder portrait (top edge 1.9 m)", () => {
     // Plaques are 0.28 m tall; bottom edge must sit above the presence plane so
     // every hotspot is visible and ray-hittable from a standing viewpoint in VR.
-    direct2YourDocSkin.commandFile.forEach((o) => {
+    direct2YourDocSkin.commandFile.forEach(o => {
       expect(o.position[1] - 0.28 / 2).toBeGreaterThan(1.9);
     });
   });
 
   it("regenerates the same layout via arc()", () => {
-    const labels = direct2YourDocSkin.commandFile.map((o) => o.label);
+    const labels = direct2YourDocSkin.commandFile.map(o => o.label);
     expect(direct2YourDocSkin.commandFile).toEqual(arc(labels));
   });
 
   it("serves the founder presence from /brand/, never /manus-storage/", () => {
-    expect(direct2YourDocSkin.presenceImage).toBe("/brand/founder-nate-presence.png");
+    expect(direct2YourDocSkin.presenceImage).toBe(
+      "/brand/founder-nate-presence.png"
+    );
     expect(direct2YourDocSkin.presenceImage).not.toContain("/manus-storage/");
   });
 
+  it("keeps the wood-and-hearth material pass in RoomSkin data with shipped assets", () => {
+    const materials = direct2YourDocSkin.materials!;
+    expect(materials.wall?.texture).toBe("/brand/xr-walnut-panel.svg");
+    expect(materials.floor?.texture).toBe("/brand/xr-herringbone-floor.svg");
+    expect(materials.hearth?.texture).toBe("/brand/xr-hearth-stone.svg");
+    expect(materials.trim?.texture).toBe("/brand/xr-aged-brass.svg");
+
+    for (const spec of Object.values(materials)) {
+      if (!spec?.texture) continue;
+      expect(spec.texture).toMatch(/^\/brand\//);
+      expect(spec.texture).not.toContain("/manus-storage/");
+      const asset = path.resolve(
+        HERE,
+        "../../../public",
+        spec.texture.replace(/^\//, "")
+      );
+      expect(
+        fs.existsSync(asset),
+        `missing material asset: ${spec.texture}`
+      ).toBe(true);
+    }
+  });
+
   it("has the presence asset on disk (founder-forward: the plane is never empty)", () => {
-    const asset = path.resolve(HERE, "../../../public/brand/founder-nate-presence.png");
+    const asset = path.resolve(
+      HERE,
+      "../../../public/brand/founder-nate-presence.png"
+    );
     expect(fs.existsSync(asset)).toBe(true);
   });
 
   it("keeps the 8.7 MB full-res source OUT of the build (lives in /art-source)", () => {
     // client/public ships verbatim in the deploy; the unreferenced source must not.
-    const shipped = path.resolve(HERE, "../../../public/brand/founder-nate-office.png");
+    const shipped = path.resolve(
+      HERE,
+      "../../../public/brand/founder-nate-office.png"
+    );
     expect(fs.existsSync(shipped)).toBe(false);
-    const source = path.resolve(HERE, "../../../../art-source/founder-nate-office.png");
+    const source = path.resolve(
+      HERE,
+      "../../../../art-source/founder-nate-office.png"
+    );
     expect(fs.existsSync(source)).toBe(true);
   });
 
   it("is identity-truthful: Nate is founder/host, never the physician", () => {
     expect(direct2YourDocSkin.professional).toBe("Nate Sillyman — Founder");
     expect(direct2YourDocSkin.officeTitle).toBe("You're with the founder.");
-    expect(direct2YourDocSkin.professional).not.toMatch(/\b(dr\.?|doctor|physician|md)\b/i);
-    expect(direct2YourDocSkin.officeTitle).not.toMatch(/\b(dr\.?|doctor|physician|md)\b/i);
+    expect(direct2YourDocSkin.professional).not.toMatch(
+      /\b(dr\.?|doctor|physician|md)\b/i
+    );
+    expect(direct2YourDocSkin.officeTitle).not.toMatch(
+      /\b(dr\.?|doctor|physician|md)\b/i
+    );
   });
 });
 
 describe("direct2YourDocCopy (content manifest)", () => {
   it("has a non-empty entry for every commandFile label", () => {
     for (const obj of direct2YourDocSkin.commandFile) {
-      expect(direct2YourDocCopy[obj.label], `missing copy for ${obj.label}`).toBeTruthy();
+      expect(
+        direct2YourDocCopy[obj.label],
+        `missing copy for ${obj.label}`
+      ).toBeTruthy();
       expect(direct2YourDocCopy[obj.label].trim().length).toBeGreaterThan(0);
     }
   });
 
   it("has no orphan keys that are not commandFile labels", () => {
-    const labels = new Set(direct2YourDocSkin.commandFile.map((o) => o.label));
+    const labels = new Set(direct2YourDocSkin.commandFile.map(o => o.label));
     for (const key of Object.keys(direct2YourDocCopy)) {
       expect(labels.has(key), `orphan copy key: ${key}`).toBe(true);
     }
@@ -96,7 +139,7 @@ describe("direct2YourDocCopy (content manifest)", () => {
 
   it("The Credential keeps the truthful introduction line", () => {
     expect(direct2YourDocCopy["The Credential"]).toContain(
-      "He isn't your physician — he's the one who makes the introduction.",
+      "He isn't your physician — he's the one who makes the introduction."
     );
   });
 

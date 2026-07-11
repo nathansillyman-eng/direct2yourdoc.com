@@ -3,9 +3,16 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { XR, createXRStore, XROrigin } from "@react-three/xr";
 import { Billboard, OrbitControls, Text, useTexture } from "@react-three/drei";
 import * as THREE from "three";
-import { buildSealedRoom } from "@/xr/engine/SealedRoom";
+import {
+  buildSealedRoom,
+  type RoomMaterialTextures,
+} from "@/xr/engine/SealedRoom";
 import { buildPresence } from "@/xr/engine/presence";
-import type { RoomSkin, RoomStage } from "@/xr/engine/RoomSkin";
+import type {
+  RoomMaterialSlot,
+  RoomSkin,
+  RoomStage,
+} from "@/xr/engine/RoomSkin";
 import { advanceStage, FADE_MS } from "@/xr/locomotion";
 import { devuiRequested } from "@/xr/devui";
 
@@ -25,8 +32,36 @@ const PANEL_OFFSET: [number, number, number] = [0, -0.75, 0.5];
 // Panel is 1.7 m wide in a 4 m room: clamp its centre so it never clips a side wall.
 const PANEL_X_LIMIT = 1.05;
 
+type MaterialTextureEntry = [
+  RoomMaterialSlot,
+  string,
+  [number, number] | undefined,
+];
+
+function materialTextureEntries(skin: RoomSkin): MaterialTextureEntry[] {
+  return Object.entries(skin.materials ?? {}).flatMap(([slot, spec]) =>
+    spec?.texture ? [[slot as RoomMaterialSlot, spec.texture, spec.repeat]] : []
+  );
+}
+
+function cloneRoomTexture(
+  source: THREE.Texture,
+  repeat?: [number, number]
+): THREE.Texture {
+  const texture = source.clone();
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.wrapS = THREE.RepeatWrapping;
+  texture.wrapT = THREE.RepeatWrapping;
+  texture.repeat.set(repeat?.[0] ?? 1, repeat?.[1] ?? 1);
+  texture.needsUpdate = true;
+  return texture;
+}
+
 /** Walk up from a raycast hit to the interactive target (door or hotspot label). */
-function hitTarget(object: THREE.Object3D): { door: boolean; label: string | null } {
+function hitTarget(object: THREE.Object3D): {
+  door: boolean;
+  label: string | null;
+} {
   let o: THREE.Object3D | null = object;
   while (o) {
     if (o.name === "door-1") return { door: true, label: null };
@@ -41,12 +76,19 @@ function hitTarget(object: THREE.Object3D): { door: boolean; label: string | nul
  * Discoverability: hotspots idle-pulse (staggered emissive breathing) and flare
  * when the pointer/controller ray hovers them. Purely visual — engine stays pure.
  */
-function HotspotGlow({ room, hovered }: { room: THREE.Group; hovered: string | null }) {
+function HotspotGlow({
+  room,
+  hovered,
+}: {
+  room: THREE.Group;
+  hovered: string | null;
+}) {
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime();
     let i = 0;
-    room.traverse((o) => {
-      if (!(o instanceof THREE.Mesh) || !o.name.startsWith(HOTSPOT_PREFIX)) return;
+    room.traverse(o => {
+      if (!(o instanceof THREE.Mesh) || !o.name.startsWith(HOTSPOT_PREFIX))
+        return;
       const mat = o.material as THREE.MeshStandardMaterial;
       const isHovered = o.name.slice(HOTSPOT_PREFIX.length) === hovered;
       mat.emissiveIntensity = isHovered
@@ -89,8 +131,12 @@ function DesktopWalkControls() {
     const c = controls.current;
     if (!c) return;
     const k = keys.current;
-    const fwd = Number(k.has("KeyW") || k.has("ArrowUp")) - Number(k.has("KeyS") || k.has("ArrowDown"));
-    const strafe = Number(k.has("KeyD") || k.has("ArrowRight")) - Number(k.has("KeyA") || k.has("ArrowLeft"));
+    const fwd =
+      Number(k.has("KeyW") || k.has("ArrowUp")) -
+      Number(k.has("KeyS") || k.has("ArrowDown"));
+    const strafe =
+      Number(k.has("KeyD") || k.has("ArrowRight")) -
+      Number(k.has("KeyA") || k.has("ArrowLeft"));
     if (fwd === 0 && strafe === 0) return;
 
     const dir = new THREE.Vector3();
@@ -131,8 +177,9 @@ function DesktopWalkControls() {
 function BillboardedPresence({ group }: { group: THREE.Group }) {
   const { camera } = useThree();
   useFrame(() => {
-    group.traverse((o) => {
-      if (o.userData.billboard) o.lookAt(camera.position.x, o.position.y, camera.position.z);
+    group.traverse(o => {
+      if (o.userData.billboard)
+        o.lookAt(camera.position.x, o.position.y, camera.position.z);
     });
   });
   return <primitive object={group} />;
@@ -153,27 +200,32 @@ function RoomScene({
   skin,
   enableOrbit,
   content,
+  materialTextures,
 }: {
   skin: RoomSkin;
   enableOrbit: boolean;
   content?: Record<string, string>;
+  materialTextures?: RoomMaterialTextures;
 }) {
   const [stage, setStage] = useState<RoomStage>("waiting");
   const [fade, setFade] = useState(0); // 0 = clear, 1 = black
   const [activeLabel, setActiveLabel] = useState<string | null>(null);
   const [hoveredLabel, setHoveredLabel] = useState<string | null>(null);
 
-  const room = useMemo(() => buildSealedRoom(stage, skin), [stage, skin]);
+  const room = useMemo(
+    () => buildSealedRoom(stage, skin, materialTextures),
+    [stage, skin, materialTextures]
+  );
   const fallbackPresence = useMemo(
     () => (stage === "office" ? buildPresence(skin) : null),
-    [stage, skin],
+    [stage, skin]
   );
 
   function trigger() {
     if (stage !== "waiting") return;
     setFade(1);
     window.setTimeout(() => {
-      setStage((s) => advanceStage(s));
+      setStage(s => advanceStage(s));
       setFade(0);
     }, FADE_MS);
   }
@@ -182,7 +234,10 @@ function RoomScene({
   // AND for controller/hand ray "select" (trigger pull) inside the immersive
   // session — @react-three/xr v6 routes XR pointers through the same R3F events.
   // door-1 is the ONLY stage-advance trigger; hotspot:* meshes toggle their panel.
-  function onSelect(e: { object: THREE.Object3D; stopPropagation?: () => void }) {
+  function onSelect(e: {
+    object: THREE.Object3D;
+    stopPropagation?: () => void;
+  }) {
     const hit = hitTarget(e.object);
     if (hit.door) {
       e.stopPropagation?.(); // consume: don't re-fire on meshes behind the door
@@ -191,7 +246,7 @@ function RoomScene({
     if (hit.label != null) {
       e.stopPropagation?.(); // consume: overlapping/behind meshes must not double-fire
       const label = hit.label;
-      setActiveLabel((cur) => (cur === label ? null : label));
+      setActiveLabel(cur => (cur === label ? null : label));
     }
     // Unhandled hits (walls, presence plane) do NOT stop propagation, so a ray
     // passing through the portrait still reaches a plaque behind it.
@@ -202,13 +257,20 @@ function RoomScene({
   }
 
   const activeSpot =
-    activeLabel != null ? skin.commandFile.find((o) => o.label === activeLabel) : undefined;
+    activeLabel != null
+      ? skin.commandFile.find(o => o.label === activeLabel)
+      : undefined;
   const activeBody = activeLabel != null ? content?.[activeLabel] : undefined;
 
   return (
     <>
-      <ambientLight intensity={0.5} />
-      <pointLight position={[0, 2.6, 0]} intensity={20} distance={10} />
+      <ambientLight intensity={0.72} />
+      <pointLight
+        position={[0, 2.6, 0]}
+        color={skin.palette.fire}
+        intensity={28}
+        distance={10}
+      />
       <primitive
         object={room}
         onClick={(e: any) => onSelect(e)}
@@ -218,10 +280,14 @@ function RoomScene({
       <HotspotGlow room={room} hovered={hoveredLabel} />
       {/* Plaque titles — in-world Text meshes so they're readable inside the headset. */}
       {stage === "office" &&
-        skin.commandFile.map((spot) => (
+        skin.commandFile.map(spot => (
           <Text
             key={spot.label}
-            position={[spot.position[0], spot.position[1], spot.position[2] + 0.011]}
+            position={[
+              spot.position[0],
+              spot.position[1],
+              spot.position[2] + 0.011,
+            ]}
             fontSize={0.05}
             color={skin.palette.floor}
             anchorX="center"
@@ -234,7 +300,13 @@ function RoomScene({
         ))}
       {stage === "office" &&
         (skin.presenceImage ? (
-          <Suspense fallback={fallbackPresence && <BillboardedPresence group={fallbackPresence} />}>
+          <Suspense
+            fallback={
+              fallbackPresence && (
+                <BillboardedPresence group={fallbackPresence} />
+              )
+            }
+          >
             <TexturedPresence skin={skin} />
           </Suspense>
         ) : (
@@ -245,7 +317,7 @@ function RoomScene({
           position={[
             Math.max(
               -PANEL_X_LIMIT,
-              Math.min(PANEL_X_LIMIT, activeSpot.position[0] + PANEL_OFFSET[0]),
+              Math.min(PANEL_X_LIMIT, activeSpot.position[0] + PANEL_OFFSET[0])
             ),
             activeSpot.position[1] + PANEL_OFFSET[1],
             activeSpot.position[2] + PANEL_OFFSET[2],
@@ -258,7 +330,11 @@ function RoomScene({
             }}
           >
             <planeGeometry args={[1.7, 1.05]} />
-            <meshBasicMaterial color={skin.palette.floor} transparent opacity={0.92} />
+            <meshBasicMaterial
+              color={skin.palette.floor}
+              transparent
+              opacity={0.92}
+            />
           </mesh>
           <Text
             position={[0, 0.38, 0.01]}
@@ -288,9 +364,61 @@ function RoomScene({
       {/* Comfort fade overlay. */}
       <mesh position={[0, 1.4, -0.3]} visible={fade > 0} renderOrder={999}>
         <planeGeometry args={[8, 8]} />
-        <meshBasicMaterial color="black" transparent opacity={fade} depthTest={false} />
+        <meshBasicMaterial
+          color="black"
+          transparent
+          opacity={fade}
+          depthTest={false}
+        />
       </mesh>
     </>
+  );
+}
+
+function TexturedRoomScene({
+  entries,
+  ...props
+}: {
+  entries: MaterialTextureEntry[];
+  skin: RoomSkin;
+  enableOrbit: boolean;
+  content?: Record<string, string>;
+}) {
+  const loaded = useTexture(entries.map(([, url]) => url)) as THREE.Texture[];
+  const materialTextures = useMemo(
+    () =>
+      entries.reduce<RoomMaterialTextures>((acc, [slot, , repeat], i) => {
+        acc[slot] = cloneRoomTexture(loaded[i], repeat);
+        return acc;
+      }, {}),
+    [entries, loaded]
+  );
+
+  useEffect(
+    () => () => {
+      Object.values(materialTextures).forEach(texture => texture?.dispose());
+    },
+    [materialTextures]
+  );
+
+  return <RoomScene {...props} materialTextures={materialTextures} />;
+}
+
+function RoomSceneWithSkinMaterials(props: {
+  skin: RoomSkin;
+  enableOrbit: boolean;
+  content?: Record<string, string>;
+}) {
+  const entries = useMemo(
+    () => materialTextureEntries(props.skin),
+    [props.skin]
+  );
+  if (entries.length === 0) return <RoomScene {...props} />;
+
+  return (
+    <Suspense fallback={<RoomScene {...props} />}>
+      <TexturedRoomScene {...props} entries={entries} />
+    </Suspense>
   );
 }
 
@@ -304,14 +432,25 @@ export function SealedRoomCanvas({
   content?: Record<string, string>;
 }) {
   return (
-    <Canvas camera={{ position: [0, 1.6, 1.8], fov: 70 }} style={{ width: "100%", height: "100%" }}>
+    <Canvas
+      camera={{ position: [0, 1.6, 1.8], fov: 70 }}
+      style={{ width: "100%", height: "100%" }}
+    >
       {xr ? (
         <XR store={store}>
           <XROrigin position={[0, 0, 1.6]} />
-          <RoomScene skin={skin} enableOrbit={false} content={content} />
+          <RoomSceneWithSkinMaterials
+            skin={skin}
+            enableOrbit={false}
+            content={content}
+          />
         </XR>
       ) : (
-        <RoomScene skin={skin} enableOrbit={true} content={content} />
+        <RoomSceneWithSkinMaterials
+          skin={skin}
+          enableOrbit={true}
+          content={content}
+        />
       )}
     </Canvas>
   );

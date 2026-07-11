@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="brass" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#8b6a20"/>
+      <stop offset="0.3" stop-color="#f6d66a"/>
+      <stop offset="0.62" stop-color="#b98b25"/>
+      <stop offset="1" stop-color="#f0c34b"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" fill="url(#brass)"/>
+  <g opacity="0.2" stroke="#fff2a8" stroke-width="2">
+    <path d="M0 28h256M0 77h256M0 119h256M0 171h256M0 221h256"/>
+  </g>
+  <g opacity="0.26" stroke="#45330f" stroke-width="1">
+    <path d="M0 44h256M0 96h256M0 146h256M0 203h256"/>
+  </g>
+</svg>

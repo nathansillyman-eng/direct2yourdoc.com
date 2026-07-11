@@ -10,11 +10,11 @@ describe("arc", () => {
 
   it("spreads labels symmetrically across x and keeps them on the front wall", () => {
     const objs = arc(["A", "B", "C"]);
-    const xs = objs.map((o) => o.position[0]);
+    const xs = objs.map(o => o.position[0]);
     expect(xs[0]).toBeLessThan(0);
     expect(Math.abs(xs[1])).toBeLessThan(1e-9); // middle centered
     expect(xs[2]).toBeGreaterThan(0);
-    objs.forEach((o) => expect(o.position[2]).toBeCloseTo(-2.3)); // front wall
+    objs.forEach(o => expect(o.position[2]).toBeCloseTo(-2.3)); // front wall
   });
 
   it("handles a single label at center", () => {
@@ -33,6 +33,7 @@ describe("neutralSkin", () => {
       fire: expect.any(String),
     });
     expect(neutralSkin.commandFile).toEqual([]);
+    expect(neutralSkin.materials).toBeUndefined();
     expect(neutralSkin.presenceImage).toBeUndefined();
   });
 });
