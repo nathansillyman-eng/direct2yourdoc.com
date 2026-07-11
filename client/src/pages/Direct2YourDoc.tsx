@@ -71,6 +71,11 @@ const TIMES = [
   "5:00 PM",
 ];
 const DAYS = ["Mon 7", "Tue 8", "Wed 9", "Thu 10", "Fri 11"];
+// Booking link — opens the founder's Calendly in a new tab.
+const CALENDLY_URL =
+  "https://calendly.com/thekeepmoreco/advisor-prep-15-mins-advisor-convo-15-mins";
+const openCalendly = () =>
+  window.open(CALENDLY_URL, "_blank", "noopener,noreferrer");
 const BOOKED: Record<string, boolean> = {
   "Mon 7-8:00 AM": true,
   "Mon 7-10:00 AM": true,
@@ -816,7 +821,7 @@ export default function Direct2YourDoc() {
                         border: "1px solid rgba(245,198,62,0.15)",
                         color: "#a6cbc5",
                       }}
-                      onClick={() => {}}
+                      onClick={openCalendly}
                     >
                       {opt}
                       <ChevronRight size={14} style={{ color: "#f5c63e" }} />
@@ -1071,7 +1076,9 @@ export default function Direct2YourDoc() {
                   </p>
                 </div>
                 <a
-                  href="#request"
+                  href={CALENDLY_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center gap-1.5 text-xs px-4 py-2 rounded-sm"
                   style={{
                     background: "#f5c63e",
