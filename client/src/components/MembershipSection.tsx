@@ -4,7 +4,15 @@
  * Single membership; access-first, not gatekept
  */
 import { useEffect, useRef } from "react";
-import { Check, ArrowRight } from "lucide-react";
+import {
+  Check,
+  ArrowRight,
+  Headset,
+  Sparkles,
+  Activity,
+  HeartPulse,
+  Lock,
+} from "lucide-react";
 
 const included = [
   "Unlimited 1-on-1 consultations with your doctor",
@@ -21,6 +29,14 @@ const notIncluded = [
   "Replaces your primary care physician",
   "Covers insurance premiums or claims",
   "Includes in-person physical examinations",
+];
+
+const kit = [
+  { icon: Headset, name: "Meta Quest 3", note: "Step into your private room" },
+  { icon: Sparkles, name: "Silicone face cover", note: "Cool, wipeable — replaces the stock cloth" },
+  { icon: Activity, name: "Blood-pressure monitor", note: "Readings your doctor can see" },
+  { icon: HeartPulse, name: "Heart-rate monitor", note: "The vitals that matter, tracked" },
+  { icon: Lock, name: "Secure document upload", note: "Send records straight to your file", soon: true },
 ];
 
 export default function MembershipSection() {
@@ -283,6 +299,118 @@ border: "1px solid oklch(0.97 0.02 200 / 0.18)",
             </div>
 
           </div>
+        </div>
+
+        {/* The Membership Kit — the physical box that ships with every membership */}
+        <div
+          className="fade-up rounded-sm mt-8 px-8 py-8"
+          style={{
+            border: "1px solid oklch(0.97 0.02 200 / 0.18)",
+            backgroundColor: "oklch(0.205 0.045 200)",
+            transitionDelay: "120ms",
+          }}
+        >
+          <div className="flex items-baseline justify-between flex-wrap gap-2 mb-6">
+            <p
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: "0.72rem",
+                fontWeight: 500,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                color: "var(--aged-bronze)",
+              }}
+            >
+              In Your Kit
+            </p>
+            <p
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "1.35rem",
+                fontWeight: 600,
+                color: "white",
+              }}
+            >
+              Everything arrives at your door.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            {kit.map((item, i) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={i}
+                  className="rounded-sm p-5 flex flex-col gap-3 relative"
+                  style={{
+                    border: "1px solid oklch(0.97 0.02 200 / 0.1)",
+                    backgroundColor: "oklch(0.17 0.04 200)",
+                  }}
+                >
+                  {item.soon && (
+                    <span
+                      className="absolute top-3 right-3"
+                      style={{
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontSize: "0.56rem",
+                        fontWeight: 500,
+                        letterSpacing: "0.1em",
+                        textTransform: "uppercase",
+                        color: "var(--aged-bronze)",
+                        border: "1px solid oklch(0.7 0.12 85 / 0.35)",
+                        borderRadius: "999px",
+                        padding: "2px 7px",
+                      }}
+                    >
+                      Coming soon
+                    </span>
+                  )}
+                  <div
+                    className="w-9 h-9 rounded-sm flex items-center justify-center"
+                    style={{ backgroundColor: "oklch(0.38 0.15 165 / 0.12)" }}
+                  >
+                    <Icon size={17} style={{ color: "var(--forest-green)" }} />
+                  </div>
+                  <div>
+                    <p
+                      style={{
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontSize: "0.86rem",
+                        fontWeight: 600,
+                        color: "white",
+                        lineHeight: 1.3,
+                      }}
+                    >
+                      {item.name}
+                    </p>
+                    <p
+                      className="mt-1"
+                      style={{
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontSize: "0.74rem",
+                        color: "oklch(0.6 0.03 200)",
+                        lineHeight: 1.45,
+                      }}
+                    >
+                      {item.note}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <p
+            className="mt-5"
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: "0.72rem",
+              color: "oklch(0.5 0.03 200)",
+              letterSpacing: "0.04em",
+            }}
+          >
+            Secure document upload is being built to full medical-privacy standards before it goes live.
+          </p>
         </div>
       </div>
     </section>
