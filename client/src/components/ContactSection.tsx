@@ -8,6 +8,8 @@ import { ArrowRight, Mail, Phone, Shield } from "lucide-react";
 export default function ContactSection() {
   const ref = useRef<HTMLDivElement>(null);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState(false);
+  const [sending, setSending] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
 
   useEffect(() => {
@@ -27,9 +29,28 @@ export default function ContactSection() {
     return () => observer.disconnect();
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setError(false);
+    setSending(true);
+    const encode = (data: Record<string, string>) =>
+      Object.keys(data)
+        .map((k) => encodeURIComponent(k) + "=" + encodeURIComponent(data[k]))
+        .join("&");
+    try {
+      const res = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encode({ "form-name": "d2yd-inquiry", "bot-field": "", ...form }),
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      setSubmitted(true);
+    } catch {
+      // Never fake success — surface the failure so a lead is never silently lost.
+      setError(true);
+    } finally {
+      setSending(false);
+    }
   };
 
   const inputStyle: React.CSSProperties = {
@@ -194,7 +215,20 @@ export default function ContactSection() {
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                <form
+                  name="d2yd-inquiry"
+                  method="POST"
+                  data-netlify="true"
+                  netlify-honeypot="bot-field"
+                  onSubmit={handleSubmit}
+                  className="flex flex-col gap-5"
+                >
+                  <input type="hidden" name="form-name" value="d2yd-inquiry" />
+                  <p className="hidden" aria-hidden="true">
+                    <label>
+                      Don't fill this out if you're human: <input name="bot-field" tabIndex={-1} />
+                    </label>
+                  </p>
                   <h3
                     style={{
                       fontFamily: "'Cormorant Garamond', serif",
@@ -212,6 +246,7 @@ export default function ContactSection() {
                       <label htmlFor="cs-name" style={labelStyle}>Full Name</label>
                       <input
                         id="cs-name"
+                        name="name"
                         type="text"
                         required
                         placeholder="Your name"
@@ -226,6 +261,7 @@ export default function ContactSection() {
                       <label htmlFor="cs-phone" style={labelStyle}>Phone</label>
                       <input
                         id="cs-phone"
+                        name="phone"
                         type="tel"
                         placeholder="Your phone"
                         value={form.phone}
@@ -241,6 +277,7 @@ export default function ContactSection() {
                     <label htmlFor="cs-email" style={labelStyle}>Email Address</label>
                     <input
                       id="cs-email"
+                      name="email"
                       type="email"
                       required
                       placeholder="your@email.com"
@@ -256,6 +293,7 @@ export default function ContactSection() {
                     <label htmlFor="cs-message" style={labelStyle}>How Can We Help You?</label>
                     <textarea
                       id="cs-message"
+                      name="message"
                       rows={4}
                       placeholder="Briefly describe your situation or what you're looking for..."
                       value={form.message}
@@ -268,6 +306,7 @@ export default function ContactSection() {
 
                   <button
                     type="submit"
+                    disabled={sending}
                     className="btn-primary w-full justify-center mt-2"
                     style={{
                       backgroundColor: "white",
@@ -275,10 +314,31 @@ export default function ContactSection() {
                       color: "var(--forest-green-dark)",
                       fontWeight: 600,
                       padding: "1rem",
+                      opacity: sending ? 0.7 : 1,
+                      cursor: sending ? "wait" : "pointer",
                     }}
                   >
-                    Submit Inquiry <ArrowRight size={15} />
+                    {sending ? "Sending…" : <>Submit Inquiry <ArrowRight size={15} /></>}
                   </button>
+
+                  {error && (
+                    <p
+                      role="alert"
+                      style={{
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontSize: "0.82rem",
+                        color: "#ffb4a8",
+                        textAlign: "center",
+                        lineHeight: 1.5,
+                      }}
+                    >
+                      Something went wrong sending that. Please email{" "}
+                      <a href="mailto:hello@direct2yourdoc.com" style={{ color: "white", textDecoration: "underline" }}>
+                        hello@direct2yourdoc.com
+                      </a>{" "}
+                      or call and we'll get you set up.
+                    </p>
+                  )}
 
                   <p
                     style={{
