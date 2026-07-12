@@ -90,7 +90,9 @@ export default function Footer() {
                   Membership Inquiries
                 </p>
                 <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.88rem", color: "oklch(0.62 0.03 200)", marginTop: "0.2rem" }}>
-                  membership@direct2yourdoc.com
+                  <a href="mailto:nate@thekeepmoreco.com" style={{ color: "inherit", textDecoration: "none" }}>
+                    membership@direct2yourdoc.com
+                  </a>
                 </p>
               </div>
               <div>
@@ -144,7 +146,7 @@ export default function Footer() {
           <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.68rem", color: "oklch(0.63 0.03 200)", textAlign: "center", lineHeight: 1.6 }}>
             Direct2YourDoc is committed to digital accessibility for all users. If you use assistive technology and
             encounter an issue on this site, contact us at{" "}
-            <a href="mailto:accessibility@direct2yourdoc.com" style={{ color: "oklch(0.64 0.03 200)" }}>
+            <a href="mailto:nate@thekeepmoreco.com" style={{ color: "oklch(0.64 0.03 200)" }}>
               accessibility@direct2yourdoc.com
             </a>{" "}
             — see our{" "}

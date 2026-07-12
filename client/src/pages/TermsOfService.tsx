@@ -103,7 +103,7 @@ export default function TermsOfService() {
       <h3>9.4 Opt-Out Right</h3>
       <p>
         You may opt out of this arbitration agreement by sending written notice to{" "}
-        <a href="mailto:legal@direct2yourdoc.com">legal@direct2yourdoc.com</a> within thirty (30) days of first
+        <a href="mailto:nate@thekeepmoreco.com">legal@direct2yourdoc.com</a> within thirty (30) days of first
         accepting these Terms, stating your name and a clear statement that you wish to opt out of this
         arbitration agreement. If you opt out, neither you nor KeepMore will be required to arbitrate Disputes, and
         Section 10 (Governing Law) will govern venue instead.
@@ -131,7 +131,7 @@ export default function TermsOfService() {
       <h2>12. Contact Us</h2>
       <p>
         Questions about these Terms can be sent to{" "}
-        <a href="mailto:legal@direct2yourdoc.com">legal@direct2yourdoc.com</a>.
+        <a href="mailto:nate@thekeepmoreco.com">legal@direct2yourdoc.com</a>.
       </p>
     </LegalPageLayout>
   );

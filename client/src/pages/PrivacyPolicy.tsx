@@ -82,7 +82,7 @@ export default function PrivacyPolicy() {
       <h2>9. Contact Us</h2>
       <p>
         Questions about this Policy or your information can be sent to{" "}
-        <a href="mailto:privacy@direct2yourdoc.com">privacy@direct2yourdoc.com</a>.
+        <a href="mailto:nate@thekeepmoreco.com">privacy@direct2yourdoc.com</a>.
       </p>
     </LegalPageLayout>
   );

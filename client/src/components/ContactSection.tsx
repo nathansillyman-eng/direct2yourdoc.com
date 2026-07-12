@@ -154,7 +154,9 @@ export default function ContactSection() {
                     Inquiries
                   </p>
                   <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.95rem", color: "white", marginTop: "0.2rem" }}>
-                    membership@direct2yourdoc.com
+                    <a href="mailto:nate@thekeepmoreco.com" style={{ color: "inherit", textDecoration: "none" }}>
+                      membership@direct2yourdoc.com
+                    </a>
                   </p>
                 </div>
               </div>
@@ -333,7 +335,7 @@ export default function ContactSection() {
                       }}
                     >
                       Something went wrong sending that. Please email{" "}
-                      <a href="mailto:hello@direct2yourdoc.com" style={{ color: "white", textDecoration: "underline" }}>
+                      <a href="mailto:nate@thekeepmoreco.com" style={{ color: "white", textDecoration: "underline" }}>
                         hello@direct2yourdoc.com
                       </a>{" "}
                       or call and we'll get you set up.

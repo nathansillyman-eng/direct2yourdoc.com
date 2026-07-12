@@ -41,7 +41,7 @@ export default function AccessibilityStatement() {
         in membership, please contact us:
       </p>
       <ul>
-        <li>Email: <a href="mailto:accessibility@direct2yourdoc.com">accessibility@direct2yourdoc.com</a></li>
+        <li>Email: <a href="mailto:nate@thekeepmoreco.com">accessibility@direct2yourdoc.com</a></li>
         <li>Phone: available on request via the email above</li>
       </ul>
       <p>
