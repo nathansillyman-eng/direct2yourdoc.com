@@ -138,7 +138,7 @@ export default function ContactSection() {
                     Direct Line
                   </p>
                   <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.95rem", color: "white", marginTop: "0.2rem" }}>
-                    Provided upon membership confirmation
+                    <a href="tel:+14804351576" style={{ color: "inherit", textDecoration: "none" }}>(480) 435-1576</a>
                   </p>
                 </div>
               </div>
@@ -337,6 +337,10 @@ export default function ContactSection() {
                       Something went wrong sending that. Please email{" "}
                       <a href="mailto:nate@thekeepmoreco.com" style={{ color: "white", textDecoration: "underline" }}>
                         hello@direct2yourdoc.com
+                      </a>{" "}
+                      or call{" "}
+                      <a href="tel:+14804351576" style={{ color: "white", textDecoration: "underline" }}>
+                        (480) 435-1576
                       </a>{" "}
                       and we'll get you set up.
                     </p>

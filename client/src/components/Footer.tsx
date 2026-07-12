@@ -97,6 +97,14 @@ export default function Footer() {
               </div>
               <div>
                 <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--aged-bronze)" }}>
+                  Direct Line
+                </p>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.88rem", color: "oklch(0.62 0.03 200)", marginTop: "0.2rem" }}>
+                  <a href="tel:+14804351576" style={{ color: "inherit", textDecoration: "none" }}>(480) 435-1576</a>
+                </p>
+              </div>
+              <div>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--aged-bronze)" }}>
                   Availability
                 </p>
                 <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.88rem", color: "oklch(0.62 0.03 200)", marginTop: "0.2rem" }}>
