@@ -338,7 +338,7 @@ export default function ContactSection() {
                       <a href="mailto:nate@thekeepmoreco.com" style={{ color: "white", textDecoration: "underline" }}>
                         hello@direct2yourdoc.com
                       </a>{" "}
-                      or call and we'll get you set up.
+                      and we'll get you set up.
                     </p>
                   )}
 

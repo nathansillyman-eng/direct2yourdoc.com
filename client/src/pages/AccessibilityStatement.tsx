@@ -42,7 +42,6 @@ export default function AccessibilityStatement() {
       </p>
       <ul>
         <li>Email: <a href="mailto:nate@thekeepmoreco.com">accessibility@direct2yourdoc.com</a></li>
-        <li>Phone: available on request via the email above</li>
       </ul>
       <p>
         Please include the web page and a description of the issue you encountered. We aim to respond to

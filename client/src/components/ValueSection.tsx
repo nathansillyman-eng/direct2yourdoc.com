@@ -120,6 +120,19 @@ color: "white",
           </span>
         </div>
 
+        <p
+          style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: "0.8rem",
+            color: "oklch(0.6 0.03 200)",
+            marginBottom: "1.5rem",
+            lineHeight: 1.6,
+          }}
+        >
+          In a medical emergency, always call 911 first. Direct2YourDoc is concierge care, not a
+          substitute for emergency services.
+        </p>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-px" style={{ backgroundColor: "oklch(0.25 0.05 200)" }}>
           {scenarios.map((scenario, i) => (
             <div
