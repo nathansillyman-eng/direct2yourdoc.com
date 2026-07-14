@@ -1259,6 +1259,8 @@ export default function Direct2YourDoc() {
       {/* ══════════════════════════════════════════════════════════════════════
           SECTION 6 — DEMO CLIPS
       ══════════════════════════════════════════════════════════════════════ */}
+      {/* Demo Clips — hidden until final video cuts land. Flip false→true to restore. */}
+      {false && (
       <section
         id="demo-clips"
         className="py-28 px-6"
@@ -1427,6 +1429,7 @@ export default function Direct2YourDoc() {
           </motion.div>
         </div>
       </section>
+      )}
 
       {/* ══════════════════════════════════════════════════════════════════════
           SECTION 7 — REQUEST / SETUP FORM
