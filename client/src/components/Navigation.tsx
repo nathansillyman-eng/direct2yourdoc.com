@@ -16,7 +16,7 @@ const KEEPMORE_MARK = "/brand/keepmore-km.svg";
 const navLinks = [
   { label: "Services", href: "#services" },
   { label: "How It Works", href: "#how-it-works" },
-  { label: "About", href: "#about" },
+  { label: "About", href: "#founder" },
   { label: "Membership", href: "#membership" },
 ];
 

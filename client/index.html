@@ -2,6 +2,16 @@
 <html lang="en">
 
   <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1W17KVYSCX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+
+      gtag('config', 'G-1W17KVYSCX');
+    </script>
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     <title>Direct2YourDoc — Your Doctor. On Call. Now.</title>
@@ -30,6 +40,15 @@
   </head>
 
   <body>
+    <!-- Netlify Forms detection: static form scanned at build so the SPA's
+         POST to "/" is accepted. Fields must match ContactSection's form. -->
+    <form name="d2yd-inquiry" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <textarea name="message"></textarea>
+      <input name="bot-field" />
+    </form>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
