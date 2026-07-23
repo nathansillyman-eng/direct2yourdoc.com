@@ -4,7 +4,15 @@
  * Single membership; access-first, not gatekept
  */
 import { useEffect, useRef } from "react";
-import { Check, ArrowRight } from "lucide-react";
+import {
+  Check,
+  ArrowRight,
+  Headset,
+  Sparkles,
+  Activity,
+  HeartPulse,
+  Lock,
+} from "lucide-react";
 
 const included = [
   "Unlimited 1-on-1 consultations with your doctor",
@@ -21,6 +29,20 @@ const notIncluded = [
   "Replaces your primary care physician",
   "Covers insurance premiums or claims",
   "Includes in-person physical examinations",
+];
+
+const kit = [
+  { icon: Headset, name: "Meta Quest 3", note: "Step into your private room" },
+  { icon: Sparkles, name: "Silicone face cover", note: "Cool, wipeable — replaces the stock cloth" },
+  { icon: Activity, name: "Blood-pressure monitor", note: "Readings your doctor can see" },
+  { icon: HeartPulse, name: "Heart-rate monitor", note: "The vitals that matter, tracked" },
+  { icon: Lock, name: "Secure document upload", note: "Send records straight to your file", soon: true },
+];
+
+const lifetime = [
+  { tier: "Single Adult", price: "$50,000", note: "One member, cared for — for life." },
+  { tier: "Family of 4", price: "$100,000", note: "Your household, covered for life." },
+  { tier: "Family of 6", price: "$120,000", note: "The whole family, for life." },
 ];
 
 export default function MembershipSection() {
@@ -54,7 +76,7 @@ export default function MembershipSection() {
 
         {/* Header */}
         <div className="fade-up text-left max-w-2xl mb-16">
-          <span className="section-label mb-4 block">Membership</span>
+          <span className="section-label mb-4 block" style={{ color: "var(--aged-bronze)" }}>Membership</span>
           <h2
             style={{
               fontFamily: "'Cormorant Garamond', serif",
@@ -93,7 +115,7 @@ color: "oklch(0.65 0.03 200)",
               {/* Card header */}
               <div
                 className="px-8 py-7"
-                style={{ backgroundColor: "var(--forest-green)", borderBottom: "none" }}
+                style={{ backgroundColor: "var(--forest-green-dark)", borderBottom: "none" }}
               >
                 <div className="flex items-start justify-between">
                   <div>
@@ -104,7 +126,7 @@ color: "oklch(0.65 0.03 200)",
                         fontWeight: 500,
                         letterSpacing: "0.16em",
                         textTransform: "uppercase",
-                        color: "oklch(0.75 0.04 200)",
+                        color: "oklch(0.96 0.02 200)",
                       }}
                     >
                       Annual Membership
@@ -129,7 +151,7 @@ color: "oklch(0.65 0.03 200)",
                       paddingLeft: "1.5rem",
                     }}
                   >
-                    <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(0.75 0.04 200)" }}>
+                    <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "oklch(0.96 0.02 200)" }}>
                       Pricing by
                     </p>
                     <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.4rem", fontWeight: 600, color: "white", marginTop: "0.2rem" }}>
@@ -176,6 +198,25 @@ color: "oklch(0.65 0.03 200)",
                     </div>
                   ))}
                 </div>
+
+                {/* Access promise + provider-billed note */}
+                <div
+                  className="mt-6 rounded-sm px-5 py-4"
+                  style={{
+                    backgroundColor: "oklch(0.38 0.15 165 / 0.1)",
+                    border: "1px solid oklch(0.38 0.15 165 / 0.25)",
+                  }}
+                >
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.9rem", fontWeight: 600, color: "white" }}>
+                    Every appointment included — no per-visit fees, ever.
+                  </p>
+                  <p
+                    className="mt-1.5"
+                    style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.76rem", color: "oklch(0.62 0.03 200)", lineHeight: 1.5 }}
+                  >
+                    Medications, labs, imaging, and outside specialists are billed directly by the provider.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -200,7 +241,7 @@ border: "1px solid oklch(0.97 0.02 200 / 0.18)",
                   fontWeight: 500,
                   letterSpacing: "0.14em",
                   textTransform: "uppercase",
-                  color: "oklch(0.52 0.03 200)",
+                  color: "oklch(0.63 0.03 200)",
               }}>
                 Not Included
               </p>
@@ -217,7 +258,7 @@ border: "1px solid oklch(0.97 0.02 200 / 0.18)",
                       style={{
                         fontFamily: "'DM Sans', sans-serif",
                         fontSize: "0.88rem",
-                        color: "oklch(0.55 0.03 200)",
+                        color: "oklch(0.64 0.03 200)",
                         lineHeight: 1.5,
                       }}
                     >
@@ -265,7 +306,7 @@ border: "1px solid oklch(0.97 0.02 200 / 0.18)",
                 href="#contact"
                 onClick={(e) => { e.preventDefault(); document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" }); }}
                 className="btn-primary w-full justify-center"
-                style={{ backgroundColor: "var(--aged-bronze)", borderColor: "var(--aged-bronze)" }}
+                style={{ backgroundColor: "var(--aged-bronze)", borderColor: "var(--aged-bronze)", color: "var(--charcoal)" }}
               >
                 Begin Inquiry <ArrowRight size={15} />
               </a>
@@ -273,7 +314,7 @@ border: "1px solid oklch(0.97 0.02 200 / 0.18)",
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: "0.72rem",
-                  color: "oklch(0.5 0.03 200)",
+                  color: "oklch(0.63 0.03 200)",
                   textAlign: "center",
                   letterSpacing: "0.06em",
                 }}
@@ -283,6 +324,204 @@ border: "1px solid oklch(0.97 0.02 200 / 0.18)",
             </div>
 
           </div>
+        </div>
+
+        {/* Lifetime — founding memberships (pay once) */}
+        <div className="fade-up mt-8" style={{ transitionDelay: "80ms" }}>
+          <div className="flex items-baseline justify-between flex-wrap gap-2 mb-6">
+            <p
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: "0.72rem",
+                fontWeight: 500,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                color: "var(--aged-bronze)",
+              }}
+            >
+              Founding · Lifetime
+            </p>
+            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.35rem", fontWeight: 600, color: "white" }}>
+              Pay once. Never think about it again.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {lifetime.map((t, i) => (
+              <div
+                key={i}
+                className="rounded-sm p-7 flex flex-col group relative overflow-hidden"
+                style={{
+                  border: "1px solid oklch(0.7 0.12 85 / 0.28)",
+                  backgroundColor: "oklch(0.205 0.045 200)",
+                }}
+              >
+                {/* Hover state — tiers shown but not yet purchasable */}
+                <div
+                  className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{ backgroundColor: "oklch(0.13 0.05 200 / 0.93)", backdropFilter: "blur(2px)" }}
+                >
+                  <span
+                    style={{
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: "0.72rem",
+                      fontWeight: 500,
+                      letterSpacing: "0.14em",
+                      textTransform: "uppercase",
+                      color: "var(--aged-bronze)",
+                      border: "1px solid oklch(0.7 0.12 85 / 0.4)",
+                      borderRadius: "999px",
+                      padding: "6px 16px",
+                    }}
+                  >
+                    Not currently available
+                  </span>
+                </div>
+                <p
+                  style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: "0.68rem",
+                    fontWeight: 500,
+                    letterSpacing: "0.14em",
+                    textTransform: "uppercase",
+                    color: "var(--aged-bronze)",
+                  }}
+                >
+                  {t.tier}
+                </p>
+                <p
+                  className="mt-3"
+                  style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "2.6rem", fontWeight: 600, color: "white", lineHeight: 1 }}
+                >
+                  {t.price}
+                </p>
+                <p
+                  className="mt-1"
+                  style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "oklch(0.64 0.03 200)" }}
+                >
+                  One-time · lifetime
+                </p>
+                <p
+                  className="mt-4"
+                  style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.86rem", color: "oklch(0.68 0.03 200)", lineHeight: 1.55 }}
+                >
+                  {t.note}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* The Membership Kit — the physical box that ships with every membership */}
+        <div
+          className="fade-up rounded-sm mt-8 px-8 py-8"
+          style={{
+            border: "1px solid oklch(0.97 0.02 200 / 0.18)",
+            backgroundColor: "oklch(0.205 0.045 200)",
+            transitionDelay: "120ms",
+          }}
+        >
+          <div className="flex items-baseline justify-between flex-wrap gap-2 mb-6">
+            <p
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: "0.72rem",
+                fontWeight: 500,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                color: "var(--aged-bronze)",
+              }}
+            >
+              In Your Kit
+            </p>
+            <p
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "1.35rem",
+                fontWeight: 600,
+                color: "white",
+              }}
+            >
+              Everything arrives at your door.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            {kit.map((item, i) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={i}
+                  className="rounded-sm p-5 flex flex-col gap-3 relative"
+                  style={{
+                    border: "1px solid oklch(0.97 0.02 200 / 0.1)",
+                    backgroundColor: "oklch(0.17 0.04 200)",
+                  }}
+                >
+                  {item.soon && (
+                    <span
+                      className="absolute top-3 right-3"
+                      style={{
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontSize: "0.56rem",
+                        fontWeight: 500,
+                        letterSpacing: "0.1em",
+                        textTransform: "uppercase",
+                        color: "var(--aged-bronze)",
+                        border: "1px solid oklch(0.7 0.12 85 / 0.35)",
+                        borderRadius: "999px",
+                        padding: "2px 7px",
+                      }}
+                    >
+                      Coming soon
+                    </span>
+                  )}
+                  <div
+                    className="w-9 h-9 rounded-sm flex items-center justify-center"
+                    style={{ backgroundColor: "oklch(0.38 0.15 165 / 0.12)" }}
+                  >
+                    <Icon size={17} style={{ color: "var(--forest-green)" }} />
+                  </div>
+                  <div>
+                    <p
+                      style={{
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontSize: "0.86rem",
+                        fontWeight: 600,
+                        color: "white",
+                        lineHeight: 1.3,
+                      }}
+                    >
+                      {item.name}
+                    </p>
+                    <p
+                      className="mt-1"
+                      style={{
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontSize: "0.74rem",
+                        color: "oklch(0.6 0.03 200)",
+                        lineHeight: 1.45,
+                      }}
+                    >
+                      {item.note}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <p
+            className="mt-5"
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: "0.72rem",
+              color: "oklch(0.63 0.03 200)",
+              letterSpacing: "0.04em",
+            }}
+          >
+            Secure document upload is being built to full medical-privacy standards before it goes live.
+          </p>
         </div>
       </div>
     </section>

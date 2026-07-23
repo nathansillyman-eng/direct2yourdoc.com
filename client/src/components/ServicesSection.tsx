@@ -6,8 +6,8 @@
 import { useEffect, useRef } from "react";
 import { FileText, Stethoscope, ShieldCheck, Clock } from "lucide-react";
 
-const CONSULT_IMG = "/manus-storage/service-consultation-EZRzCNnVu5vjNNBxFh2hjS.webp";
-const RX_IMG = "/manus-storage/service-prescription-YuXJvDQs9bHsSpt7KVRhLC.webp";
+const CONSULT_IMG = "/brand/founder-nate-consult.png";
+const RX_IMG = "/brand/founder-nate-desk.png";
 
 const services = [
   {
@@ -154,7 +154,7 @@ export default function ServicesSection() {
                       fontWeight: 500,
                       letterSpacing: "0.14em",
                       textTransform: "uppercase",
-                      color: "var(--aged-bronze)",
+                      color: "var(--bronze-ink)",
                       marginBottom: "0.4rem",
                       display: "block",
                     }}
@@ -212,11 +212,14 @@ export default function ServicesSection() {
 
         {/* Two image panels — full bleed editorial */}
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mt-20 fade-up">
-          <div className="md:col-span-3 relative overflow-hidden rounded-sm" style={{ height: "380px" }}>
+          <div className="md:col-span-3 relative overflow-hidden rounded-sm" style={{ height: "460px" }}>
             <img
               src={CONSULT_IMG}
-              alt="Private consultation"
+              alt="Nate Sillyman, founder, in a private consultation setting"
               className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+              style={{ objectPosition: "50% 8%" }}
+              loading="lazy"
+              decoding="async"
             />
             <div
               className="absolute inset-0"
@@ -231,11 +234,14 @@ export default function ServicesSection() {
               </p>
             </div>
           </div>
-          <div className="md:col-span-2 relative overflow-hidden rounded-sm" style={{ height: "380px" }}>
+          <div className="md:col-span-2 relative overflow-hidden rounded-sm" style={{ height: "460px" }}>
             <img
               src={RX_IMG}
-              alt="Prescription writing"
+              alt="Nate Sillyman, founder, at his desk"
               className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+              style={{ objectPosition: "50% 8%" }}
+              loading="lazy"
+              decoding="async"
             />
             <div
               className="absolute inset-0"

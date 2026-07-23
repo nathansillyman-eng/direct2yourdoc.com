@@ -7,6 +7,9 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import Direct2YourDoc from "./pages/Direct2YourDoc";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
+import AccessibilityStatement from "./pages/AccessibilityStatement";
 
 // WebXR sealed room — lazy so Three.js never lands in the main bundle.
 const VRRoomPage = lazy(() => import("./xr/react/VRRoomPage"));
@@ -17,11 +20,14 @@ function Router() {
     <Switch>
       <Route path={"/"} component={Home} />
       <Route path={"/direct2yourdoc"} component={Direct2YourDoc} />
-      <Route path={"/room"}>
+<Route path={"/room"}>
         <Suspense fallback={<div style={{ position: "fixed", inset: 0, background: "#081519" }} />}>
           <VRRoomPage />
         </Suspense>
       </Route>
+      <Route path={"/privacy-policy"} component={PrivacyPolicy} />
+      <Route path={"/terms-of-service"} component={TermsOfService} />
+      <Route path={"/accessibility"} component={AccessibilityStatement} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
